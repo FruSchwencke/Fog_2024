@@ -33,11 +33,15 @@ else (Customized carport)
 endif
 |Customer|
 :Customer confirms details;
-:Payment;
+
 fork
 :Standard carport;
+:Customer provides personal information]
+:Payment;
 fork again
 :Customized carport;
+:Customer information available via login]
+:Payment;
 |Webshop|
 :Orderpayment registers]
 |Salesperson|
@@ -45,7 +49,11 @@ fork again
 
 |Customer|
 end fork
+if () then (Standard carport)
 :Order details forwarded]
+else (Customized carport)
+:Customized details forwarded]
+endif
 end
 
 @enduml
