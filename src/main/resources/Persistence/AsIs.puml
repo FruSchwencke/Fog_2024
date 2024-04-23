@@ -1,0 +1,56 @@
+@startuml
+|kunde|
+start
+:vælg en carport;
+fork
+:standard carport;
+fork again
+:egne mål carport;
+:vælg egne mål carport;
+if  (skur) then (ja)
+:vælg mål på skur m.m;
+
+else (nej)
+endif
+endfork
+:indsend forespørgsel;
+|#AntiqueWhite|webshop|
+:forespørgsel]
+|mailsystem|
+:sender mail til sælger med forespørgselsdata;
+|sælger|
+:mail til sælger]
+if (enig med forespørgselsdata) then (nej)
+:telefonisk rådgivning v. opkald til kunden;
+
+
+
+|tilbudsberegning (programmet)|
+else (ja)
+endif
+:indtaster forespørgselsdata;
+
+|sælger|
+:generet tilbud]
+
+|mailsystem|
+:send mail til kunde med tilbud;
+|kunde|
+
+:tilbud til godkendelse]
+if (enig) then (nej)
+:farvel;
+kill
+
+else (ja)
+|webshop|
+:betal;
+|mailsystem|
+:send en mail med godkendt og betalt tilbud;
+|sælger|
+:godkendelse]
+
+|kunde|
+:ordrebekræftelse og m stykliste]
+stop
+@enduml
