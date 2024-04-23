@@ -1,37 +1,17 @@
 @startuml
 'https://plantuml.com/activity-diagram-beta
 
+|Customer|
 start
-:ClickServlet.handleRequest();
-:new page;
-if (Page.onSecurityCheck) then (true)
-  :Page.onInit();
-  if (isForward?) then (no)
-    :Process controls;
-    if (continue processing?) then (no)
-      stop
-    endif
+:Choose a carport option;
+if ( )  then (Standard carport)
+end
+-[hidden]
+else  (Customized carport)
+:Customize the carport;
+|Webshop|
 
-    if (isPost?) then (yes)
-      :Page.onPost();
-    else (no)
-      :Page.onGet();
-    endif
-    :Page.onRender();
-  endif
-else (false)
-endif
 
-if (do redirect?) then (yes)
-  :redirect process;
-else
-  if (do forward?) then (yes)
-    :Forward request;
-  else (no)
-    :Render page template;
-  endif
-endif
-
-stop
+|Salesrepresentant|
 
 @enduml
