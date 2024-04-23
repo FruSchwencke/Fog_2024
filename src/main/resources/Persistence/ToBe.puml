@@ -3,15 +3,49 @@
 
 |Customer|
 start
-:Choose a carport option;
-if ( )  then (Standard carport)
-end
--[hidden]
-else  (Customized carport)
-:Customize the carport;
+:Choose a carport type;
+fork
+:Standard carport;
+fork again
+:Customized carport;
 |Webshop|
+:Login;
+|Customer|
+:Customize the carport;
+:Do you want a shed?;
+fork
+:yes;
+:Customize the shed;
+fork again
+:no;
+end fork
+end fork
+:Send order request]
+|Webshop|
+:Order request]
+if (Order) then (Standard carport)
+:Standard carport;
+else (Customized carport)
+|Salesperson|
+:Notification]
+:Salesperson qualifies request;
+:Salesperson sends details;
+endif
+|Customer|
+:Customer confirms details;
+:Payment;
+fork
+:Standard carport;
+fork again
+:Customized carport;
+|Webshop|
+:Orderpayment registers]
+|Salesperson|
+:Notification]
 
-
-|Salesrepresentant|
+|Customer|
+end fork
+:Order details forwarded]
+end
 
 @enduml
