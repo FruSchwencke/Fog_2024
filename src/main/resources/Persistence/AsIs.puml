@@ -22,12 +22,14 @@ endfork
 :mail to salesperson]
 if (Agreeing with order request) then (No)
 :Calls customer with advice and adjustment;
+|Description editor (program)|
 :Updated order request]
 
 
 
 |Offer calculator (program)|
 else (Yes)
+
 endif
 :Enter order request;
 
