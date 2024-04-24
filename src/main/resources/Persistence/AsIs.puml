@@ -1,56 +1,57 @@
 @startuml
-|kunde|
+|Customer|
 start
-:vælg en carport;
+:Choose a carport type;
 fork
-:standard carport;
+:Standard carport;
 fork again
-:egne mål carport;
-:vælg egne mål carport;
-if  (skur) then (ja)
-:vælg mål på skur m.m;
+:Customized carport;
+:Customize the carport;
+if  (Shed) then (Yes)
+:Customize shed;
 
-else (nej)
+else (No)
 endif
 endfork
-:indsend forespørgsel;
-|#AntiqueWhite|webshop|
-:forespørgsel]
-|mailsystem|
-:sender mail til sælger med forespørgselsdata;
-|sælger|
-:mail til sælger]
-if (enig med forespørgselsdata) then (nej)
-:telefonisk rådgivning v. opkald til kunden;
-
-
-
-|tilbudsberegning (programmet)|
-else (ja)
-endif
-:indtaster forespørgselsdata;
-
-|sælger|
-:generet tilbud]
-
-|mailsystem|
-:send mail til kunde med tilbud;
-|kunde|
-
-:tilbud til godkendelse]
-if (enig) then (nej)
-:farvel;
-kill
-
-else (ja)
+:Send order request;
 |webshop|
-:betal;
+:Order request]
 |mailsystem|
-:send en mail med godkendt og betalt tilbud;
-|sælger|
-:godkendelse]
+:Sending mail to salesperson, with order request;
+|Salesperson|
+:mail to salesperson]
+if (Agreeing with order request) then (No)
+:Calls customer with advice and adjustment;
+:Updated order request]
 
-|kunde|
-:ordrebekræftelse og m stykliste]
+
+
+|Offer calculator (program)|
+else (Yes)
+endif
+:Enter order request;
+
+|Salesperson|
+:Generated offer]
+
+|mailsystem|
+:Send mail to customer with offer;
+|Customer|
+
+:Offer for approval]
+if (Agreed) then (No)
+
+
+else (Yes)
+:Send payment;
+|webshop|
+:Payment]
+|mailsystem|
+:Send mail with approved and payed offer;
+|Salesperson|
+:approval]
+
+|Customer|
+:Order confirmation and piece list]
 stop
 @enduml
