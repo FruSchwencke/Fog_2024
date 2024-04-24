@@ -1,0 +1,57 @@
+@startuml
+|Customer|
+start
+:Choose a carport type;
+fork
+:Standard carport;
+fork again
+:Customized carport;
+:Customize the carport;
+if  (Shed) then (Yes)
+:Customize shed;
+
+else (No)
+endif
+endfork
+:Send order request;
+|webshop|
+:Order request]
+|mailsystem|
+:Sending mail to salesperson, with order request;
+|Salesperson|
+:mail to salesperson]
+if (Agreeing with order request) then (No)
+:Calls customer with advice and adjustment;
+:Updated order request]
+
+
+
+|Offer calculator (program)|
+else (Yes)
+endif
+:Enter order request;
+
+|Salesperson|
+:Generated offer]
+
+|mailsystem|
+:Send mail to customer with offer;
+|Customer|
+
+:Offer for approval]
+if (Agreed) then (No)
+
+
+else (Yes)
+:Send payment;
+|webshop|
+:Payment]
+|mailsystem|
+:Send mail with approved and payed offer;
+|Salesperson|
+:approval]
+
+|Customer|
+:Order confirmation and piece list]
+stop
+@enduml
