@@ -29,9 +29,12 @@ else (Customized carport)
 |Salesperson|
 :Notification]
 :Salesperson qualifies request;
+:Salesperson can calculate financial coverage rate;
+:Salesperson can edit offer;
 :Salesperson sends details;
 endif
 |Customer|
+:Order details]
 :Customer confirms details;
 
 fork
