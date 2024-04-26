@@ -8,9 +8,8 @@ fork
 :Standard carport;
 fork again
 :Customized carport;
-|Webshop|
-:Login;
-|Customer|
+
+
 :Customize the carport;
 :Do you want a shed?;
 fork
@@ -20,14 +19,27 @@ fork again
 :no;
 end fork
 end fork
+
+|Customer|
 :Send order request]
+
 |Webshop|
+if (Is the user logged in?) then (Yes)
+else (No)
+:Login;
+endif
 :Order request]
-if (Order) then (Standard carport)
+
+
+if () then (Standard carport)
 :Standard carport;
 else (Customized carport)
 |Salesperson|
 :Notification]
+if (Is the salesperson logged in?) then (Yes)
+else (No)
+:Login;
+endif
 :Salesperson qualifies request;
 :Salesperson can calculate financial coverage rate;
 :Salesperson can edit offer;
