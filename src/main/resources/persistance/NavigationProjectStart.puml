@@ -1,0 +1,38 @@
+@startuml
+'https://plantuml.com/state-diagram
+
+scale 600 width
+scale 600 height
+
+[*] --> Index
+Index --> Login : on click "login" button
+Index --> Create_user : on click "Opret Konto" button
+Index --> Johannesfog : on click "Standard Carport" link
+Index --> Dimensions :on click "Byg-selv carporte" button
+
+Create_user --> Login : on submit "Opret Konto" button
+Login --> Create_user : on click "Opret Konto" button
+Login --> Login : incorrect login
+
+state Logged_in {
+state c <<choice>>
+Login --> c : on click "Login", looking for user role
+state As_customer {
+c --> Customerpage :if role is customer
+}
+state As_admin {
+c --> Adminpage : if role is admin
+Adminpage --> Order_details : on click "Se forespøgsel" button
+
+}
+}
+
+Dimensions --> Roof_etcetera : on submit "tilføj dimensioner" button
+Roof_etcetera --> Information : on submit "Tilføj Tag" button
+Information --> Login : on click "Login eller opret konto" button
+Customerpage --> Dimensions : As customer on click "Byg-selv carporte" button
+Order_details --> Customerpage : on click "Send tilbud" button
+Customerpage --> Adminpage : on click "Accepter tilbud" button
+Customerpage --> Adminpage : on click "Send forespørgsel" button
+Information --> Customerpage : As customer "Se forespøgsel" button
+@enduml
