@@ -12,6 +12,7 @@ public class UserController {
     public static void addRoutes(Javalin app, ConnectionPool connectionPool) {
         app.post("login", ctx -> login(ctx, connectionPool));
         app.get("login", ctx -> ctx.render("login"));
+        app.get("logout", ctx -> logout(ctx));
 
     }
 
@@ -26,15 +27,21 @@ public class UserController {
             if (user.getRole() ==1){
                 ctx.sessionAttribute("currentUser", user);
 
-                ctx.render("salesperson_page.html");
+                ctx.render("customer_page.html");
             }else {
                 ctx.sessionAttribute("currentUser", user);
-                ctx.render("customer_page.html");
+                ctx.render("salesperson_page.html");
             }
         } catch (DatabaseException e) {
             ctx.attribute("message", e.getMessage());
             ctx.render("login.html");
         }
 
+    }
+
+    private static void logout(Context ctx)
+    {
+        ctx.req().getSession().invalidate();
+        ctx.redirect("/");
     }
 }

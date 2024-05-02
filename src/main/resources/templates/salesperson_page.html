@@ -14,7 +14,11 @@
         <img src="../public/images/logofog.PNG" height="176" width="179"/>
     </header>
 
+Dette er sales person
 
+    <p th:if="${session.currentUser != null}">
+        <a href="index.html" th:href="@{/logout}">Log ud</a>
+    </p>
 
 
 </div>
