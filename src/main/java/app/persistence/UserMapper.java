@@ -4,13 +4,31 @@ import app.exceptions.DatabaseException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UserMapper {
 
+    public static boolean checkZipCode (int zipcode, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "select * from zip_code where zip_code = ?";
+    try (Connection connection = connectionPool.getConnection();
+    PreparedStatement ps = connection.prepareStatement(sql))
+    {
+        ps.setInt(1,zipcode);
+
+       ResultSet rs = ps.executeQuery();
+
+           return rs.next();
+
+    } catch (SQLException e) {
+        String msg= "der er sket en fejl";
+        throw new DatabaseException(msg, e.getMessage());
+    }
+
+    }
     public static void createuser(String email, String password, String firstName, String lastName, String phonenumber, String address, int zipcode, ConnectionPool connectionPool) throws DatabaseException
     {
-        String sql = "insert into users (email, password, firstName, lastName, phonenumber, address, zipcode) values (?,?,?,?,?,?,?)";
+        String sql = "insert into users (email, password, first_name, last_name, phonenumber, address, zip_code) values (?,?,?,?,?,?,?)";
 
         try (
                 Connection connection = connectionPool.getConnection();
