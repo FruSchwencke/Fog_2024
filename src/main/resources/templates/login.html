@@ -13,11 +13,27 @@
 
         <img src="../public/images/logofog.PNG" height="176" width="179"/>
     </header>
+    <nav>
 
+    </nav>
+    <div class="flex-container">
+        <div>
+            <form class="login-form" method="post">
 
+                <input type="text" name="email" placeholder="Email"/>
+                <input type="password" name="password" placeholder="Password"/>
+
+                <button type="submit" formaction="/login">Log på</button>
+
+                <div><p th:text="${message}"> </p></div>
+            </form>
+        </div>
+        <p><a href="createuser.html" th:href="@{/createuser}">Opret konto</a> </p>
+    </div>
 
 
 
 </div>
+
 </body>
 </html>
