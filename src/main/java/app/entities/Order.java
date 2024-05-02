@@ -8,5 +8,8 @@ public class Order {
     private String status;
     private double totalprice;
 
-
+    public Order(int orderId, String status) {
+        this.orderId = orderId;
+        this.status = status;
+    }
 }
