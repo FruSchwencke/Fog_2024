@@ -101,7 +101,7 @@ nav {
     color: black;
     font-size: 1.0rem;
 }
-.error {
+.error:not(:empty) {
     display: flex;
     justify-content: center;
     align-items: start;

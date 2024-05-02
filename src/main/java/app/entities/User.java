@@ -9,7 +9,9 @@ private String email;
 private String password;
 private String address;
 private String phonenumber;
-private int zipcode;
+
+private String zipcode;
+private int zipId;
 private int role;
 
 

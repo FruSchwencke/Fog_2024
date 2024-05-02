@@ -23,18 +23,27 @@ public class UserController {
             String address = ctx.formParam("address");
             String firstName = ctx.formParam("first_name");
             String lastName = ctx.formParam("last_name");
-            int zipcode = Integer.parseInt(ctx.formParam("zip_code"));
+           String zipcode = ctx.formParam("zip_code");
             String phoneNumber = ctx.formParam("phonenumber");
+
+            if (email == null || email.isEmpty() || password1 == null || password1.isEmpty() ||
+                    password2 == null || password2.isEmpty() || address == null || address.isEmpty() ||
+                    firstName == null || firstName.isEmpty() || lastName == null || lastName.isEmpty() ||
+                    phoneNumber == null || phoneNumber.isEmpty() || zipcode == null || zipcode.isEmpty()) {
+                ctx.attribute("message", "alle felter skal være udfyldt");
+                ctx.render("createuser.html");
+                return;
+            }
 
             //firsName must be atleast 2 characters
             if (firstName.length() < 2) {
-                ctx.attribute("message", "intet dansk navn er på 1 bogstav");
+                ctx.attribute("message", "intet dansk fornavn er på 1 bogstav, prøv igen");
                 ctx.render("createuser.html");
                 return;
             }
             //Lastname must be atleast 2 characters
             if (lastName.length() < 2) {
-                ctx.attribute("message", "intet dansk efternavn er på 1 bogstav");
+                ctx.attribute("message", "intet dansk efternavn er på 1 bogstav, prøv igen");
                 ctx.render("createuser.html");
                 return;
             }
@@ -45,8 +54,10 @@ public class UserController {
                 ctx.render("createuser.html");
                 return;
             }
-            //checking if zipcode exist in the table
+
+              //checking if zipcode exist in the table
             try {
+
                 if (!UserMapper.checkZipCode(zipcode, connectionPool)) {
                     ctx.attribute("message", "dit postnummer findes ikke i databasen");
                     ctx.render("createuser.html");

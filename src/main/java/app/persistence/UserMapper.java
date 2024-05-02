@@ -9,12 +9,12 @@ import java.sql.SQLException;
 
 public class UserMapper {
 
-    public static boolean checkZipCode (int zipcode, ConnectionPool connectionPool) throws DatabaseException {
+    public static boolean checkZipCode (String zipcode, ConnectionPool connectionPool) throws DatabaseException {
         String sql = "select * from zip_code where zip_code = ?";
     try (Connection connection = connectionPool.getConnection();
     PreparedStatement ps = connection.prepareStatement(sql))
     {
-        ps.setInt(1,zipcode);
+        ps.setString(1,zipcode);
 
        ResultSet rs = ps.executeQuery();
 
@@ -26,9 +26,9 @@ public class UserMapper {
     }
 
     }
-    public static void createuser(String email, String password, String firstName, String lastName, String phonenumber, String address, int zipcode, ConnectionPool connectionPool) throws DatabaseException
+    public static void createuser(String email, String password, String firstName, String lastName, String phonenumber, String address, String zipcode, ConnectionPool connectionPool) throws DatabaseException
     {
-        String sql = "insert into users (email, password, first_name, last_name, phonenumber, address, zip_code) values (?,?,?,?,?,?,?)";
+        String sql = "insert into users (email, password, first_name, last_name, phonenumber, address, zip_id) values (?,?,?,?,?,?,?)";
 
         try (
                 Connection connection = connectionPool.getConnection();
@@ -41,7 +41,7 @@ public class UserMapper {
             ps.setString(4, lastName);
             ps.setString(5, phonenumber);
             ps.setString(6, address);
-            ps.setInt(7, zipcode);
+            ps.setString(7, zipcode);
 
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected != 1)
