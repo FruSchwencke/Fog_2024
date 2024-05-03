@@ -16,6 +16,22 @@
 
 Dette er sales person
 
+    ORDRELISTE
+    <table>
+        <thead>
+        <tr>
+            <th>Ordrenummer</th>
+            <th>Status</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="order : ${allOrdersList}">
+            <td th:text="${order.orderId}"></td>
+            <td th:text="${order.status}"></td>
+        </tr>
+        </tbody>
+    </table>
+
     <p th:if="${session.currentUser != null}">
         <a href="index.html" th:href="@{/logout}">Log ud</a>
     </p>
