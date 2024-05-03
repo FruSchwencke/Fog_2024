@@ -10,7 +10,7 @@ import java.sql.SQLException;
 
 public class MaterialMapper {
     public static void addMaterial (String name, String description, double price, int unitId, int width, int length, int height, ConnectionPool connectionPool) throws DatabaseException {
-        String sql = "insert into materials (name, description, price, unit_id, witdth, length, height) values (?,?,?,?,?,?,?)";
+        String sql = "insert into materials (name, description, price, unit_id, width, length, height) values (?,?,?,?,?,?,?)";
 
         try (
                 Connection connection = connectionPool.getConnection();
