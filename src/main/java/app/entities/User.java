@@ -14,7 +14,7 @@ private String zipcode;
 private int zipId;
 private int role;
 
-    public User(int userID, String firstName, String lastName, String email, String password, String address, String phonenumber, int zipcode, int role) {
+    public User(int userID, String firstName, String lastName, String email, String password, String address, String phonenumber, String zipcode, int role) {
         this.userId = userID;
         this.firstName = firstName;
         this.lastName = lastName;
