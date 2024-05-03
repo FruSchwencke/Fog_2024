@@ -1,5 +1,6 @@
 package app.persistence;
 
+
 import app.entities.User;
 import app.exceptions.DatabaseException;
 
@@ -10,12 +11,66 @@ import java.sql.SQLException;
 
 public class UserMapper {
 
+
+    public static boolean checkZipCode (String zipcode, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "select * from zip_code where zip_code = ?";
+    try (Connection connection = connectionPool.getConnection();
+    PreparedStatement ps = connection.prepareStatement(sql))
+    {
+        ps.setString(1,zipcode);
+
+       ResultSet rs = ps.executeQuery();
+
+           return rs.next();
+
+    } catch (SQLException e) {
+        String msg= "der er sket en fejl";
+        throw new DatabaseException(msg, e.getMessage());
+    }
+
+    }
+    public static void createuser(String email, String password, String firstName, String lastName, String phonenumber, String address, String zipcode, ConnectionPool connectionPool) throws DatabaseException
+    {
+        String sql = "insert into users (email, password, first_name, last_name, phonenumber, address, zip_code) values (?,?,?,?,?,?,?)";
+      try (
+                Connection connection = connectionPool.getConnection();
+                PreparedStatement ps = connection.prepareStatement(sql)
+
+        )
+        {
+            ps.setString(1, email);
+            ps.setString(2, password);
+            ps.setString(3, firstName);
+            ps.setString(4, lastName);
+            ps.setString(5, phonenumber);
+            ps.setString(6, address);
+            ps.setString(7, zipcode);
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected != 1)
+            {
+                throw new DatabaseException("Fejl ved oprettelse af ny bruger");
+            }
+        }
+        catch (SQLException e)
+        {
+            String msg = "Der er sket en fejl. Prøv igen";
+            if (e.getMessage().startsWith("ERROR: duplicate key value "))
+            {
+                msg = "mail eller telefon nummer findes allerede. Vælg et andet";
+            }
+            throw new DatabaseException(msg, e.getMessage());
+        }
+    }
+
     public static User login(String email, String password, ConnectionPool connectionPool) throws DatabaseException {
         String sql = "select * from users where email=?";
+
 
         try (
                 Connection connection = connectionPool.getConnection();
                 PreparedStatement ps = connection.prepareStatement(sql)
+
         ) {
             ps.setString(1, email);
 
@@ -27,7 +82,7 @@ public class UserMapper {
                     String lastName = rs.getString("last_name");
                     int role = rs.getInt("role_id");
                     String address = rs.getString("address");
-                    int zipcode = rs.getInt("zip_code");
+                    String zipcode = rs.getString("zip_code");
                     String phonenumber = rs.getString("phonenumber");
                     return new User(userId, firstName, lastName, email, password, address, phonenumber, zipcode, role);
                 } else {

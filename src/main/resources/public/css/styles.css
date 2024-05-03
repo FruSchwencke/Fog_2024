@@ -5,11 +5,11 @@ h1 {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 3rem;
 }
-#page {
 
-    min-height: 800px;
-    max-width: 1512px;
-    background-color: bisque; /** Denne farve er sat for at kunne se felter **/
+#page {
+    padding:8px;
+    min-height: 600px;
+
 }
 header {
     display: flex;
@@ -17,20 +17,27 @@ header {
     background-color: #030531;
 
 
-
 }
+/*remove the line under links*/
+a {
+    text-decoration: none;
+    color: black;
+}
+
 nav {
     display: flex;
+    justify-content: space-between;
     background-color: lightgray;
-    padding:10px;
-    margin-bottom: 10px;
-    font-size: 1.5rem;
+    padding:15px;
+    margin-bottom: 20px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
 
-    height: 20px;
-    left: 204px;
-    top: 196px;
+#rightnav {
+    display: flex;
+    justify-content: right;
 
-
+}
 /*******vertical-menu******/
 }
 .vertical-menu {
@@ -38,15 +45,15 @@ nav {
 }
 
 .vertical-menu a {
-    background-color: #eee; /* Grey background color */
-    color: black; /* Black text color */
+    background-color: #eee; /*  grey  */
+    color: black;
     display: block; /* Make the links appear below each other */
-    padding: 12px; /* Add some padding */
+    padding: 12px;
     text-decoration: none; /* Remove underline from links */
 }
 
 .vertical-menu a:hover {
-    background-color: #ccc; /* Dark grey background on mouse-over */
+    background-color: #ccc; /* Dark grey  */
 }
 
 .vertical-menu a.active {
@@ -54,8 +61,89 @@ nav {
     color: white;
 }
 
-@media screen and (max-width: 600px){
+/********* createuser styles *****************/
+.flex-container{
+    display: flex;
+    justify-content: center;
+    background-color: #030531;
+    border-radius: 15px;
+}
+.flex-container > div {
+    background-color: white;
+    margin: 10px;
+    padding: 40px;
+    border-radius: 15px;
+}
 
+.createuser-form {
+    display: flex;
+    align-content: center;
+    flex-direction: column;
+
+}
+.createuser-form input[type=text], .createuser-form input[type=password] {
+    padding: 5px;
+    font-size: 1.0rem;
+    border-radius: 5px;
+    border: 2px black solid;
+
+}
+.btn-create{
+    display: flex;
+    justify-content: center;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: green;
+    color: black;
+    font-size: 1.0rem;
+    border: 2px black solid;
+
+}
+.btn-create:hover {
+    background-color: darkgreen;
+    color: black;
+    font-size: 1.0rem;
+}
+.btnend {
+    display: flex;
+    justify-content: end;
+}
+.error:not(:empty) {
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    border: 2px solid red;
+    width: 200px;
+
+}
+.boxtitel {
+   margin-bottom: 5px;
+    display: flex;
+    font-size: 0.8rem;
+}
+
+
+
+
+
+/****** Media query *******/
+@media screen and (max-width: 600px){
+    header {
+        display: flex;
+        justify-content: center;
+        background-color: #030531;
+    }
+    .boxtitel {
+        margin: 2px;
+        display: flex;
+    }
+
+    .createuser-form {
+
+        align-items: center;
+        flex-direction: column;
+        gap: 0px;
+    }
 
     nav {
         flex-direction: column;

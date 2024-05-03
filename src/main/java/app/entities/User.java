@@ -9,7 +9,9 @@ private String email;
 private String password;
 private String address;
 private String phonenumber;
-private int zipcode;
+
+private String zipcode;
+private int zipId;
 private int role;
 
     public User(int userID, String firstName, String lastName, String email, String password, String address, String phonenumber, int zipcode, int role) {
