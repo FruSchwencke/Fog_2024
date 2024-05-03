@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>FOG</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
+</head>
+
+<body>
+
+<div id="page">
+
+    <header>
+
+        <img src="../public/images/logofog.PNG" th:src="@{/images/logofog.PNG}"height="176" width="179"/>
+    </header>
+    <nav>
+        <div id="leftnav">
+
+        </div>
+        <div id="rightnav">
+            <button class="btn-create"> <a href="index.html" th:href="@{/logout}">Log ud</a></button>
+        </div>
+    </nav>
+    <div>
+        <form class="createuser-form" method="post">
+            <p class="boxtitel">navn</p>
+            <input type="text" name="name" placeholder="Indtast navn"/>
+            <p class="boxtitel">beskrivelse</p>
+            <input type="text" name="description" placeholder="Indtast beskrivelse"/>
+            <p class="boxtitel">pris</p>
+            <input type="text" name="price" placeholder="Indtast pris"/>
+            <p class="boxtitel">enhed</p>
+            <input type="text" name="unit" placeholder="Indtast enhed"/>
+            <p class="boxtitel">bredde</p>
+            <input type="text" name="width" placeholder="Indtast bredde"/>
+            <p class="boxtitel">længde</p>
+            <input type="text" name="length" placeholder="Indtast længde"/>
+            <p class="boxtitel">højde</p>
+            <input type="text" name="height" placeholder="Indtast højde"/>
+            <br>
+            <br>
+
+            <div class="btnend">
+                <button class="btn-create" type="submit" formaction="/addmaterial">Tilføj Materiale</button>
+            </div>
+            <div><p class="error" th:text="${message}"></p>
+
+            </div>
+
+        </form>
+    </div>
+
+
+
+
+
+
+</div>
+</body>
+</html>
