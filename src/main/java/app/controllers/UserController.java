@@ -33,7 +33,8 @@ public class UserController {
 
                 ctx.render("customer_page.html");
             } else {
-
+                List<Order> allOrdersList = OrderMapper.getAllOrders(connectionPool);
+                ctx.attribute("allOrdersList", allOrdersList);
                 ctx.sessionAttribute("currentUser", user);
                 ctx.render("salesperson_page.html");
             }
@@ -41,6 +42,8 @@ public class UserController {
             ctx.attribute("message", e.getMessage());
             ctx.render("login.html");
 
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
 
     }

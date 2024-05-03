@@ -31,4 +31,35 @@ public class OrderMapper {
             return allOrdersList;
         }
     }
+
+    public static Order getOrderDetails(int orderId, ConnectionPool connectionPool)
+    {
+        String sql = "SELECT lenght, width, total_price FROM orders WHERE order_id = ?";
+        Order order = null;
+        try (
+                Connection connection = connectionPool.getConnection();
+                PreparedStatement ps = connection.prepareStatement(sql)
+        ) {
+                ps.setInt(1, orderId);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+
+                int lenght = rs.getInt("length");
+                int width = rs.getInt("width");
+                double totalprice = rs.getDouble("total_price");
+
+                order = new Order(orderId, lenght, width, totalprice);
+
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return order;
+    }
+
+
+
 }
