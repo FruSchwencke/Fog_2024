@@ -60,7 +60,8 @@ nav {
     background-color: #04AA6D; /* Add a green color to the "active/current" link */
     color: white;
 }
-/* createuser styles*/
+
+/********* createuser styles *****************/
 .flex-container{
     display: flex;
     justify-content: center;
@@ -76,9 +77,9 @@ nav {
 
 .createuser-form {
     display: flex;
-    align-items: center;
+    align-content: center;
     flex-direction: column;
-    gap: 5px;
+
 }
 .createuser-form input[type=text], .createuser-form input[type=password] {
     padding: 5px;
@@ -88,6 +89,8 @@ nav {
 
 }
 .btn-create{
+    display: flex;
+    justify-content: center;
     border-radius: 5px;
     padding: 5px;
     background-color: green;
@@ -101,6 +104,10 @@ nav {
     color: black;
     font-size: 1.0rem;
 }
+.btnend {
+    display: flex;
+    justify-content: end;
+}
 .error:not(:empty) {
     display: flex;
     justify-content: center;
@@ -109,14 +116,26 @@ nav {
     width: 200px;
 
 }
+.boxtitel {
+   margin-bottom: 5px;
+    display: flex;
+    font-size: 0.8rem;
+}
 
+
+
+
+
+/****** Media query *******/
 @media screen and (max-width: 600px){
     header {
         display: flex;
         justify-content: center;
         background-color: #030531;
-
-
+    }
+    .boxtitel {
+        margin: 2px;
+        display: flex;
     }
 
     .createuser-form {

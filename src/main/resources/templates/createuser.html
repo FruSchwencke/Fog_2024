@@ -11,7 +11,7 @@
 <div id="page">
     <header>
 
-        <img src="../public/images/logofog.PNG" th:src="@{/images/logofog.PNG}"height="176" width="179"/>
+        <img src="../public/images/logofog.PNG" th:src="@{/images/logofog.PNG}" height="176" width="179"/>
     </header>
     <nav>
 
@@ -19,21 +19,30 @@
     <div class="flex-container">
         <div>
             <form class="createuser-form" method="post">
-
-                <input type="text" name="first_name" placeholder="Angiv fornavn"/> <br>
-                <input type="text" name="last_name" placeholder="Angiv efternavn"/> <br>
-                <input type="text" name="address" placeholder="Angiv adresse"/> <br>
-                <input type="text" name="zip_code" placeholder="Angiv postnummer"/> <br>
-                <input type="text" name="phonenumber" placeholder="Angiv telefonnummer"/> <br>
-                <input type="text" name="email" placeholder="Angiv email"/> <br>
-                <input type="password" name="password1" placeholder="Angiv ønsket password"/> <br>
-                <input type="password" name="password2" placeholder="Gentag password"/> <br>
+                <p class="boxtitel">fornavn</p>
+                <input type="text" name="first_name" placeholder="Angiv fornavn"/>
+                <p class="boxtitel">efternavn</p>
+                <input type="text" name="last_name" placeholder="Angiv efternavn"/>
+                <p class="boxtitel">adresse</p>
+                <input type="text" name="address" placeholder="Angiv adresse"/>
+                <p class="boxtitel">postnummer</p>
+                <input type="text" name="zip_code" placeholder="Angiv postnummer"/>
+                <p class="boxtitel">telefonnummer</p>
+                <input type="text" name="phonenumber" placeholder="Angiv telefonnummer"/>
+                <p class="boxtitel">email</p>
+                <input type="text" name="email" placeholder="navn@eksempel.dk"/>
+                <p class="boxtitel">kodeord</p>
+                <input type="password" name="password1" placeholder="Opret kodeord"/>
+                <p class="boxtitel">gentag kodeord</p>
+                <input type="password" name="password2" placeholder="Gentag kodeord"/> <br>
                 <br>
-                <button class="btn-create" type="submit" formaction="/createuser">opret bruger</button>
 
-                    <div ><p class="error"th:text="${message}"></p>
+                <div class="btnend">
+                    <button class="btn-create" type="submit" formaction="/createuser">opret konto</button>
+                </div>
+                <div><p class="error" th:text="${message}"></p>
 
-                    </div>
+                </div>
 
             </form>
         </div>

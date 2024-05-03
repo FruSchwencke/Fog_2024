@@ -28,7 +28,7 @@ public class UserMapper {
     }
     public static void createuser(String email, String password, String firstName, String lastName, String phonenumber, String address, String zipcode, ConnectionPool connectionPool) throws DatabaseException
     {
-        String sql = "insert into users (email, password, first_name, last_name, phonenumber, address, zip_id) values (?,?,?,?,?,?,?)";
+        String sql = "insert into users (email, password, first_name, last_name, phonenumber, address, zip_code) values (?,?,?,?,?,?,?)";
 
         try (
                 Connection connection = connectionPool.getConnection();
@@ -54,7 +54,7 @@ public class UserMapper {
             String msg = "Der er sket en fejl. Prøv igen";
             if (e.getMessage().startsWith("ERROR: duplicate key value "))
             {
-                msg = "Brugernavnet findes allerede. Vælg et andet";
+                msg = "mail eller telefon nummer findes allerede. Vælg et andet";
             }
             throw new DatabaseException(msg, e.getMessage());
         }
