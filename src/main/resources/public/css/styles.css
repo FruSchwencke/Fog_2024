@@ -81,6 +81,12 @@ nav {
     flex-direction: column;
 
 }
+.login-form {
+    display: flex;
+    align-content: center;
+    flex-direction: column;
+
+}
 .createuser-form input[type=text], .createuser-form input[type=password] {
     padding: 5px;
     font-size: 1.0rem;
@@ -88,6 +94,7 @@ nav {
     border: 2px black solid;
 
 }
+
 .btn-create{
     display: flex;
     justify-content: center;
