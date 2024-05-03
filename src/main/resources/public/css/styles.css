@@ -106,6 +106,16 @@ nav {
     border: 2px black solid;
 
 }
+.btn-gen{
+    display: flex;
+    justify-content: center;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: grey;
+    color: black;
+    font-size: 1.0rem;
+    border: 2px black solid;
+}
 .btn-create:hover {
     background-color: darkgreen;
     color: black;
@@ -114,6 +124,10 @@ nav {
 .btnend {
     display: flex;
     justify-content: end;
+}
+.errorbox {
+    display: flex;
+    justify-content: center;
 }
 .error:not(:empty) {
     display: flex;
@@ -128,8 +142,22 @@ nav {
     display: flex;
     font-size: 0.8rem;
 }
+/*addmaterial style*/
+.info-addmat {
+    display: flex;
+    width: 350px;
+    height: 32px;
+    justify-content: center;
+    background-color: lightgray;
+    border-radius: 5px;
 
-
+}
+.boxtitel2 {
+    margin: 5px;
+    display: flex;
+    align-items: center;
+    font-size: 0.8rem;
+}
 
 
 
@@ -139,8 +167,15 @@ nav {
         display: flex;
         justify-content: center;
         background-color: #030531;
+
+
+
     }
     .boxtitel {
+        margin: 2px;
+        display: flex;
+    }
+    .boxtitel2 {
         margin: 2px;
         display: flex;
     }
@@ -153,9 +188,16 @@ nav {
     }
 
     nav {
-        flex-direction: column;
+        flex-direction: row;
         align-items: center;
-        gap:10px;
+        gap:5px;
+        margin-bottom: 5px;
+        padding: 8px;
+    }
+    .info-addmat {
+        flex-direction: column;
+
+        width: 209px;
     }
 
 

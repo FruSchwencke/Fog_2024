@@ -13,58 +13,62 @@
 
     <header>
 
-        <img src="../public/images/logofog.PNG" th:src="@{/images/logofog.PNG}"height="176" width="179"/>
+        <img src="../public/images/logofog.PNG" th:src="@{/images/logofog.PNG}" height="176" width="179"/>
     </header>
     <nav>
         <div id="leftnav">
-
+            <button class="btn-gen"><a href="salesperson_page.html" th:href="@{/salesperson}">Tilbage</a></button>
         </div>
         <div id="rightnav">
-            <button class="btn-create"> <a href="index.html" th:href="@{/logout}">Log ud</a></button>
+            <button class="btn-gen"><a href="index.html" th:href="@{/logout}">Log ud</a></button>
         </div>
     </nav>
-    <div>
-        <form class="createuser-form" method="post">
-            <p class="boxtitel">navn</p>
-            <input type="text" name="name" placeholder="Indtast navn"/>
-            <p class="boxtitel">beskrivelse</p>
-            <input type="text" name="description" placeholder="Indtast beskrivelse"/>
-            <p class="boxtitel">pris</p>
-            <input type="text" name="price" placeholder="Indtast pris"/>
+    <div class="flex-container">
+        <div>
+            <form class="createuser-form" method="post">
+                <p class="boxtitel">navn</p>
+                <input type="text" name="name" placeholder="Indtast navn"/>
+                <p class="boxtitel">beskrivelse</p>
+                <input type="text" name="description" placeholder="Indtast beskrivelse"/>
+                <p class="boxtitel">pris</p>
+                <input type="text" name="price" placeholder="Indtast pris"/>
 
-            <div class="radio">
-            <p class="boxtitel">enhed</p>
-                <input type="radio" name="unit" value="1"/>
-                <label>Stk</label>
-                <input type="radio" name="unit" value="2"/>
-                <label>Pakke</label>
-                <input type="radio" name="unit" value="3"/>
-                <label>Rulle</label>
-                <input type="radio" name="unit" value="4"/>
-                <label>Sæt</label>
-            </div>
-            <p class="boxtitel">bredde</p>
-            <input type="text" name="width" placeholder="Indtast bredde"/>
-            <p class="boxtitel">længde</p>
-            <input type="text" name="length" placeholder="Indtast længde"/>
-            <p class="boxtitel">højde</p>
-            <input type="text" name="height" placeholder="Indtast højde"/>
-            <br>
-            <br>
+                <p class="boxtitel">enhed</p>
+                <div class="radio">
+                    <input type="radio" name="unit" value="1"/>
+                    <label>Stk</label>
+                    <input type="radio" name="unit" value="2"/>
+                    <label>Pakke</label>
+                    <input type="radio" name="unit" value="3"/>
+                    <label>Rulle</label>
+                    <input type="radio" name="unit" value="4"/>
+                    <label>Sæt</label>
+                </div>
+                <br>
 
-            <div class="btnend">
-                <button class="btn-create" type="submit" formaction="/addmaterial">Tilføj Materiale</button>
-            </div>
-            <div><p class="error" th:text="${message}"></p>
+                <div class="info-addmat">
+                    <p class="boxtitel2"><strong>Underliggende felter udfyldes kun hvis informationen haves</strong></p>
+                </div>
 
-            </div>
+                <p class="boxtitel">bredde</p>
+                <input type="text" name="width" placeholder="Indtast bredde"/>
+                <p class="boxtitel">længde</p>
+                <input type="text" name="length" placeholder="Indtast længde"/>
+                <p class="boxtitel">højde</p>
+                <input type="text" name="height" placeholder="Indtast højde"/>
+                <br>
+                <br>
 
-        </form>
+                <div class="btnend">
+                    <button class="btn-create" type="submit" formaction="/addmaterial">Tilføj Materiale</button>
+                </div>
+                <div class="errorbox"><p class="error" th:text="${message}"></p>
+
+                </div>
+
+            </form>
+        </div>
     </div>
-
-
-
-
 
 
 </div>
