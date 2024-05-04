@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title></title>
+    <title>Design en carport</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
+</head>
+<body>
+
+
+<div id="page">
+
+    <header>
+
+        <img src="../public/images/logofog.PNG" th:src="@{/images/logofog.PNG}"height="176" width="179"/>
+    </header>
+    <nav>
+        <div id="leftnav">
+
+        </div>
+        <div id="rightnav">
+            <button class="btn-create"> <a href="createuser.html" th:href="@{/createuser}">Opret konto</a></button>
+        </div>
+    </nav>
+    <a href="login.html" th:href="@{/login}"> Login</a>
+
+    <div id="page">
+
+        <header>
+            <a href="index.html" th:href="@{/}">
+                <img src="../public/images/cupcakelogo.png" th:src="@{/images/cupcakelogo.png}" width=80%/>
+            </a>
+        </header>
+
+        <nav>
+            <div id="left-nav">
+                <a href="/" >Tilbage</a>
+            </div>
+
+        </nav>
+
+
+        <h2>Design en carport med specialmål her </h2>
+        <h3>Carport med fladt tag</h3>
+        <h4>Udfyld nedenstående felter omhyggeligt og tryk på "Bestil tilbud". Så vender vi hurtigts muligt tilbage med et tilbud på en din carport med specialmål</h4>
+
+        <div id="dropdowns1">
+            <select name="choose_width" id="choose_width">
+                <option id="0">Vælg carporten bredde</option>
+                <option value="1">240 cm</option>
+                <option value="2">270 cm</option>
+                <option value="3">300 cm</option>
+                <option value="4">330 cm</option>
+                <option value="1">360 cm</option>
+                <option value="2">390 cm</option>
+                <option value="3">420 cm</option>
+                <option value="4">450 cm</option>
+            </select>
+        </div>
+        <div id="dropdowns2">
+            <select  name="choose_length" id="choose_length">
+                <option id="0">Vælg carportens længde</option>
+                <option value="1">240 cm</option>
+                <option value="2">270 cm</option>
+                <option value="3">300 cm</option>
+                <option value="4">330 cm</option>
+                <option value="1">360 cm</option>
+                <option value="2">390 cm</option>
+                <option value="3">420 cm</option>
+                <option value="4">450 cm</option>
+            </select>
+        </div>
+
+         <div id="dropdowns3">
+            <select name="choose_roof" id="choose_roof">
+                <option id="0" >Vælg tag</option>
+                <option value="1">Uden tagplader</option>
+                <option value="2">Plasttrapezplader</option>
+            </select>
+        </div>
+
+
+        <div>
+            <form id="send_request" method="get" th:action="@{/pay}">
+                <button type="submit">Bestil tilbud</button>
+            </form>
+        </div>
+
+    </div>
+
+
+
+
+</div>
+</body>
+</html>
