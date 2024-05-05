@@ -87,7 +87,7 @@ nav {
     flex-direction: column;
 
 }
-.createuser-form input[type=text], .createuser-form input[type=password] {
+.createuser-form input[type=text], .createuser-form input[type=password], .createuser-form input[type=number]{
     padding: 5px;
     font-size: 1.0rem;
     border-radius: 5px;
