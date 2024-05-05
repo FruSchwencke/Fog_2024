@@ -40,11 +40,8 @@ import java.util.List;
             // TODO: check if data is collected else return a error message
             Order order = new Order(Integer.parseInt(width),Integer.parseInt(length),input);
 
+            //catch orderId from orderMapper...
 
-            //
-
-
-            System.out.println("Der er hul igennem");
         };
 
 
