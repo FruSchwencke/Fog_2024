@@ -29,5 +29,11 @@ private int role;
     public int getRole() {
         return role;
     }
+
+
+    public int getUserId() {
+        return userId;
+    }
 }
+
 

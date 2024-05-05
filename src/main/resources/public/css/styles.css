@@ -111,10 +111,12 @@ nav {
     color: black;
     font-size: 1.0rem;
 }
+
 .btnend {
     display: flex;
     justify-content: end;
 }
+
 .error:not(:empty) {
     display: flex;
     justify-content: center;
@@ -123,10 +125,11 @@ nav {
     width: 200px;
 
 }
+
 .boxtitel {
    margin-bottom: 5px;
     display: flex;
-    font-size: 0.8rem;
+    font-size: 1rem;
 }
 
 
