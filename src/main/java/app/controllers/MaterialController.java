@@ -34,6 +34,7 @@ public class MaterialController {
            if (price <0){
                ctx.attribute("message","Prisen kan ikke være minus");
                ctx.render("addmaterial.html");
+               return;
            }
         } catch (NumberFormatException e) {
             ctx.attribute("message", "de 4 øverste felter skal udfyldes" + e.getMessage());
