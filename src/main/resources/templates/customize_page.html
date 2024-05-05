@@ -30,7 +30,7 @@
         <h2>Carport med fladt tag</h2>
         <h3>Udfyld nedenstående felter omhyggeligt og tryk på "Bestil tilbud". Så vender vi hurtigt tilbage med et tilbud på din carport med specialmål</h3>
 
-        <form action="#" th:action="@{/customize}">
+        <form action="#" th:action="@{/customize}" method="post">
 
             <div class="flex-container">
                  <div>
@@ -85,9 +85,7 @@
                             </form>
 
                     <div>
-                        <form id="send_request" method="get" th:action="@{/pay}">
                             <button type="submit">Bestil tilbud</button>
-                        </form>
                     </div>
 
                     <div><p class="error" th:text="${message}"></p>

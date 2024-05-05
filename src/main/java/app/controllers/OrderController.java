@@ -1,7 +1,9 @@
 package app.controllers;
 
 import app.entities.Order;
+import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
+import app.persistence.MaterialMapper;
 import app.persistence.OrderMapper;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
@@ -36,11 +38,20 @@ import java.util.List;
                 String roof = ctx.queryParam("choose_roof");
                 String input = ctx.queryParam("text_input");
 
-            // Collecting the input from the user into at list
-            // TODO: check if data is collected else return a error message
-            Order order = new Order(Integer.parseInt(width),Integer.parseInt(length),input);
 
-            //catch orderId from orderMapper...
+            //
+            try {
+
+                int orderId = OrderMapper.createOrder(10, Integer.parseInt(width),Integer.parseInt(length), input, connectionPool);
+                MaterialMapper.createMaterialLine(1, orderId,1, connectionPool);
+                MaterialMapper.createMaterialLine(1, orderId,2, connectionPool);
+                MaterialMapper.createMaterialLine(1, orderId,3, connectionPool);
+                //todo: hvilke materialer og hvor mange materialer skal der til denne carport
+
+            } catch (DatabaseException e) {
+                throw new RuntimeException(e);
+            }
+
 
         };
 
