@@ -34,7 +34,7 @@ public class MaterialMapper {
             throw new DatabaseException(msg, e.getMessage());
         }
     }
-    public static Material findMaterial (int materialId, ConnectionPool connectionPool) throws DatabaseException {
+    public static Material findMaterialForUpdateMaterial(int materialId, ConnectionPool connectionPool) throws DatabaseException {
         Material material= null;
         String sql="Select * from materials where m_id = ?";
 

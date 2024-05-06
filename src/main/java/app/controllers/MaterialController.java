@@ -1,7 +1,6 @@
 package app.controllers;
 
 import app.entities.Material;
-import app.entities.User;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
 import app.persistence.MaterialMapper;
@@ -86,7 +85,7 @@ public class MaterialController {
 
         try {
             int matrialId = Integer.parseInt(ctx.formParam("material_id"));
-            Material material = MaterialMapper.findMaterial(matrialId, connectionPool);
+            Material material = MaterialMapper.findMaterialForUpdateMaterial(matrialId, connectionPool);
             if (material != null) {
                 ctx.attribute("material", material);
                 ctx.render("editMaterial.html");
