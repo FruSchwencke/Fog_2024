@@ -16,17 +16,32 @@
 
 ORDREDETALJER
 
-    <h1>Order Details</h1>
+    <h1>Informationer om ordren</h1>
+
+<div class="flex-container">
+
+
+
 
     <div th:if="${orderDetails != null}">
+
+         Kontaktinformationer
+        <p><strong>Fornavn:</strong> <span th:text="${userInformation.firstName}"></span></p>
+        <p><strong>Efternavn:</strong> <span th:text="${userInformation.lastName}"></span></p>
+        <p><strong>Email:</strong> <span th:text="${userInformation.email}"></span></p>
+        <p><strong>Telefonnummer:</strong> <span th:text="${userInformation.phonenumber}"></span></p>
+        <p><strong>Adresse:</strong> <span th:text="${userInformation.address}"></span></p>
+        <p><strong>Postnummer:</strong> <span th:text="${userInformation.zipcode}"></span></p>
+        <p><strong>By:</strong> <span th:text="${userInformation.city}"></span></p>
+
+        Ordredetaljer
         <p>Order ID: <span th:text="${orderDetails.orderId}"></span></p>
         <p>Længde: <span th:text="${orderDetails.length}"></span></p>
         <p>Bredde: <span th:text="${orderDetails.width}"></span></p>
         <p>Samlet pris: <span th:text="${orderDetails.totalPrice}"></span></p>
     </div>
-    <div th:unless="${orderDetails != null}">
-        <p>Ingen data for dette ordreid</p>
-    </div>
+
+</div>
 
     <p th:if="${session.currentUser != null}">
         <a href="salesperson_page.html" th:href="@{/salesperson}">Tilbage</a>

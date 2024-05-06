@@ -60,6 +60,53 @@ public class OrderMapper {
         return orderDetails;
     }
 
+    public static User getUserInformation(int orderId, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "SELECT " +
+                "u.first_name, " +
+                "u.last_name, " +
+                "u.email, " +
+                "u.address, " +
+                "z.zip_code, " +
+                "z.city, " +
+                "u.phonenumber " +
+                "FROM " +
+                "orders o " +
+                "JOIN " +
+                "users u ON o.user_id = u.user_id " +
+                "JOIN " +
+                "zip_code z ON u.zip_code = z.zip_code " +
+                "WHERE " +
+                "o.order_id = ?";
+
+        try (
+                Connection connection = connectionPool.getConnection();
+                PreparedStatement ps = connection.prepareStatement(sql)
+        ) {
+            ps.setInt(1, orderId);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    String firstName = rs.getString("first_name");
+                    String lastName = rs.getString("last_name");
+                    String email = rs.getString("email");
+                    String address = rs.getString("address");
+                    String zipCode = rs.getString("zip_code");
+                    String city = rs.getString("city");
+                    String phoneNumber = rs.getString("phonenumber");
+
+                    return new User(firstName, lastName, email, address, zipCode, city, phoneNumber);
+                } else {
+                    throw new DatabaseException("Ingen bruger fundet for order_id: " + orderId);
+                }
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Der opstod en fejl under forsøg på at hente brugeroplysninger for order_id: " + orderId);
+        }
+    }
+
+
+
+
     public static int createOrder(User user, int width, int length, int textInput, ConnectionPool connectionPool) throws DatabaseException {
 
         String sql = "insert into orders (user_id, width, length, text_input) values (?,?,?,?)";

@@ -1,6 +1,8 @@
 package app.controllers;
 
 import app.entities.Order;
+import app.entities.User;
+import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
 import app.persistence.OrderMapper;
 import io.javalin.Javalin;
@@ -15,6 +17,7 @@ import java.util.List;
             app.get("/customize", ctx -> ctx.render("customize_page.html"));
             app.post("/customize", ctx -> customizeCarportRoute(ctx, connectionPool));
             app.get("/order_details/{orderId}", ctx -> getOrderDetails(ctx, connectionPool));
+
         }
 
         private static void getAllOrders(Context ctx, ConnectionPool connectionPool) {
@@ -30,15 +33,23 @@ import java.util.List;
             try {
                 int orderId = Integer.parseInt(ctx.pathParam("orderId"));
                 Order orderDetails = OrderMapper.getOrderDetails(orderId, connectionPool);
+                User userInformation = OrderMapper.getUserInformation(orderId, connectionPool);
 
                 if (orderDetails != null) {
                     ctx.attribute("orderDetails", orderDetails);
-                    ctx.render("order_details.html");
                 }
-            } catch (NumberFormatException e) {
+
+                if (userInformation != null) {
+                    ctx.attribute("userInformation", userInformation);
+                }
+
+                ctx.render("order_details.html");
+            } catch (NumberFormatException | DatabaseException e) {
                 throw new RuntimeException(e);
             }
         }
+
+
 
 
         public static void customizeCarportRoute(Context ctx, ConnectionPool connectionPool) {
