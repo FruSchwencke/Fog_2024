@@ -18,14 +18,6 @@ public class Calculate {
             throw new RuntimeException(e);
         }
 
-        // Calculate posts on length
-        // offset is the space in the front and back of the carport
-        int offsetL1 = 1000;
-        int offsetL2 = 300;
-        //offsets are not subtracted from the length, it is not as vital for the design, like it is for width.
-        int maxlength = 6000;
-        //the ceil method rounds a number UP to the nearest Integer, and not in either direction like the round() method.
-        int quantityByLength = (int) Math.ceil(length - (offsetL1 +offsetL2) / maxlength);
 
         // Calculate posts based on width
         // offset is the space in the sides of the carport
@@ -33,10 +25,23 @@ public class Calculate {
         int offsetW2 = 350;
         //offsets are subtracted from maxWidth, so we accurately can calculate if the need for at post in the middle to hold the roof, really is required.
         int maxWidth = 6000 - (offsetW1+offsetW2);
-        int quantityByWidth = (int) Math.ceil(width - (offsetW1 +offsetW2) / maxWidth);
+        //the ceil method rounds a number UP to the nearest Integer, and not in either direction like the round() method.
+        //adding 1 post at the end, because there are two ends of the width supporting the roof.
+        int quantityByWidth = (int) Math.ceil(width - (offsetW1 +offsetW2) / maxWidth +1);
 
 
-        //create result for customized order
+        // Calculate posts based on length
+        // offset is the space in the front and back of the carport
+        int offsetL1 = 1000;
+        int offsetL2 = 300;
+        //offsets are not subtracted from the length, it is not as vital for the design, like it is for width.
+        int maxlength = 6000;
+        //the ceil method rounds a number UP to the nearest Integer, and not in either direction like the round() method.
+        //adding 1 post at the end, because there are two sides supporting the roof.
+        int quantityByLength = (int) Math.ceil(length - (offsetL1 +offsetL2) / maxlength +1);
+
+
+        //calculating the quantity of posts needed by multiplying the quantities of posts (length & width) needed with each other.
         int quantityOfPosts = quantityByWidth * quantityByLength;
 
 
