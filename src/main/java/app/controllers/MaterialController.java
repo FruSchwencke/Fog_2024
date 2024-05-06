@@ -95,7 +95,7 @@ public class MaterialController {
                 ctx.render("editMaterial.html");
             }
         } catch (DatabaseException | NumberFormatException e) {
-            ctx.attribute("message", "der er sket en fejl" + e.getMessage());
+            ctx.attribute("message", "Feltet skal udfyldes med et nummer");
             ctx.render("editMaterial.html");
         }
     }
@@ -112,7 +112,7 @@ public class MaterialController {
             ctx.attribute("message1", "din opdatering er nu gennemført");
             ctx.render("editMaterial.html");
         } catch (DatabaseException | NumberFormatException e) {
-            ctx.attribute("message1", "der skete en fejl i opdatering af materialet" + e.getMessage());
+            ctx.attribute("message1", "udfyld alle felter for at undgå fejl");
             ctx.render("editMaterial.html");
         }
     }

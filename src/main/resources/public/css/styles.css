@@ -5,7 +5,10 @@ h1 {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 3rem;
 }
-
+h3 {
+    display: flex;
+    justify-content: center;
+}
 #page {
     padding:8px;
     min-height: 600px;
@@ -168,8 +171,6 @@ nav {
         justify-content: center;
         background-color: #030531;
 
-
-
     }
     .boxtitel {
         margin: 2px;
@@ -199,6 +200,9 @@ nav {
 
         width: 209px;
     }
+    .flex-container {
+        flex-direction: column;
+        border-radius: 15px;
 
-
+    }
 }

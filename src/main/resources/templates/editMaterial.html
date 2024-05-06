@@ -26,16 +26,17 @@
 
     <div class="flex-container">
         <div>
-            <form method="post" th:action="@{/findMaterial}">
-                <label for="material_id">Materiale ID:</label>
-                <input type="number" id="material_id" name="material_id" ><br>
+            <h3>Find materiale</h3>
+            <form class="createuser-form" method="post" th:action="@{/findMaterial}">
+                <label class="boxtitel">Materiale ID:</label>
+                <input type="number"  name="material_id" ><br>
                 <button class="btn-create" type="submit">Søg</button>
 
                 <div class="errorbox"><p class="error" th:text="${message}"></p>
 
                 </div>
             </form>
-            <div th:if="${material != null}">
+            <div  th:if="${material != null}">
 
                 <p>Navn: <span th:text="${material.name}"></span></p>
                 <p>Beskrivelse: <span th:text="${material.description}"></span></p>
@@ -44,18 +45,19 @@
             </div>
         </div>
         <div>
-            <form method="post" th:action="@{/updateMaterial}">
+            <h3>Opdater materiale</h3>
+            <form class="createuser-form" method="post" th:action="@{/updateMaterial}">
 
-                <label >Materiale ID:</label>
+                <label class="boxtitel">Materiale ID:</label>
                 <input type="number"  name="material_id" ><br>
 
-                <label>Navn:</label>
+                <label class="boxtitel">Navn:</label>
                 <input type="text"  name="name" ><br>
 
-                <label >Beskrivelse:</label>
+                <label class="boxtitel">Beskrivelse:</label>
                 <input type="text"  name="description" ><br>
 
-                <label >Pris:</label>
+                <label class="boxtitel">Pris:</label>
                 <input type="number"  name="price" ><br>
 
 
