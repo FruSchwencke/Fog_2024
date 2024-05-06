@@ -8,11 +8,11 @@ import app.persistence.MaterialMapper;
 public class Calculate {
 
 
-    public static void calculatePosts(int length, int width, ConnectionPool connectionPool){
+    public static int calculatePosts(int length, int width, ConnectionPool connectionPool){
         //Get material
         int materialId = 1601;
         try {
-            Material material = MaterialMapper.getMaterialById(1601, connectionPool);
+            Material material = MaterialMapper.getMaterialById(materialId, connectionPool);
         } catch (DatabaseException e) {
             throw new RuntimeException(e);
         }
@@ -25,7 +25,7 @@ public class Calculate {
         int maxWidth = 6000 - (offsetW1+offsetW2);
         //the ceil method converts a decimal number to the immediate largest Integer, and not in either direction like the round() method.
         //adding 1 post at the end, because there are two ends of the width supporting the roof.
-        int quantityByWidth = (int) Math.ceil( (double) width - (offsetW1 +offsetW2) / (double) maxWidth +1);
+        int quantityByWidth = (int) Math.ceil( (double)(width - (offsetW1 +offsetW2)) / (double) maxWidth +1);
 
 
 
@@ -37,14 +37,16 @@ public class Calculate {
         int maxlength = 6000;
         //the ceil method converts a decimal number to the immediate largest Integer, and not in either direction like the round() method.
         //adding 1 post at the end, because there are two sides supporting the roof.
-        int quantityByLength = (int) Math.ceil( (double) length - (offsetL1 +offsetL2) / (double) maxlength +1);
+        int quantityByLength = (int) Math.ceil( (double) (length - (offsetL1 +offsetL2)) / (double) maxlength +1);
 
 
 
         //calculating the quantity of posts needed by multiplying the quantities of posts (length & width) needed with each other.
         int quantityOfPosts = quantityByWidth * quantityByLength;
 
+        return quantityOfPosts;
     }
+
 
 
 }

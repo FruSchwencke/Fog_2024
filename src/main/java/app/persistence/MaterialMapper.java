@@ -70,7 +70,7 @@ public class MaterialMapper {
     public static Material getMaterialById (int materialById, ConnectionPool connectionPool) throws DatabaseException {
 
         Material material = new Material();
-        String sql = "SELECT * FROM material WHERE m_id = ?";
+        String sql = "SELECT * FROM materials WHERE m_id = ?";
 
 
         try (Connection connection = connectionPool.getConnection()) {
