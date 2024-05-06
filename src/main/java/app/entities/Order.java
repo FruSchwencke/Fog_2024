@@ -35,4 +35,16 @@ public class Order {
     public String getStatus() {
         return status;
     }
+
+    public int getLength() {
+        return length;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public double getTotalprice() {
+        return totalprice;
+    }
 }

@@ -14,7 +14,7 @@ import java.util.List;
             app.get("/salesperson", ctx -> getAllOrders(ctx, connectionPool));
             app.get("/customize", ctx -> ctx.render("customize_page.html"));
             app.post("/customize", ctx -> customizeCarportRoute(ctx, connectionPool));
-
+            app.get("/order_details/{orderId}", ctx -> getOrderDetails(ctx, connectionPool));
         }
 
         private static void getAllOrders(Context ctx, ConnectionPool connectionPool) {
@@ -23,6 +23,19 @@ import java.util.List;
                 ctx.attribute("allOrdersList", allOrdersList);
                 ctx.render("salesperson_page.html");
             } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        private static void getOrderDetails(Context ctx, ConnectionPool connectionPool) {
+            try {
+                int orderId = Integer.parseInt(ctx.pathParam("orderId"));
+                Order orderDetails = OrderMapper.getOrderDetails(orderId, connectionPool);
+
+                if (orderDetails != null) {
+                    ctx.attribute("orderDetails", orderDetails);
+                    ctx.render("order_details.html");
+                }
+            } catch (NumberFormatException e) {
                 throw new RuntimeException(e);
             }
         }

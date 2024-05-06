@@ -34,7 +34,7 @@ public class OrderMapper {
 
     public static Order getOrderDetails(int orderId, ConnectionPool connectionPool)
     {
-        String sql = "SELECT lenght, width, total_price FROM orders WHERE order_id = ?";
+        String sql = "SELECT length, width, total_price FROM orders WHERE order_id = ?";
         Order orderDetails = null;
         try (
                 Connection connection = connectionPool.getConnection();
@@ -46,11 +46,11 @@ public class OrderMapper {
 
             if (rs.next()) {
 
-                int lenght = rs.getInt("length");
+                int length = rs.getInt("length");
                 int width = rs.getInt("width");
                 double totalprice = rs.getDouble("total_price");
 
-                orderDetails = new Order(orderId, lenght, width, totalprice);
+                orderDetails = new Order(orderId, length, width, totalprice);
 
             }
         } catch (SQLException e) {

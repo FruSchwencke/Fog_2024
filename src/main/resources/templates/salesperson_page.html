@@ -16,32 +16,20 @@
 
 Dette er sales person
 
-    ORDRELISTE
-    <table>
-        <thead>
-        <tr>
-            <th>Ordrenummer</th>
-            <th>Status</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="order : ${allOrdersList}">
-            <td th:text="${order.orderId}"></td>
-            <td th:text="${order.status}"></td>
-        </tr>
-        </tbody>
-    </table>
 
+
+    <h1>ORDRELISTE</h1>
     <table>
         <thead>
         <tr>
-            <th>Ordrenummer</th>
+            <th>Order ID</th>
             <th>Status</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="order : ${allOrdersList}">
             <td>
+
                 <a th:href="@{'/order_details/' + ${order.orderId}}">
                     <span th:text="${order.orderId}"></span>
                 </a>
