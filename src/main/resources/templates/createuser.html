@@ -14,10 +14,16 @@
         <img src="../public/images/logofog.PNG" th:src="@{/images/logofog.PNG}" height="176" width="179"/>
     </header>
     <nav>
+        <div id="leftnav">
 
+        </div>
+        <div id="rightnav">
+            <button class="btn-create"> <a href="login.html" th:href="@{/login}">Login</a></button>
+        </div>
     </nav>
     <div class="flex-container">
         <div>
+            <h3>Opret Konto</h3>
             <form class="createuser-form" method="post">
                 <p class="boxtitel">fornavn</p>
                 <input type="text" name="first_name" placeholder="Angiv fornavn"/>
@@ -26,9 +32,9 @@
                 <p class="boxtitel">adresse</p>
                 <input type="text" name="address" placeholder="Angiv adresse"/>
                 <p class="boxtitel">postnummer</p>
-                <input type="text" name="zip_code" placeholder="Angiv postnummer"/>
+                <input type="number" name="zip_code" placeholder="Angiv postnummer"/>
                 <p class="boxtitel">telefonnummer</p>
-                <input type="text" name="phonenumber" placeholder="Angiv telefonnummer"/>
+                <input type="number" name="phonenumber" placeholder="Angiv telefonnummer"/>
                 <p class="boxtitel">email</p>
                 <input type="text" name="email" placeholder="navn@eksempel.dk"/>
                 <p class="boxtitel">kodeord</p>
@@ -40,7 +46,7 @@
                 <div class="btnend">
                     <button class="btn-create" type="submit" formaction="/createuser">opret konto</button>
                 </div>
-                <div><p class="error" th:text="${message}"></p>
+                <div class="errorbox"><p class="error" th:text="${message}"></p>
 
                 </div>
 

@@ -22,6 +22,10 @@ public class UserController {
         app.get("login", ctx -> ctx.render("login"));
         app.get("logout", ctx -> logout(ctx));
 
+        app.get("salesperson", ctx -> ctx.render("salesperson_page"));
+
+
+
     }
 
     //made the email validate strict with use of regex.
