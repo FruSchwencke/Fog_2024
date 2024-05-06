@@ -41,27 +41,14 @@ nav {
     justify-content: right;
 
 }
-/*******vertical-menu******/
 }
-.vertical-menu {
-    width: 200px; /* Set a width if you like */
-}
+#midnav {
+    height: 32px;
 
-.vertical-menu a {
-    background-color: #eee; /*  grey  */
-    color: black;
-    display: block; /* Make the links appear below each other */
-    padding: 12px;
-    text-decoration: none; /* Remove underline from links */
 }
-
-.vertical-menu a:hover {
-    background-color: #ccc; /* Dark grey  */
-}
-
-.vertical-menu a.active {
-    background-color: #04AA6D; /* Add a green color to the "active/current" link */
-    color: white;
+.Titel_nav {
+    margin-top: 3px;
+    font-size: 1.3rem;
 }
 
 /********* createuser styles *****************/
