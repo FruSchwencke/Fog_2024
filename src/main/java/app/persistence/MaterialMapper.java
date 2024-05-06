@@ -1,9 +1,11 @@
 package app.persistence;
 
+import app.entities.Material;
 import app.exceptions.DatabaseException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
@@ -35,6 +37,7 @@ public class MaterialMapper {
         }
     }
 
+
     public static void createMaterialLine(int quantity, int orderId, int materialId, ConnectionPool connectionPool) throws DatabaseException {
 
         //OrderLines are created in DB by this method, which gets called in createOrder
@@ -60,7 +63,47 @@ public class MaterialMapper {
 
             throw new DatabaseException(msg , e.getMessage());
         }
-
     }
+
+
+
+    public static Material getMaterialById (int materialById, ConnectionPool connectionPool) throws DatabaseException {
+
+        Material material = new Material();
+        String sql = "SELECT * FROM material WHERE m_id = ?";
+
+
+        try (Connection connection = connectionPool.getConnection()) {
+
+            try (PreparedStatement ps = connection.prepareStatement(sql)) {
+                ps.setInt(1, materialById);
+                ResultSet rs = ps.executeQuery();
+
+                while (rs.next()) {
+                    String name = rs.getString("name");
+                    String description = rs.getString("description");
+                    double price = rs.getDouble("price");
+                    int unitId = rs.getInt("unit_id");
+                    int width = rs.getInt("width");
+                    int length = rs.getInt("length");
+                    int height = rs.getInt("height");
+                    material.setMaterialId(materialById);
+                    material.setName(name);
+                    material.setDescription(description);
+                    material.setPrice(price);
+                    material.setUnitId(unitId);
+                    material.setWidth(width);
+                    material.setLength(length);
+                    material.setHeight(height);
+                }
+            } catch (SQLException e) {
+                throw new DatabaseException(e.getMessage());
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException(e.getMessage());
+        }
+        return material;
+    }
+
 
 }
