@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title></title>
+    <title>Design en carport</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
+</head>
+<body>
+
+<div id="page">
+
+    <header>
+
+        <img src="../public/images/logofog.PNG" th:src="@{/images/logofog.PNG}"height="176" width="179"/>
+    </header>
+    <nav>
+        <div id="leftnav">
+
+        </div>
+        <div id="rightnav">
+            <button class="btn-create"> <a href="createuser.html" th:href="@{/createuser}">Opret konto</a></button>
+        </div>
+    </nav>
+
+    <div id="customize_page">
+
+        <h1>Design en carport med specialmål her </h1>
+        <h2>Carport med fladt tag</h2>
+        <h3>Udfyld nedenstående felter omhyggeligt og tryk på "Bestil tilbud". Så vender vi hurtigt tilbage med et tilbud på din carport med specialmål</h3>
+
+        <form action="#" th:action="@{/customize}">
+
+            <div class="flex-container">
+                 <div>
+                        <form class="createuser-form" method="post">
+                            <p class="boxtitel">Vælg carportens bredde</p>
+                            <select name="choose_width" id="choose_width">
+                                <option id="0">Vælg carportens bredde</option>
+                                <option value="1">240 cm</option>
+                                <option value="2">270 cm</option>
+                                <option value="3">300 cm</option>
+                                <option value="4">330 cm</option>
+                                <option value="5">360 cm</option>
+                                <option value="6">390 cm</option>
+                                <option value="7">420 cm</option>
+                                <option value="8">450 cm</option>
+                                <option value="9">480 cm</option>
+                                <option value="10">510 cm</option>
+                                <option value="11">540 cm</option>
+                                <option value="12">570 cm</option>
+                                <option value="13">600 cm</option>
+                            </select>
+
+                            <p class="boxtitel">Vælg carportens længde</p>
+                            <select  name="choose_length" id="choose_length">
+                                <option id="0">Vælg carportens længde</option>
+                                <option value="1">240 cm</option>
+                                <option value="2">270 cm</option>
+                                <option value="3">300 cm</option>
+                                <option value="4">330 cm</option>
+                                <option value="5">360 cm</option>
+                                <option value="6">390 cm</option>
+                                <option value="7">420 cm</option>
+                                <option value="8">450 cm</option>
+                                <option value="9">480 cm</option>
+                                <option value="10">510 cm</option>
+                                <option value="11">540 cm</option>
+                                <option value="12">570 cm</option>
+                                <option value="13">600 cm</option>
+                            </select>
+
+                            <p class="boxtitel">Vælg carportens tag</p>
+                            <select name="choose_roof" id="choose_roof">
+                                <option id="0" >Vælg carportens tag</option>
+                                <option value="1">Uden tagplader</option>
+                                <option value="2">Plasttrapezplader</option>
+                            </select>
+
+                            <p class="boxtitel">Evt. bemærkninger / særlige ønsker </p>
+
+                            <form name="text_input" id="text_input">
+                                <textarea style="height:150px; width:250px;"></textarea>
+                            </form>
+
+                    <div>
+                        <form id="send_request" method="get" th:action="@{/pay}">
+                            <button type="submit">Bestil tilbud</button>
+                        </form>
+                    </div>
+
+                    <div><p class="error" th:text="${message}"></p>
+
+                    </div>
+
+                </form>
+
+                 </div>
+        </div>
+    </form>
+
+    </div>
+</div>
+
+</body>
+</html>

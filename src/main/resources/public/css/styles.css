@@ -124,14 +124,17 @@ nav {
     color: black;
     font-size: 1.0rem;
 }
+
 .btnend {
     display: flex;
     justify-content: end;
 }
+
 .errorbox {
     display: flex;
     justify-content: center;
 }
+
 .error:not(:empty) {
     display: flex;
     justify-content: center;
@@ -140,11 +143,18 @@ nav {
     width: 200px;
 
 }
+
 .boxtitel {
    margin-bottom: 5px;
     display: flex;
-    font-size: 0.8rem;
+    font-size: 1rem;
 }
+.calculater {
+    background-color: white;
+    margin: 10px;
+    padding: 40px;
+}
+
 /*addmaterial style*/
 .info-addmat {
     display: flex;
@@ -161,6 +171,7 @@ nav {
     align-items: center;
     font-size: 0.8rem;
 }
+
 
 
 

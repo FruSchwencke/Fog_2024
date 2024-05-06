@@ -11,6 +11,8 @@ private String address;
 private String phonenumber;
 
 private String zipcode;
+
+private String city;
 private int zipId;
 private int role;
 
@@ -26,8 +28,52 @@ private int role;
         this.role = role;
     }
 
+    public User(String firstName, String lastName, String email, String address, String phonenumber, String zipcode, String city) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.address = address;
+        this.zipcode = zipcode;
+        this.city = city;
+        this.phonenumber = phonenumber;
+    }
+
     public int getRole() {
         return role;
     }
+
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getPhonenumber() {
+        return phonenumber;
+    }
+
+    public String getZipcode() {
+        return zipcode;
+    }
+
+    public String getCity() {
+        return city;
+    }
 }
+
 
