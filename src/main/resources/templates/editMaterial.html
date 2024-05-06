@@ -38,9 +38,14 @@
             </form>
             <div  th:if="${material != null}">
 
-                <p>Navn: <span th:text="${material.name}"></span></p>
-                <p>Beskrivelse: <span th:text="${material.description}"></span></p>
-                <p>Pris: <span th:text="${material.price}"></span></p>
+                <label class="boxtitel"><strong>Navn:</strong></label>
+                <p><span th:text="${material.name}"></span></p>
+                <br>
+                <label class="boxtitel"><strong>Beskrivelse:</strong></label>
+                <p><span th:text="${material.description}"></span></p>
+                <br>
+                <label class="boxtitel"><strong>Pris:</strong></label>
+                <p><span th:text="${material.price}"></span></p>
 
             </div>
         </div>
