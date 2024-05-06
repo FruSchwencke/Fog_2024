@@ -61,23 +61,10 @@ public class OrderMapper {
     }
 
     public static User getUserInformation(int orderId, ConnectionPool connectionPool) throws DatabaseException {
-        String sql = "SELECT " +
-                "u.first_name, " +
-                "u.last_name, " +
-                "u.email, " +
-                "u.address, " +
-                "z.zip_code, " +
-                "z.city, " +
-                "u.phonenumber " +
-                "FROM " +
-                "orders o " +
-                "JOIN " +
-                "users u ON o.user_id = u.user_id " +
-                "JOIN " +
-                "zip_code z ON u.zip_code = z.zip_code " +
-                "WHERE " +
-                "o.order_id = ?";
-
+        String sql = "SELECT  u.first_name,  u.last_name, u.email, u.address, z.zip_code, z.city, u.phonenumber FROM orders o "
+                + "JOIN " + "users u ON o.user_id = u.user_id " +
+                "JOIN " + "zip_code z ON u.zip_code = z.zip_code " +
+                "WHERE o.order_id = ?";
         try (
                 Connection connection = connectionPool.getConnection();
                 PreparedStatement ps = connection.prepareStatement(sql)
