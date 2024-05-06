@@ -131,7 +131,11 @@ nav {
     display: flex;
     font-size: 1rem;
 }
-
+.calculater {
+    background-color: white;
+    margin: 10px;
+    padding: 40px;
+}
 
 
 

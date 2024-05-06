@@ -17,6 +17,11 @@ public class Order {
         this.totalprice = totalprice;
     }
 
+    public Order(int orderId, double totalprice) {
+        this.orderId = orderId;
+        this.totalprice = totalprice;
+    }
+
     public Order(int length, int width, String textInput) {
         this.length = length;
         this.width = width;
@@ -34,5 +39,17 @@ public class Order {
 
     public String getStatus() {
         return status;
+    }
+
+    public int getLength() {
+        return length;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public double getTotalprice() {
+        return totalprice;
     }
 }
