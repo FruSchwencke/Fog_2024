@@ -83,15 +83,13 @@ public class OrderMapper {
 
                     return new User(firstName, lastName, email, address, zipCode, city, phoneNumber);
                 } else {
-                    throw new DatabaseException("Ingen bruger fundet for order_id: " + orderId);
+                    throw new DatabaseException("Ingen bruger fundet for order id: " + orderId);
                 }
             }
         } catch (SQLException e) {
-            throw new DatabaseException("Der opstod en fejl under forsøg på at hente brugeroplysninger for order_id: " + orderId);
+            throw new DatabaseException("Der opstod en fejl");
         }
     }
-
-
 
 
     public static int createOrder(User user, int width, int length, int textInput, ConnectionPool connectionPool) throws DatabaseException {
@@ -114,7 +112,6 @@ public class OrderMapper {
                 rs.next();
                 int orderId = rs.getInt("order_id");
                 return orderId;
-
 
 
             //TODO: go through error-handling
