@@ -127,4 +127,27 @@ public class OrderMapper {
             throw new DatabaseException(msg, e.getMessage());
         }
     }
+
+    public static void updateTotalPrice(int orderId, double newTotalPrice, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "UPDATE orders SET total_price = ? WHERE order_id = ?";
+
+        try (
+                Connection connection = connectionPool.getConnection();
+                PreparedStatement ps = connection.prepareStatement(sql)
+        ) {
+            ps.setDouble(1, newTotalPrice);
+            ps.setInt(2, orderId);
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected != 1) {
+                throw new DatabaseException("Fejl ved opdatering af totalpris for ordre " + orderId);
+            }
+
+        } catch (SQLException e) {
+            throw new DatabaseException("Fejl i opdatering af pris", e.getMessage());
+        }
+    }
+
+
+
 }
