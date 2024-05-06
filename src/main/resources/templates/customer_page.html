@@ -11,17 +11,41 @@
 <div id="page">
     <header>
 
-        <img src="../public/images/logofog.PNG" th:src="@{/images/logofog.PNG}"height="176" width="179"/>
+        <img src="../public/images/logofog.PNG" th:src="@{/images/logofog.PNG}" height="176" width="179"/>
     </header>
+    <nav>
+        <div id="leftnav">
+
+        </div>
+        <div id="midnav">
+            <p class="Titel_nav"> Velkommen <strong><span th:if="${session.currentUser != null}" th:text="${session.currentUser.firstName}"></span></strong>, du er nu logget ind som kunde </p>
+
+        </div>
+
+        <div id="rightnav">
+
+            <button class="btn-gen"><a href="index.html" th:href="@{/logout}">Log ud</a></button>
+        </div>
 
 
+    </nav>
+    <div class="flex-container">
+        <div>
 
-DETTE ER CUSTOMER
 
-    <p th:if="${session.currentUser != null}">
-        <a href="index.html" th:href="@{/logout}">Log ud</a>
-    </p>
+            <h3>make magic here</h3>
 
+        </div>
+
+
+        <div>
+            <h3>more magic</h3>
+            </div>
+        <div>
+            <h3>Even more magic</h3>
+            </div>
+
+    </div>
 </div>
 </body>
 </html>
