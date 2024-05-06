@@ -40,7 +40,6 @@ public class Calculate {
         int quantityByLength = (int) Math.ceil( (double) (length - (offsetL1 +offsetL2)) / (double) maxlength +1);
 
 
-
         //calculating the quantity of posts needed by multiplying the quantities of posts (length & width) needed with each other.
         int quantityOfPosts = quantityByWidth * quantityByLength;
 
