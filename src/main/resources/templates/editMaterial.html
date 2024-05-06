@@ -28,7 +28,7 @@
         <div>
             <form method="post" th:action="@{/findMaterial}">
                 <label for="material_id">Materiale ID:</label>
-                <input type="number" id="material_id" name="material_id" required><br>
+                <input type="number" id="material_id" name="material_id" ><br>
                 <button class="btn-create" type="submit">Søg</button>
 
                 <div class="errorbox"><p class="error" th:text="${message}"></p>
@@ -37,11 +37,36 @@
             </form>
             <div th:if="${material != null}">
 
-                <p>Materiale ID: <span th:text="${material.name}"></span></p>
+                <p>Navn: <span th:text="${material.name}"></span></p>
                 <p>Beskrivelse: <span th:text="${material.description}"></span></p>
                 <p>Pris: <span th:text="${material.price}"></span></p>
 
             </div>
+        </div>
+        <div>
+            <form method="post" th:action="@{/updateMaterial}">
+
+                <label >Materiale ID:</label>
+                <input type="number"  name="material_id" ><br>
+
+                <label>Navn:</label>
+                <input type="text"  name="name" ><br>
+
+                <label >Beskrivelse:</label>
+                <input type="text"  name="description" ><br>
+
+                <label >Pris:</label>
+                <input type="number"  name="price" ><br>
+
+
+                <button class="btn-create" type="submit">Opdater Materiale</button>
+
+            </form>
+
+            <div class="errorbox">
+                <p class="error" th:text="${message1}"></p>
+            </div>
+
         </div>
     </div>
 

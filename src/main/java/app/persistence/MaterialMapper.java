@@ -58,4 +58,28 @@ public class MaterialMapper {
         }
         return material;
     }
+    public static void updateMaterial(int materialId,String name, String description, double price, ConnectionPool connectionPool) throws DatabaseException
+    {
+        String sql = "update materials set name=?, description=?, price = ? where m_id = ?";
+
+        try (
+                Connection connection = connectionPool.getConnection();
+                PreparedStatement ps = connection.prepareStatement(sql)
+        )
+        {
+            ps.setString(1, name);
+            ps.setString(2, description);
+            ps.setDouble(3, price);
+            ps.setInt(4, materialId);
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected != 1)
+            {
+                throw new DatabaseException("Fejl i opdatering af en materialer");
+            }
+        }
+        catch (SQLException e)
+        {
+            throw new DatabaseException("Fejl i opdatering af en materialer", e.getMessage());
+        }
+    }
 }

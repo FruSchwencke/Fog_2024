@@ -15,6 +15,7 @@ public class MaterialController {
         app.post("addmaterial", ctx -> addMaterial(ctx, connectionPool));
         app.get("editMaterial", ctx -> ctx.render("editMaterial"));
         app.post("findMaterial", ctx -> findMaterial(ctx, connectionPool));
+        app.post("updateMaterial", ctx -> updateMaterial(ctx, connectionPool));
 
     }
 
@@ -34,13 +35,13 @@ public class MaterialController {
         int unitId;
         // handling excptions
         try {
-           price = Double.parseDouble(ctx.formParam("price"));
-           unitId = Integer.parseInt(ctx.formParam("unit"));
-           if (price <0){
-               ctx.attribute("message","Prisen kan ikke være minus");
-               ctx.render("addmaterial.html");
-               return;
-           }
+            price = Double.parseDouble(ctx.formParam("price"));
+            unitId = Integer.parseInt(ctx.formParam("unit"));
+            if (price < 0) {
+                ctx.attribute("message", "Prisen kan ikke være minus");
+                ctx.render("addmaterial.html");
+                return;
+            }
         } catch (NumberFormatException e) {
             ctx.attribute("message", "de 4 øverste felter skal udfyldes" + e.getMessage());
             ctx.render("addmaterial.html");
@@ -54,7 +55,7 @@ public class MaterialController {
 
         int width = 0;
         int length = 0;
-        int height =0 ;
+        int height = 0;
         // set 0 in database if nothing is assigned in formparam
         if (widthParam != null && !widthParam.isEmpty()) {
             width = Integer.parseInt(widthParam);
@@ -81,28 +82,39 @@ public class MaterialController {
         }
     }
 
-    private static void findMaterial(Context ctx, ConnectionPool connectionPool)
-    {
+    private static void findMaterial(Context ctx, ConnectionPool connectionPool) {
 
-        try
-        {
+        try {
             int matrialId = Integer.parseInt(ctx.formParam("material_id"));
             Material material = MaterialMapper.findMaterial(matrialId, connectionPool);
             if (material != null) {
                 ctx.attribute("material", material);
-                ctx.attribute("message", "Materiale eksistere ");
                 ctx.render("editMaterial.html");
             } else {
                 ctx.attribute("message", "Materiale eksistere ikke");
                 ctx.render("editMaterial.html");
             }
-        }
-        catch (DatabaseException | NumberFormatException e)
-        {
+        } catch (DatabaseException | NumberFormatException e) {
             ctx.attribute("message", "der er sket en fejl" + e.getMessage());
             ctx.render("editMaterial.html");
         }
     }
 
+    private static void updateMaterial(Context ctx, ConnectionPool connectionPool)  {
+
+        try {
+            int materialId = Integer.parseInt(ctx.formParam("material_id"));
+            String name = ctx.formParam("name");
+            String description = ctx.formParam("description");
+            double price = Double.parseDouble(ctx.formParam("price"));
+
+            MaterialMapper.updateMaterial(materialId, name, description, price, connectionPool);
+            ctx.attribute("message1", "din opdatering er nu gennemført");
+            ctx.render("editMaterial.html");
+        } catch (DatabaseException | NumberFormatException e) {
+            ctx.attribute("message1", "der skete en fejl i opdatering af materialet" + e.getMessage());
+            ctx.render("editMaterial.html");
+        }
+    }
 
 }
