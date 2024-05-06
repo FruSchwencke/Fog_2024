@@ -30,11 +30,10 @@
         <h2>Carport med fladt tag</h2>
         <h3>Udfyld nedenstående felter omhyggeligt og tryk på "Bestil tilbud". Så vender vi hurtigt tilbage med et tilbud på din carport med specialmål</h3>
 
-        <form action="#" th:action="@{/customize}" method="post">
+        <form action="#" th:action="@{/customize}" method="post" class="createuser-form">
 
             <div class="flex-container">
                  <div>
-                        <form class="createuser-form" method="post">
                             <p class="boxtitel">Vælg carportens bredde</p>
                             <select name="choose_width" id="choose_width">
                                 <option id="0">Vælg carportens bredde</option>
@@ -84,16 +83,17 @@
                                 <textarea style="height:150px; width:250px;"></textarea>
                             </form>
 
-                    <div>
-                            <button type="submit">Bestil tilbud</button>
-                    </div>
+                        <div th:if="${session.currentUser != null}">
+                            <button> <a href="customer_page.html" th:href="@{/createuser}">Bestil tilbud</a></button>
+                        </div>
 
-                    <div><p class="error" th:text="${message}"></p>
+                        <div th:unless="${session.currentUser != null}">
+                            <button> <a href="login.html" th:href="@{/login}">Bestil tilbud</a></button>
+                        </div>
 
-                    </div>
-
-                </form>
-
+                        <div>
+                            <p class="error" th:text="${message}"></p>
+                        </div>
                  </div>
         </div>
     </form>
