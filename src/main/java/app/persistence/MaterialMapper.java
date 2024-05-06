@@ -1,11 +1,10 @@
 package app.persistence;
 
 
+import app.entities.Material;
 import app.exceptions.DatabaseException;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 
 public class MaterialMapper {
@@ -34,5 +33,29 @@ public class MaterialMapper {
 
             throw new DatabaseException(msg, e.getMessage());
         }
+    }
+    public static Material findMaterial (int materialId, ConnectionPool connectionPool) throws DatabaseException {
+        Material material= null;
+        String sql="Select * from materials where m_id = ?";
+
+        try(Connection connection = connectionPool.getConnection();
+        PreparedStatement ps = connection.prepareStatement(sql))
+
+        {
+         ps.setInt(1,materialId);
+            ResultSet rs =ps.executeQuery();
+            if (rs.next())
+            {
+            String name = rs.getString("name");
+            String description = rs.getString("description");
+            double price = rs.getDouble("price");
+            material =new Material(name,description,price);
+            }
+
+        } catch (SQLException e)
+        {
+            throw new DatabaseException("Fejl ved indhentning af oplysninger på matriale id =" + materialId, e.getMessage());
+        }
+        return material;
     }
 }

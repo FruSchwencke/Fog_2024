@@ -11,6 +11,12 @@ public class Material {
     private int length;
     private int height;
 
+    public Material(String name, String description, double price) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+    }
+
     @Override
     public String toString() {
         return "Material{" +

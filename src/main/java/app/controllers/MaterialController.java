@@ -1,5 +1,7 @@
 package app.controllers;
 
+import app.entities.Material;
+import app.entities.User;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
 import app.persistence.MaterialMapper;
@@ -11,6 +13,9 @@ public class MaterialController {
     public static void addRoutes(Javalin app, ConnectionPool connectionPool) {
         app.get("addmaterial", ctx -> ctx.render("addmaterial"));
         app.post("addmaterial", ctx -> addMaterial(ctx, connectionPool));
+        app.get("editMaterial", ctx -> ctx.render("editMaterial"));
+        app.post("findMaterial", ctx -> findMaterial(ctx, connectionPool));
+
     }
 
     public static void addMaterial(Context ctx, ConnectionPool connectionPool) {
@@ -49,7 +54,7 @@ public class MaterialController {
 
         int width = 0;
         int length = 0;
-        int height = 0;
+        int height =0 ;
         // set 0 in database if nothing is assigned in formparam
         if (widthParam != null && !widthParam.isEmpty()) {
             width = Integer.parseInt(widthParam);
@@ -73,6 +78,29 @@ public class MaterialController {
 
             ctx.attribute("message", "dit materiale blev desværre ikke oprettet" + e.getMessage());
             ctx.render("addmaterial.html");
+        }
+    }
+
+    private static void findMaterial(Context ctx, ConnectionPool connectionPool)
+    {
+
+        try
+        {
+            int matrialId = Integer.parseInt(ctx.formParam("material_id"));
+            Material material = MaterialMapper.findMaterial(matrialId, connectionPool);
+            if (material != null) {
+                ctx.attribute("material", material);
+                ctx.attribute("message", "Materiale eksistere ");
+                ctx.render("editMaterial.html");
+            } else {
+                ctx.attribute("message", "Materiale eksistere ikke");
+                ctx.render("editMaterial.html");
+            }
+        }
+        catch (DatabaseException | NumberFormatException e)
+        {
+            ctx.attribute("message", "der er sket en fejl" + e.getMessage());
+            ctx.render("editMaterial.html");
         }
     }
 
