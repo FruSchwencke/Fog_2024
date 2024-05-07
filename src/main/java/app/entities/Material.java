@@ -10,6 +10,13 @@ public class Material {
     private int length;
     private int height;
 
+    public Material(int materialId, String name, String description, double price, int unitId, int width, int length, int height, int quantity) {
+    }
+
+    public Material() {
+
+    }
+
     @Override
     public String toString() {
         return "Material{" +

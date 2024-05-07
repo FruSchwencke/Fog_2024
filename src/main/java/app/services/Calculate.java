@@ -5,9 +5,26 @@ import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
 import app.persistence.MaterialMapper;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.Math.ceil;
+
 public class Calculate {
+
+    public static Material newItem(int quantity, int materialId, Material material) {
+        return new Material(
+                materialId,
+                material.getName(),
+                material.getDescription(),
+                material.getPrice(),
+                material.getUnitId(),
+                material.getWidth(),
+                material.getLength(),
+                material.getHeight(),
+                quantity);
+    }
+
 
 
     public static int calculatePosts(int length, int width, ConnectionPool connectionPool){
@@ -27,7 +44,7 @@ public class Calculate {
         int maxWidth = 6000 - (offsetW1+offsetW2);
         //the ceil method converts a decimal number to the immediate largest Integer, and not in either direction like the round() method.
         //adding 1 post at the end, because there are two ends of the width supporting the roof.
-        int quantityByWidth = (int) Math.ceil( (double)(width - (offsetW1 +offsetW2)) / (double) maxWidth +1);
+        int quantityByWidth = (int) ceil( (double)(width - (offsetW1 +offsetW2)) / (double) maxWidth +1);
 
 
 
@@ -39,7 +56,7 @@ public class Calculate {
         int maxlength = 6000;
         //the ceil method converts a decimal number to the immediate largest Integer, and not in either direction like the round() method.
         //adding 1 post at the end, because there are two sides supporting the roof.
-        int quantityByLength = (int) Math.ceil( (double) (length - (offsetL1 +offsetL2)) / (double) maxlength +1);
+        int quantityByLength = (int) ceil( (double) (length - (offsetL1 +offsetL2)) / (double) maxlength +1);
 
 
         //calculating the quantity of posts needed by multiplying the quantities of posts (length & width) needed with each other.
@@ -50,17 +67,54 @@ public class Calculate {
 
 
 
-    public static int calculateBeam (){
+    public static int calculateBeam (int length, int width, ConnectionPool connectionPool){
 
         // Get material from DB
         String description = "Remme i sider, sadles ned i stolper";
+
+
         try {
+            // creating a materialList based on description
             List<Material> materialList = MaterialMapper.getMaterialByDescription(description, new ConnectionPool());
+
+
+            // Create list with available lengths
+            List<Integer> variousLengths = new ArrayList<>();
+            for (Material material : materialList) {
+                variousLengths.add(material.getLength());
+            }
+
+            // Calculate
+            int offsetW1 = 350;
+            int offsetW2 = 350;
+            int maxWidth = 6000 - (offsetW1 + offsetW2);
+            int quantity = (int) ceil((double) (width - (offsetW1 + offsetW2)) / (double) maxWidth) + 1;
+
+            //
+            List<Material> result = new ArrayList<>();
+            //iterating over the list of various lengths in reverse order to determine if i is greater the 0, if so, it continues to iterate over the variousLengths
+            for (int i = variousLengths.size() - 1; i > 0; i--) {
+
+                // condition - comparing the length with the value of index i in the variousLengths list
+                if ((length) >= variousLengths.get(i)) {
+                    //if index i is greater or equal to the length, then it's added to the new item list
+                    result.add(newItem(quantity, materialList.get(i).getMaterialId(), materialList.get(i)));
+                    // this ensures that the lengths are ready to be iterated over again, with nok changes.
+                    length -= variousLengths.get(i);
+                }
+            }
+
+            // Minimum length
+            if (length > 0) {
+                result.add(newItem(quantity, materialList.get(0).getMaterialId(), materialList.get(0)));
+            }
+
+
         } catch (DatabaseException e) {
             throw new RuntimeException(e);
         }
 
-        return 0;
+        return result;
     }
 
 }
