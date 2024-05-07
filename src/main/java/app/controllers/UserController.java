@@ -134,18 +134,16 @@ public class UserController {
         String email = ctx.formParam("email");
         String password = ctx.formParam("password");
 
-
         try {
             User user = UserMapper.login(email, password, connectionPool);
             if (user.getRole() == 1) {
                 ctx.sessionAttribute("currentUser", user);
 
-
                 ctx.render("customer_page.html");
             } else {
                 List<Order> allOrdersList = OrderMapper.getAllOrders(connectionPool);
-                ctx.attribute("allOrdersList", allOrdersList);
                 ctx.sessionAttribute("currentUser", user);
+                ctx.sessionAttribute("allOrdersList", allOrdersList);
                 ctx.render("salesperson_page.html");
             }
         } catch (DatabaseException e) {

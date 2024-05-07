@@ -13,7 +13,7 @@ import java.util.List;
 
     public class OrderController {
         public static void addRoutes(Javalin app, ConnectionPool connectionPool) {
-            app.get("/salesperson", ctx -> getAllOrders(ctx, connectionPool));
+            //app.get("/salesperson", ctx -> getAllOrders(ctx, connectionPool));
             app.get("/customize", ctx -> ctx.render("customize_page.html"));
             app.post("/customize", ctx -> customizeCarportRoute(ctx, connectionPool));
             app.get("/order_details/{orderId}", ctx -> getOrderDetails(ctx, connectionPool));
@@ -22,16 +22,14 @@ import java.util.List;
 
         }
 
-        private static void getAllOrders(Context ctx, ConnectionPool connectionPool) {
-            try {
-                List<Order> allOrdersList = OrderMapper.getAllOrders(connectionPool);
-                ctx.attribute("allOrdersList", allOrdersList);
-                ctx.render("salesperson_page.html");
-
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        }
+//        private static void getAllOrders(Context ctx, ConnectionPool connectionPool) throws SQLException {
+//
+//            List<Order> allOrdersList = OrderMapper.getAllOrders(connectionPool);
+//            ctx.attribute("allOrdersList", allOrdersList);
+//            ctx.render("salesperson_page.html");
+//
+//
+//        }
 
             private static void getOrderDetails(Context ctx, ConnectionPool connectionPool) {
             try {
