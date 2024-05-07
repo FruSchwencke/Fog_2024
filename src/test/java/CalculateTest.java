@@ -42,11 +42,25 @@ public class CalculateTest {
         List<Material> expected = new ArrayList<>();
         expected.add(material);
         List<Material> result = new ArrayList<>();
-        result = Calculate.calculateBeam(6000,7000, connectionPool);
+        result = Calculate.calculateBeam(6000,6000, connectionPool);
 
         //assertEquals only works here, because of the equals-override in Material Class. Where it is defined what equals is.
         assertEquals(expected, result);
 
     }
+
+    @Test
+    void calculateBeam2(){
+        Material material = new Material(1506,"45x195 mm. spærtræ ubh.","Remme i sider, sadles ned i stolper",189.0,1,195,3600,45,2);
+        List<Material> expected = new ArrayList<>();
+        expected.add(material);
+        List<Material> result = new ArrayList<>();
+        result = Calculate.calculateBeam(2400,2400, connectionPool);
+
+        //assertEquals only works here, because of the equals-override in Material Class. Where it is defined what equals is.
+        assertEquals(expected, result);
+
+    }
+
 
 }

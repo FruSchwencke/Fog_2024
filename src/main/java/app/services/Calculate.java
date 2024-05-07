@@ -28,7 +28,7 @@ public class Calculate {
     }
 
 
-
+    //STOLPER
     public static int calculatePosts(int length, int width, ConnectionPool connectionPool){
         //Get material
         int materialId = 1601;
@@ -69,22 +69,14 @@ public class Calculate {
     }
 
 
-
+    //REMME
     public static List<Material> calculateBeam (int length, int width, ConnectionPool connectionPool){
-
         // Get material from DB
         String description = "Remme i sider, sadles ned i stolper";
 
         try {
             // creating a materialList based on description
             List<Material> materialList = MaterialMapper.getMaterialByDescription(description, connectionPool);
-
-            // Create list with available lengths
-            List<Integer> availableLengths = new ArrayList<>();
-
-            for (Material material : materialList) {
-                availableLengths.add(material.getLength());
-            }
 
             // Calculate
             int offsetW1 = 350;
@@ -119,5 +111,43 @@ public class Calculate {
             throw new RuntimeException(e);
         }
     }
+
+
+    //SPÆR
+    public List<Material> calculateRafter(int width, int length, ConnectionPool connectionPool) throws DatabaseException {
+
+        // Get materials from database
+        String description = "Spær, monteres på rem";
+        List<Material> materialList = MaterialMapper.getMaterialByDescription(description, connectionPool);
+
+
+
+        // Calculate
+        // maxWidth is the largest space allowed between rafters
+        int maxWidth = 600;
+        // then the length of the carport is divided by maxWidth, to find the quantity needed for at specific length
+        int quantity = (int) ceil((double) length / (double) maxWidth);
+
+        // Add the correct lengths for the rafters
+        List<Material> result = new ArrayList<>();
+        // the length of the rafter has to be equal to the width of the carport
+        int length = width;
+        //
+        for (int i = materialList.size() - 1; i > 0; i--) {
+            if ((length) >= materialList.get(i)) {
+                result.add(newItem(quantity, materialList.get(i).getMaterialId(), materialList.get(i)));
+                length -= materialList.get(i);
+            }
+        }
+
+        // Minimum length
+        if (length > 0) {
+            result.add(newItem(quantity, materialList.get(0).getMaterialId(), materialList.get(0)));
+        }
+        return result;
+    }
+
+
+
 
 }
