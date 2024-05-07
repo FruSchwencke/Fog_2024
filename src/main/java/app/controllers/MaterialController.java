@@ -7,6 +7,8 @@ import app.persistence.MaterialMapper;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 
+import java.util.List;
+
 public class MaterialController {
 
     public static void addRoutes(Javalin app, ConnectionPool connectionPool) {
@@ -15,7 +17,8 @@ public class MaterialController {
         app.get("editMaterial", ctx -> ctx.render("editMaterial"));
         app.post("findMaterial", ctx -> findMaterial(ctx, connectionPool));
         app.post("updateMaterial", ctx -> updateMaterial(ctx, connectionPool));
-
+        app.get("company_mat_list", ctx -> ctx.render("company_mat_list"));
+        app.post("company_mat_list", ctx -> companyMatList(ctx, connectionPool));
     }
 
     public static void addMaterial(Context ctx, ConnectionPool connectionPool) {
@@ -116,4 +119,17 @@ public class MaterialController {
         }
     }
 
+    private static void companyMatList (Context ctx, ConnectionPool connectionPool){
+        try {
+
+            List<Material> materials = MaterialMapper.companyMaterialList( connectionPool);
+
+                ctx.attribute("materials",materials);
+                ctx.render("company_mat_list.html");
+            } catch (DatabaseException e)
+        {
+            ctx.attribute("message", "Der er problemer med at få listen fra databasen");
+            ctx.render("salesperson_page.html");
+        }
+    }
 }
