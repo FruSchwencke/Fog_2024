@@ -13,7 +13,10 @@ public class OrderMapper {
 
     public static List<Order> getAllOrders(ConnectionPool connectionPool) throws SQLException {
         List<Order> allOrdersList = new ArrayList<>();
-        String sql = "SELECT order_id, status_id FROM orders";
+        String sql = "SELECT o.order_id, s.status_name " +
+                "FROM orders o " +
+                "JOIN status s ON o.status_id = s.status_id";
+
 
         try (
                 Connection connection = connectionPool.getConnection();
@@ -22,7 +25,7 @@ public class OrderMapper {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 int orderId = rs.getInt("order_id");
-                String status = rs.getString("status_id");
+                String status = rs.getString("status_name");
 
                 Order order = new Order(orderId, status);
                 allOrdersList.add(order);

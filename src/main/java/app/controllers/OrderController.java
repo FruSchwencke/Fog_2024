@@ -18,7 +18,6 @@ import java.util.List;
             app.post("/customize", ctx -> customizeCarportRoute(ctx, connectionPool));
             app.get("/order_details/{orderId}", ctx -> getOrderDetails(ctx, connectionPool));
             app.post("/updatetotalprice", ctx -> updateTotalPrice(ctx, connectionPool));
-
         }
 
         private static void getAllOrders(Context ctx, ConnectionPool connectionPool) {
@@ -30,7 +29,6 @@ import java.util.List;
                 throw new RuntimeException(e);
             }
         }
-
         private static void getOrderDetails(Context ctx, ConnectionPool connectionPool) {
             try {
                 int orderId = Integer.parseInt(ctx.pathParam("orderId"));
