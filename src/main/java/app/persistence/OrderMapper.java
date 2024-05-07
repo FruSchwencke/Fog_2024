@@ -130,6 +130,27 @@ public class OrderMapper {
             throw new DatabaseException(msg, e.getMessage());
         }
     }
+    public static void updateStatus(int orderId, int newStatusId, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "UPDATE orders SET status_id = ? WHERE order_id = ?";
+
+        try (
+                Connection connection = connectionPool.getConnection();
+                PreparedStatement ps = connection.prepareStatement(sql)
+        ) {
+            ps.setInt(1, newStatusId);
+            ps.setInt(2, orderId);
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected == 0) {
+                throw new DatabaseException("Ingen rækker blev påvirket. Ordren med id " + orderId + " blev ikke fundet.");
+            }
+        } catch (SQLException e) {
+            String msg = "Der er sket en fejl ved opdatering af ordrestatus. Prøv igen.";
+            throw new DatabaseException(msg, e.getMessage());
+        }
+    }
+
+
 
     public static void updateTotalPrice(int orderId, double newTotalPrice, ConnectionPool connectionPool) throws DatabaseException {
         String sql = "UPDATE orders SET total_price = ? WHERE order_id = ?";

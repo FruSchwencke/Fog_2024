@@ -1,16 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <title>FOG</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ordredetaljer</title>
+    <link href="../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
 </head>
+
 <body>
 <div id="page">
     <header>
+
         <img src="../public/images/logofog.PNG" th:src="@{/images/logofog.PNG}" height="176" width="179"/>
     </header>
+    <nav>
+        <div id="leftnav">
 
+        </div>
+        <div id="midnav">
+            <p class="Titel_nav"> Velkommen <strong><span th:if="${session.currentUser != null}" th:text="${session.currentUser.firstName}"></span></strong>, du er nu logget ind som medarbejder </p>
+
+        </div>
+
+        <div id="rightnav">
+
+            <button class="btn-gen"><a href="index.html" th:href="@{/logout}">Log ud</a></button>
+        </div>
+
+
+    </nav>
     <h1>Informationer om ordren</h1>
 
     <div class="flex-container">
@@ -38,21 +56,28 @@
             <div class="calculater">
                 Opdater prisen
                 <form action="/updatetotalprice" method="post">
-                    <input type="hidden" id="orderId" name="orderId" th:value="${orderDetails.orderId}">
+                    <input type="hidden" id="updateprice" name="orderId" th:value="${orderDetails.orderId}">
                     <label for="newTotalPrice">Ny Pris:</label>
                     <input type="number" id="newTotalPrice" name="newTotalPrice" required><br><br>
                     <input type="submit" value="Opdater Pris">
                 </form>
 
             </div>
+            <form action="/updateOrderStatus" method="post">
+                <input type="hidden" id="sendoffer" name="orderId" th:value="${orderDetails.orderId}">
+                <input type="submit" value="Send tilbud">
+            </form>
+
+
         </div>
+
 
     </div>
 
 
 
     <form action="/salesperson" method="get">
-        <button type="submit">Gå til Salgspersonside</button>
+        <button type="submit">Tilbage</button>
     </form>
 
 </div>
