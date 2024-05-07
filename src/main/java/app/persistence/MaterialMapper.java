@@ -98,6 +98,7 @@ public class MaterialMapper {
                     material.setLength(length);
                     material.setHeight(height);
                 }
+
             } catch (SQLException e) {
                 throw new DatabaseException(e.getMessage());
             }
@@ -129,6 +130,7 @@ public class MaterialMapper {
                     int width = rs.getInt("width");
                     int length = rs.getInt("length");
                     int height = rs.getInt("height");
+
 
                     materialList.add(new Material(materialId, name, description, price, unitId, width, length, height));
                 }

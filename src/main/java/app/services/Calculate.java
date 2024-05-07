@@ -93,7 +93,6 @@ public class Calculate {
                 if ((length) >= materialList.get(i).getLength()) {
                     //if index i is greater or equal to the length, then it's added to the new item list
                     result.add(materialList.get(i));
-                    // result.add(newItem(quantity, materialList.get(i).getMaterialId(), materialList.get(i)));
 
                     // this ensures that the lengths are ready to be iterated over again, with no changes.
                     length -= materialList.get(i).getLength();
@@ -104,6 +103,7 @@ public class Calculate {
                 if (length > 0) {
                     result.add(materialList.get(0));
                 }
+
             result.forEach(mat -> mat.setQuantity(2));
             return result;
 
@@ -114,36 +114,43 @@ public class Calculate {
 
 
     //SPÆR
-    public List<Material> calculateRafter(int width, int length, ConnectionPool connectionPool) throws DatabaseException {
+    public static List<Material> calculateRafter(int length, int width, ConnectionPool connectionPool) throws DatabaseException {
 
         // Get materials from database
         String description = "Spær, monteres på rem";
         List<Material> materialList = MaterialMapper.getMaterialByDescription(description, connectionPool);
 
-
-
         // Calculate
-        // maxWidth is the largest space allowed between rafters
-        int maxWidth = 600;
+        // maxWidth is the largest space allowed between rafters (60 cm) subtracted with a rafters own width (50)
+        int maxWidth = 550;
         // then the length of the carport is divided by maxWidth, to find the quantity needed for at specific length
         int quantity = (int) ceil((double) length / (double) maxWidth);
 
         // Add the correct lengths for the rafters
         List<Material> result = new ArrayList<>();
-        // the length of the rafter has to be equal to the width of the carport
-        int length = width;
+        // the length of the rafter has to be set as equal to the width of the carport.
+        length = width;
+
         //
         for (int i = materialList.size() - 1; i > 0; i--) {
-            if ((length) >= materialList.get(i)) {
-                result.add(newItem(quantity, materialList.get(i).getMaterialId(), materialList.get(i)));
-                length -= materialList.get(i);
+            if ((length) >= materialList.get(i).getLength()) {
+                //if index i is greater or equal to the length, then it's added to the new item list
+                result.add(materialList.get(i));
+
+
+                // this ensures that the lengths are ready to be iterated over again, with no changes.
+                length -= materialList.get(i).getLength();
             }
         }
 
-        // Minimum length
+        // this ensures if there's any leftover length of material that wasn't accounted for in the loop processing the various lengths, it adds an item to the result list.
         if (length > 0) {
-            result.add(newItem(quantity, materialList.get(0).getMaterialId(), materialList.get(0)));
+            result.add(materialList.get(0));
+
         }
+
+        result.get(0).setQuantity(quantity);
+
         return result;
     }
 
