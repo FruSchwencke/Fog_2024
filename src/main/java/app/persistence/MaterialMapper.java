@@ -130,7 +130,7 @@ public class MaterialMapper {
                     int length = rs.getInt("length");
                     int height = rs.getInt("height");
 
-                    materialList.add(new Material());
+                    materialList.add(new Material(materialId, name, description, price, unitId, width, length, height));
                 }
             } catch (SQLException e) {
                 throw new DatabaseException(e.getMessage());

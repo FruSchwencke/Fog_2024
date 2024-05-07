@@ -1,5 +1,7 @@
 package app.entities;
 
+import java.util.Objects;
+
 public class Material {
     private int materialId;
     private String name;
@@ -10,11 +12,33 @@ public class Material {
     private int length;
     private int height;
 
+    private int quantity;
+
     public Material(int materialId, String name, String description, double price, int unitId, int width, int length, int height, int quantity) {
+        this.materialId = materialId;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.unitId = unitId;
+        this.width = width;
+        this.length = length;
+        this.height = height;
+        this.quantity = quantity;
     }
 
     public Material() {
 
+    }
+
+    public Material(int materialId, String name, String description, double price, int unitId, int width, int length, int height) {
+        this.materialId = materialId;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.unitId = unitId;
+        this.width = width;
+        this.length = length;
+        this.height = height;
     }
 
     @Override
@@ -28,6 +52,7 @@ public class Material {
                 ", width=" + width +
                 ", length=" + length +
                 ", height=" + height +
+                ", quantity=" + quantity +
                 '}';
     }
 
@@ -94,5 +119,22 @@ public class Material {
 
     public void setHeight(int height) {
         this.height = height;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Material material = (Material) o;
+        return materialId == material.materialId && Double.compare(price, material.price) == 0 && unitId == material.unitId && width == material.width && length == material.length && height == material.height && quantity == material.quantity && Objects.equals(name, material.name) && Objects.equals(description, material.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(materialId, name, description, price, unitId, width, length, height, quantity);
     }
 }

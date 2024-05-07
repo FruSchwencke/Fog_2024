@@ -1,10 +1,17 @@
+import app.entities.Material;
 import app.persistence.ConnectionPool;
 import app.services.Calculate;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 public class CalculateTest {
 
     private static final String USER = "postgres";
@@ -27,6 +34,19 @@ public class CalculateTest {
     @Test
     void calculatePosts(){
         assertEquals(4, Calculate.calculatePosts(4000,3000, connectionPool));
+    }
+
+    @Test
+    void calculateBeam(){
+        Material material = new Material(1514,"45x195 mm. spærtræ ubh.","Remme i sider, sadles ned i stolper",315.0,1,195,6000,45,2);
+        List<Material> expected = new ArrayList<>();
+        expected.add(material);
+        List<Material> result = new ArrayList<>();
+        result = Calculate.calculateBeam(6000,7000, connectionPool);
+
+        //assertEquals only works here, because of the equals-override in Material Class. Where it is defined what equals is.
+        assertEquals(expected, result);
+
     }
 
 }
