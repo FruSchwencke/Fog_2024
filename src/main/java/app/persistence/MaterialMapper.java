@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class MaterialMapper {
@@ -104,6 +106,41 @@ public class MaterialMapper {
         }
         return material;
     }
+
+
+
+    public static List<Material> getMaterialByDescription (String description, ConnectionPool connectionPool) throws DatabaseException {
+
+        List<Material> materialList = new ArrayList<>();
+        String sql = "SELECT * FROM materials WHERE description = ?";
+
+
+        try (Connection connection = connectionPool.getConnection()) {
+
+            try (PreparedStatement ps = connection.prepareStatement(sql)) {
+                ps.setString(1, description);
+                ResultSet rs = ps.executeQuery();
+
+                while (rs.next()) {
+                    int materialId = rs.getInt("m_id");
+                    String name = rs.getString("name");
+                    double price = rs.getDouble("price");
+                    int unitId = rs.getInt("unit_id");
+                    int width = rs.getInt("width");
+                    int length = rs.getInt("length");
+                    int height = rs.getInt("height");
+
+                    materialList.add(new Material());
+                }
+            } catch (SQLException e) {
+                throw new DatabaseException(e.getMessage());
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException(e.getMessage());
+        }
+        return materialList;
+    }
+
 
 
 }

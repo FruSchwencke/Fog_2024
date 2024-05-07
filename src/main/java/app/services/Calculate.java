@@ -5,6 +5,8 @@ import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
 import app.persistence.MaterialMapper;
 
+import java.util.List;
+
 public class Calculate {
 
 
@@ -47,5 +49,18 @@ public class Calculate {
     }
 
 
+
+    public static int calculateBeam (){
+
+        // Get material from DB
+        String description = "Remme i sider, sadles ned i stolper";
+        try {
+            List<Material> materialList = MaterialMapper.getMaterialByDescription(description, new ConnectionPool());
+        } catch (DatabaseException e) {
+            throw new RuntimeException(e);
+        }
+
+        return 0;
+    }
 
 }
