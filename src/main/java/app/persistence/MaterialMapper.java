@@ -5,6 +5,8 @@ import app.entities.Material;
 import app.exceptions.DatabaseException;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class MaterialMapper {
@@ -82,5 +84,35 @@ public class MaterialMapper {
             throw new DatabaseException("Fejl i opdatering af en materialer", e.getMessage());
         }
     }
+    public static List<Material> companyMaterialList (ConnectionPool connectionPool) throws DatabaseException {
+        List <Material> materials= new ArrayList<>();
+        String sql="Select * from materials";
 
+        try(Connection connection = connectionPool.getConnection();
+            PreparedStatement ps = connection.prepareStatement(sql))
+
+        {
+
+            ResultSet rs =ps.executeQuery();
+            while (rs.next())
+            {
+               int materialId = rs.getInt("m_id");
+                String name = rs.getString("name");
+                String description = rs.getString("description");
+                double price = rs.getDouble("price");
+                int unitId = rs.getInt("unit_id");
+                int width = rs.getInt("width");
+                int length = rs.getInt("length");
+                int height = rs.getInt("height");
+                Material material = new Material(materialId,name,description,price,unitId,width,length,height);
+                materials.add(material);
+
+            }
+
+        } catch (SQLException e)
+        {
+            throw new DatabaseException("Fejl ved indhentning af virksomhedens materiale liste =" , e.getMessage());
+        }
+        return materials;
+    }
 }

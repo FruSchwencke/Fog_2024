@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>FOG</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
+</head>
+
+<body>
+
+<div id="page">
+
+    <header>
+        <img src="../public/images/logofog.PNG" th:src="@{/images/logofog.PNG}" height="176" width="179"/>
+    </header>
+
+    <nav>
+        <div id="leftnav">
+            <a href="salesperson_page.html" th:href="@{/salesperson}" class="btn-gen">Tilbage</a>
+        </div>
+        <div id="rightnav">
+            <a href="index.html" th:href="@{/logout}" class="btn-gen">Log ud</a>
+        </div>
+    </nav>
+
+    <div class="flex-container">
+        <div>
+            <h3>Virksomhedens materiale liste</h3>
+            <div>
+                <form method="post" th:action="@{/company_mat_list}">
+                    <button class="btn-create" type="submit">Søg</button>
+
+            </form> </div>
+            <table class="createuser-form">
+                <thead>
+                <tr>
+                    <th>Materiale ID</th>
+                    <th>Navn</th>
+                    <th>Beskrivelse</th>
+                    <th>Pris</th>
+                    <th>Enhed</th>
+                    <th>Bredde</th>
+                    <th>Længde</th>
+                    <th>Højde</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="material : ${materials}">
+                    <td th:text="${material.materialId}"></td>
+                    <td th:text="${material.name}"></td>
+                    <td th:text="${material.description}"></td>
+                    <td th:text="${material.price}"></td>
+                    <td th:text="${material.unitId}"></td>
+                    <td th:text="${material.width}"></td>
+                    <td th:text="${material.length}"></td>
+                    <td th:text="${material.height}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

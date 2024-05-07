@@ -11,6 +11,26 @@ public class Material {
     private int length;
     private int height;
 
+    public int getMaterialId() {
+        return materialId;
+    }
+
+    public int getUnitId() {
+        return unitId;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getLength() {
+        return length;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
     public String getName() {
         return name;
     }
@@ -27,6 +47,17 @@ public class Material {
         this.name = name;
         this.description = description;
         this.price = price;
+    }
+
+    public Material(int materialId, String name, String description, double price, int unitId, int width, int length, int height) {
+        this.materialId = materialId;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.unitId = unitId;
+        this.width = width;
+        this.length = length;
+        this.height = height;
     }
 
     @Override
