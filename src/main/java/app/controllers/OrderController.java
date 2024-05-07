@@ -18,6 +18,7 @@ import java.util.List;
             app.post("/customize", ctx -> customizeCarportRoute(ctx, connectionPool));
             app.get("/order_details/{orderId}", ctx -> getOrderDetails(ctx, connectionPool));
             app.post("/updatetotalprice", ctx -> updateTotalPrice(ctx, connectionPool));
+            app.post("/setstatus2", ctx -> setStatus2(ctx, connectionPool));
 
         }
 
@@ -26,12 +27,13 @@ import java.util.List;
                 List<Order> allOrdersList = OrderMapper.getAllOrders(connectionPool);
                 ctx.attribute("allOrdersList", allOrdersList);
                 ctx.render("salesperson_page.html");
+
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
         }
 
-        private static void getOrderDetails(Context ctx, ConnectionPool connectionPool) {
+            private static void getOrderDetails(Context ctx, ConnectionPool connectionPool) {
             try {
                 int orderId = Integer.parseInt(ctx.pathParam("orderId"));
                 Order orderDetails = OrderMapper.getOrderDetails(orderId, connectionPool);
@@ -65,7 +67,6 @@ import java.util.List;
             Order order = new Order(Integer.parseInt(width), Integer.parseInt(length), input);
 
             //catch orderId from orderMapper...
-
         }
 
         public static void updateTotalPrice(Context ctx, ConnectionPool connectionPool) {
@@ -92,6 +93,52 @@ import java.util.List;
             double newMargin = ((newPrice - originalPrice + originalMarginAmount) / newPrice) * 100;
             return newMargin;
         }
+
+        private static void setStatus2(Context ctx, ConnectionPool connectionPool) {
+            try {
+                int orderId = Integer.parseInt(ctx.formParam("orderId"));
+                int newStatusId = 2;
+
+                OrderMapper.updateStatus(orderId, newStatusId, connectionPool);
+
+                ctx.redirect("/salesperson");
+            } catch (NumberFormatException | DatabaseException e) {
+
+                ctx.attribute("message", "Fejl ved opdatering af ordrestatus: " + e.getMessage());
+
+            }
+        }
+
+        private static void setStatus3(Context ctx, ConnectionPool connectionPool) {
+            try {
+                int orderId = Integer.parseInt(ctx.formParam("orderId"));
+                int newStatusId = 3;
+
+                OrderMapper.updateStatus(orderId, newStatusId, connectionPool);
+
+                ctx.redirect("/salesperson");
+            } catch (NumberFormatException | DatabaseException e) {
+
+                ctx.attribute("message", "Fejl ved opdatering af ordrestatus: " + e.getMessage());
+
+            }
+        }
+
+        private static void setStatus4(Context ctx, ConnectionPool connectionPool) {
+            try {
+                int orderId = Integer.parseInt(ctx.formParam("orderId"));
+                int newStatusId = 4;
+
+                OrderMapper.updateStatus(orderId, newStatusId, connectionPool);
+
+                ctx.redirect("/salesperson");
+            } catch (NumberFormatException | DatabaseException e) {
+
+                ctx.attribute("message", "Fejl ved opdatering af ordrestatus: " + e.getMessage());
+
+            }
+        }
+
 
     }
 

@@ -13,7 +13,10 @@ public class OrderMapper {
 
     public static List<Order> getAllOrders(ConnectionPool connectionPool) throws SQLException {
         List<Order> allOrdersList = new ArrayList<>();
-        String sql = "SELECT order_id, status_id FROM orders";
+        String sql = "SELECT o.order_id, s.status_name " +
+                "FROM orders o " +
+                "JOIN status s ON o.status_id = s.status_id";
+
 
         try (
                 Connection connection = connectionPool.getConnection();
@@ -22,7 +25,7 @@ public class OrderMapper {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 int orderId = rs.getInt("order_id");
-                String status = rs.getString("status_id");
+                String status = rs.getString("status_name");
 
                 Order order = new Order(orderId, status);
                 allOrdersList.add(order);
@@ -127,6 +130,27 @@ public class OrderMapper {
             throw new DatabaseException(msg, e.getMessage());
         }
     }
+    public static void updateStatus(int orderId, int newStatusId, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "UPDATE orders SET status_id = ? WHERE order_id = ?";
+
+        try (
+                Connection connection = connectionPool.getConnection();
+                PreparedStatement ps = connection.prepareStatement(sql)
+        ) {
+            ps.setInt(1, newStatusId);
+            ps.setInt(2, orderId);
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected == 0) {
+                throw new DatabaseException("Ingen rækker blev påvirket. Ordren med id " + orderId + " blev ikke fundet.");
+            }
+        } catch (SQLException e) {
+            String msg = "Der er sket en fejl ved opdatering af ordrestatus. Prøv igen.";
+            throw new DatabaseException(msg, e.getMessage());
+        }
+    }
+
+
 
     public static void updateTotalPrice(int orderId, double newTotalPrice, ConnectionPool connectionPool) throws DatabaseException {
         String sql = "UPDATE orders SET total_price = ? WHERE order_id = ?";
