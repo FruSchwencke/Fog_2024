@@ -19,7 +19,6 @@ import java.util.List;
             app.get("/order_details/{orderId}", ctx -> getOrderDetails(ctx, connectionPool));
             app.post("/updatetotalprice", ctx -> updateTotalPrice(ctx, connectionPool));
 
-
         }
 
         private static void getAllOrders(Context ctx, ConnectionPool connectionPool) {

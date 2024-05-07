@@ -51,9 +51,9 @@
 
 
 
-    <p th:if="${session.currentUser != null}">
-        <a href="salesperson_page.html" th:href="@{/salesperson}">Tilbage</a>
-    </p>
+    <form action="/salesperson" method="get">
+        <button type="submit">Tilbage</button>
+    </form>
 </div>
 </body>
 </html>
