@@ -82,4 +82,5 @@ public class MaterialMapper {
             throw new DatabaseException("Fejl i opdatering af en materialer", e.getMessage());
         }
     }
+
 }
