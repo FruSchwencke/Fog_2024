@@ -27,11 +27,13 @@ import java.util.List;
                 List<Order> allOrdersList = OrderMapper.getAllOrders(connectionPool);
                 ctx.attribute("allOrdersList", allOrdersList);
                 ctx.render("salesperson_page.html");
+
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
         }
-        private static void getOrderDetails(Context ctx, ConnectionPool connectionPool) {
+
+            private static void getOrderDetails(Context ctx, ConnectionPool connectionPool) {
             try {
                 int orderId = Integer.parseInt(ctx.pathParam("orderId"));
                 Order orderDetails = OrderMapper.getOrderDetails(orderId, connectionPool);
