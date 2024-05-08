@@ -153,11 +153,24 @@ public class Calculate {
 
 
     // STERN
+    public static List<Material> calculateStern(int carportLength, int carportWidth, ConnectionPool connectionPool) throws DatabaseException {
 
-    //public static List<Material> calculateStern(){
+        // Get materials from database
+        String sternSides = "Understernbrædder til siderne";
+        List<Material> materialList = MaterialMapper.getMaterialByDescription(sternSides, connectionPool);
+
+        // Get materials from database
+        String sternFrontAndBack = "Understernbrædder til for- & bagende";
+        List<Material> materialList2 = MaterialMapper.getMaterialByDescription(sternFrontAndBack, connectionPool);
 
 
-    //}
+
+
+
+
+
+        return null;
+    }
 
 
 
