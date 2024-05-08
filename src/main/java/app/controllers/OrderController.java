@@ -37,7 +37,6 @@ import java.util.List;
                 throw new RuntimeException(e); //på anden side.
             }
 
-
         }
 
         private static void getOrderPrUser(Context ctx, ConnectionPool connectionPool)
@@ -148,19 +147,15 @@ import java.util.List;
             }
         }
 
-        private static void setStatus3(Context ctx, ConnectionPool connectionPool) {
-            try {
-                int orderId = Integer.parseInt(ctx.formParam("orderId"));
+        private static void setStatusAccepted(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+
+            Order orderUser = ctx.attribute("orderUser");
+
                 int newStatusId = 3;
+               OrderMapper.updateStatus(orderUser.getOrderId(), newStatusId, connectionPool);
 
-                OrderMapper.updateStatus(orderId, newStatusId, connectionPool);
 
 
-            } catch (NumberFormatException | DatabaseException e) {
-
-                ctx.attribute("message", "Fejl ved opdatering af ordrestatus: " + e.getMessage());
-
-            }
         }
 
         private static void setStatus4(Context ctx, ConnectionPool connectionPool) {

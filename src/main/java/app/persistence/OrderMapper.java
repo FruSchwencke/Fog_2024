@@ -21,8 +21,8 @@ public class OrderMapper {
                 Connection connection = connectionPool.getConnection();
                 PreparedStatement ps = connection.prepareStatement(sql)
         ) {
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
                     int orderId = rs.getInt("order_id");
                     String status = rs.getString("status_name");
                     Order order = new Order(orderId, status);
@@ -32,12 +32,6 @@ public class OrderMapper {
 
                 throw new DatabaseException("Ingen ordre at hente");
             }
-        } catch (SQLException e) {
-
-            String msg = "Der er sket en fejl. Prøv igen";
-            throw new DatabaseException(msg, e.getMessage());
-        }
-
         return allOrdersList;
     }
 
@@ -187,6 +181,9 @@ public class OrderMapper {
             throw new DatabaseException(msg, e.getMessage());
         }
     }
+
+
+
 
 
 
