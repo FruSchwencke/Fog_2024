@@ -36,7 +36,7 @@
             <p>Længde: <span th:text="${session.orderUser.length}"></span></p>
             <p>Bredde: <span th:text="${session.orderUser.width}"></span></p>
             <p>Status: <span th:text="${session.orderUser.status}"></span></p>
-            <p th:if="${session.orderUser.status != 'Afventer'}">Samletpris: <span th:text="${session.orderUser.totalPrice}"></span></p>
+            <p th:if="${session.orderUser.status != 'Afventer'}">Total pris: <span th:text="${session.orderUser.totalPrice}"></span></p>
 
         </div>
 

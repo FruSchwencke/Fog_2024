@@ -123,10 +123,14 @@ import java.util.List;
 
         private static void setStatusAccepted(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
 
-            Order orderUser = ctx.attribute("orderUser");
+            Order orderUser = ctx.sessionAttribute("orderUser");
 
                 int newStatusId = 3;
                OrderMapper.updateStatus(orderUser.getOrderId(), newStatusId, connectionPool);
+               orderUser.setStatusId(newStatusId);
+
+            ctx.sessionAttribute("orderUser", orderUser);
+            ctx.render("customer_page.html");
 
 
 

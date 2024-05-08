@@ -70,4 +70,8 @@ public class Order {
     public int getStatusId() {
         return statusId;
     }
+
+    public void setStatusId(int statusId) {
+        this.statusId = statusId;
+    }
 }
