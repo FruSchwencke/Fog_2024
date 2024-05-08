@@ -82,7 +82,7 @@ public class CalculateTest {
 
     @Test
     void calcRoofing() throws DatabaseException {
-        assertEquals(new Material(), Calculate.calculateRoof(6000, 2400, connectionPool));
+        assertEquals(new Material(), Calculate.calculateRoof(6000, 2250, connectionPool));
     }
 
 
