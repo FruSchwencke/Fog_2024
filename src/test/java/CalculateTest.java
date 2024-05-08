@@ -5,20 +5,15 @@ import app.services.Calculate;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+
 public class CalculateTest {
 
     private static final String USER = "postgres";
-    private static final String PASSWORD = "postgres";
-    private static final String URL = "jdbc:postgresql://localhost:5432/%s?currentSchema=public";
-    private static final String DB = "databasename";
+    private static final String PASSWORD = "Amokka123";
+    private static final String URL = "jdbc:postgresql://164.92.183.102:5432/%s?currentSchema\\\\public";
+    private static final String DB = "carport";
     private static ConnectionPool connectionPool;
 
 
