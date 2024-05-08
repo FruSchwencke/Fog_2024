@@ -28,7 +28,7 @@ private int role;
         this.role = role;
     }
 
-    public User(String firstName, String lastName, String email, String address, String phonenumber, String zipcode, String city) {
+    public User(String firstName, String lastName, String email, String address, String zipcode, String city, String phonenumber) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;

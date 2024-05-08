@@ -13,7 +13,8 @@ import java.util.List;
 
     public class OrderController {
         public static void addRoutes(Javalin app, ConnectionPool connectionPool) {
-            //app.get("/salesperson", ctx -> getAllOrders(ctx, connectionPool));
+            app.get("/salesperson", ctx -> getAllOrders(ctx, connectionPool));
+            app.post("/salesperson", ctx -> getAllOrders(ctx, connectionPool));
             app.get("/customize", ctx -> ctx.render("customize_page.html"));
             app.post("/customize", ctx -> customizeCarportRoute(ctx, connectionPool));
             app.get("/order_details/{orderId}", ctx -> getOrderDetails(ctx, connectionPool));
@@ -22,14 +23,19 @@ import java.util.List;
 
         }
 
-//        private static void getAllOrders(Context ctx, ConnectionPool connectionPool) throws SQLException {
-//
-//            List<Order> allOrdersList = OrderMapper.getAllOrders(connectionPool);
-//            ctx.attribute("allOrdersList", allOrdersList);
-//            ctx.render("salesperson_page.html");
-//
-//
-//        }
+        private static void getAllOrders(Context ctx, ConnectionPool connectionPool)  {
+
+            List<Order>allOrdersList = null;
+            try {
+                allOrdersList = OrderMapper.getAllOrders(connectionPool);
+                ctx.attribute("allOrdersList", allOrdersList);
+                ctx.render("salesperson_page.html");
+            } catch (DatabaseException e) {
+                throw new RuntimeException(e); //på anden side.
+            }
+
+
+        }
 
             private static void getOrderDetails(Context ctx, ConnectionPool connectionPool) {
             try {
@@ -39,9 +45,7 @@ import java.util.List;
 
                 if (orderDetails != null) {
                     ctx.attribute("orderDetails", orderDetails);
-                }
 
-                if (userInformation != null) {
                     ctx.attribute("userInformation", userInformation);
                 }
 
@@ -98,8 +102,10 @@ import java.util.List;
                 int newStatusId = 2;
 
                 OrderMapper.updateStatus(orderId, newStatusId, connectionPool);
+                List<Order>allOrdersList = OrderMapper.getAllOrders(connectionPool);
+                ctx.attribute("allOrdersList", allOrdersList);
+                ctx.render("salesperson_page.html");
 
-                ctx.redirect("/salesperson");
             } catch (NumberFormatException | DatabaseException e) {
 
                 ctx.attribute("message", "Fejl ved opdatering af ordrestatus: " + e.getMessage());
@@ -114,7 +120,7 @@ import java.util.List;
 
                 OrderMapper.updateStatus(orderId, newStatusId, connectionPool);
 
-                ctx.redirect("/salesperson");
+
             } catch (NumberFormatException | DatabaseException e) {
 
                 ctx.attribute("message", "Fejl ved opdatering af ordrestatus: " + e.getMessage());

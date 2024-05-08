@@ -11,29 +11,36 @@ import java.util.List;
 
 public class OrderMapper {
 
-    public static List<Order> getAllOrders(ConnectionPool connectionPool) throws SQLException {
+    public static List<Order> getAllOrders(ConnectionPool connectionPool)  throws DatabaseException{
         List<Order> allOrdersList = new ArrayList<>();
         String sql = "SELECT o.order_id, s.status_name " +
                 "FROM orders o " +
                 "JOIN status s ON o.status_id = s.status_id";
 
-
         try (
                 Connection connection = connectionPool.getConnection();
                 PreparedStatement ps = connection.prepareStatement(sql)
         ) {
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                int orderId = rs.getInt("order_id");
-                String status = rs.getString("status_name");
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    int orderId = rs.getInt("order_id");
+                    String status = rs.getString("status_name");
+                    Order order = new Order(orderId, status);
+                    allOrdersList.add(order);
+                }
+            } catch (SQLException e) {
 
-                Order order = new Order(orderId, status);
-                allOrdersList.add(order);
-
+                throw new DatabaseException("Ingen ordre at hente");
             }
-            return allOrdersList;
+        } catch (SQLException e) {
+
+            String msg = "Der er sket en fejl. Prøv igen";
+            throw new DatabaseException(msg, e.getMessage());
         }
+
+        return allOrdersList;
     }
+
 
     public static Order getOrderDetails(int orderId, ConnectionPool connectionPool)
     {

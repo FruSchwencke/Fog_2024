@@ -42,7 +42,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="order : ${session.allOrdersList}">
+                <tr th:each="order : ${allOrdersList}">
                     <td>
                         <a th:href="@{'/order_details/' + ${order.orderId}}">
                             <span th:text="${order.orderId}"></span>
