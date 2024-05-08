@@ -8,6 +8,9 @@ import app.persistence.OrderMapper;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -18,7 +21,7 @@ import java.util.List;
             app.get("/customize", ctx -> ctx.render("customize_page.html"));
             app.post("/customize", ctx -> customizeCarportRoute(ctx, connectionPool));
             app.get("/order_details/{orderId}", ctx -> getOrderDetails(ctx, connectionPool));
-            app.post("/updatetotalprice", ctx -> updateTotalPrice(ctx, connectionPool));
+//            app.post("/updatetotalprice", ctx -> updateTotalPrice(ctx, connectionPool));
             app.post("/setstatus2", ctx -> setStatus2(ctx, connectionPool));
 
         }
@@ -37,6 +40,12 @@ import java.util.List;
 
         }
 
+        private static void getOrderPrUser(Context ctx, ConnectionPool connectionPool)
+        {
+
+
+        }
+
             private static void getOrderDetails(Context ctx, ConnectionPool connectionPool) {
             try {
                 int orderId = Integer.parseInt(ctx.pathParam("orderId"));
@@ -45,7 +54,6 @@ import java.util.List;
 
                 if (orderDetails != null) {
                     ctx.attribute("orderDetails", orderDetails);
-
                     ctx.attribute("userInformation", userInformation);
                 }
 
@@ -71,23 +79,33 @@ import java.util.List;
             //catch orderId from orderMapper...
         }
 
-        public static void updateTotalPrice(Context ctx, ConnectionPool connectionPool) {
-            try {
-                int orderId = Integer.parseInt(ctx.formParam("orderId"));
-                double newTotalPrice = Double.parseDouble(ctx.formParam("newTotalPrice"));
+        public static Order getOrderDetails(int orderId, ConnectionPool connectionPool)
+        {
+            String sql = "SELECT length, width, total_price FROM orders WHERE order_id = ?";
+            Order orderDetails = null;
+            try (
+                    Connection connection = connectionPool.getConnection();
+                    PreparedStatement ps = connection.prepareStatement(sql)
+            ) {
+                ps.setInt(1, orderId);
 
-                OrderMapper.updateTotalPrice(orderId, newTotalPrice, connectionPool);
-                ctx.attribute("messageupdateprice", newTotalPrice + " er nu prisen for ordre nr " + orderId + ".");
-                ctx.render("order_details");
+                ResultSet rs = ps.executeQuery();
 
-            } catch (NumberFormatException e) {
+                if (rs.next()) {
 
+                    int length = rs.getInt("length");
+                    int width = rs.getInt("width");
+                    double totalprice = rs.getDouble("total_price");
 
-            } catch (DatabaseException e) {
-                String s = "Fejl ved opdatering af totalpris: " + e.getMessage();
+                    orderDetails = new Order(orderId, length, width, totalprice);
+
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
-        }
 
+            return orderDetails;
+        }
         public static double calculateMargin(double originalPrice, double newPrice) {
 
             double originalMargin = 30.0;

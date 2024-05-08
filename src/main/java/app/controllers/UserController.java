@@ -128,11 +128,12 @@ public class UserController {
     private static void login(Context ctx, ConnectionPool connectionPool) {
         String email = ctx.formParam("email");
         String password = ctx.formParam("password");
-
         try {
             User user = UserMapper.login(email, password, connectionPool);
             if (user.getRole() == 1) {
                 ctx.sessionAttribute("currentUser", user);
+                Order orderUser = OrderMapper.getOrderPrUser(user.getUserId(),connectionPool);
+                ctx.attribute("orderUser", orderUser);
                 ctx.render("customer_page.html");
             } else {
                 List<Order> allOrdersList = OrderMapper.getAllOrders(connectionPool);

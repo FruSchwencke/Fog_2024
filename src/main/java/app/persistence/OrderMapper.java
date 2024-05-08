@@ -22,7 +22,7 @@ public class OrderMapper {
                 PreparedStatement ps = connection.prepareStatement(sql)
         ) {
             try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
+                if (rs.next()) {
                     int orderId = rs.getInt("order_id");
                     String status = rs.getString("status_name");
                     Order order = new Order(orderId, status);
@@ -39,6 +39,37 @@ public class OrderMapper {
         }
 
         return allOrdersList;
+    }
+
+    public static Order getOrderPrUser (int userId, ConnectionPool connectionPool) {
+        String sql = "SELECT o.length, o.width, o.total_price, s.status_name " +
+                "FROM orders o " +
+                "JOIN status s ON o.status_id = s.status_id " +
+                "WHERE o.user_id = ?";
+
+
+        Order orderUser = null;
+        try (
+                Connection connection = connectionPool.getConnection();
+                PreparedStatement ps = connection.prepareStatement(sql)
+        ) {
+            ps.setInt(1, userId);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                int length = rs.getInt("length");
+                int width = rs.getInt("width");
+                double totalprice = rs.getDouble("total_price");
+                String status = rs.getString("status_name");
+                orderUser = new Order(length, width, status, totalprice);
+
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return orderUser;
     }
 
 
