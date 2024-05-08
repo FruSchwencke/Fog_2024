@@ -31,23 +31,23 @@
     </nav>
     <div class="flex-container">
         <div>
+
             SE DIN ORDRE HER!
-            <p>1: <span th:text="${orderUser.status}"></span></p>
-            <p>1: <span th:text="${orderUser.length}"></span></p>
-            <p>2: <span th:text="${orderUser.width}"></span></p>
-
-
-            <p>Samletpris: <span th:text="${orderUser.totalPrice}"></span></p>
-
+            <p>Længde: <span th:text="${orderUser.length}"></span></p>
+            <p>Bredde: <span th:text="${orderUser.width}"></span></p>
+            <p>Status: <span th:text="${orderUser.status}"></span></p>
+            <p th:unless="${orderUser.status == 'Afventer'}">Samletpris: <span th:text="${orderUser.totalPrice}"></span></p>
         </div>
+
+
 
 
         <div>
             <h3>more magic</h3>
-            </div>
+        </div>
         <div>
             <h3>Even more magic</h3>
-            </div>
+        </div>
 
     </div>
 </div>

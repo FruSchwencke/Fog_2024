@@ -78,33 +78,7 @@ import java.util.List;
             //catch orderId from orderMapper...
         }
 
-        public static Order getOrderDetails(int orderId, ConnectionPool connectionPool)
-        {
-            String sql = "SELECT length, width, total_price FROM orders WHERE order_id = ?";
-            Order orderDetails = null;
-            try (
-                    Connection connection = connectionPool.getConnection();
-                    PreparedStatement ps = connection.prepareStatement(sql)
-            ) {
-                ps.setInt(1, orderId);
 
-                ResultSet rs = ps.executeQuery();
-
-                if (rs.next()) {
-
-                    int length = rs.getInt("length");
-                    int width = rs.getInt("width");
-                    double totalprice = rs.getDouble("total_price");
-
-                    orderDetails = new Order(orderId, length, width, totalprice);
-
-                }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-
-            return orderDetails;
-        }
         public static double calculateMargin(double originalPrice, double newPrice) {
 
             double originalMargin = 30.0;

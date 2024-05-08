@@ -35,12 +35,12 @@ public class OrderMapper {
         return allOrdersList;
     }
 
+
     public static Order getOrderPrUser (int userId, ConnectionPool connectionPool) {
         String sql = "SELECT o.length, o.width, o.total_price, s.status_name " +
                 "FROM orders o " +
                 "JOIN status s ON o.status_id = s.status_id " +
                 "WHERE o.user_id = ?";
-
 
         Order orderUser = null;
         try (
@@ -65,6 +65,7 @@ public class OrderMapper {
         }
         return orderUser;
     }
+
 
 
     public static Order getOrderDetails(int orderId, ConnectionPool connectionPool)

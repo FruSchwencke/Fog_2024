@@ -33,7 +33,7 @@
         <div>
 
 
-        <h3>ORDRELISTE</h3>
+            <h3>ORDRELISTE</h3>
             <table>
                 <thead>
                 <tr>
@@ -43,7 +43,11 @@
                 </thead>
                 <tbody>
                 <tr th:each="order : ${allOrdersList}">
-                    <td th:text="${order.orderId}"></td>
+                    <td>
+                        <a th:href="@{'/order_details/' + ${order.orderId}}">
+                            <span th:text="${order.orderId}"></span>
+                        </a>
+                    </td>
                     <td th:text="${order.status}"></td>
                 </tr>
                 </tbody>
