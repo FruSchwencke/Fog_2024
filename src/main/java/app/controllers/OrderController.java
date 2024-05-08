@@ -21,7 +21,7 @@ import java.util.List;
             app.get("/customize", ctx -> ctx.render("customize_page.html"));
             app.post("/customize", ctx -> customizeCarportRoute(ctx, connectionPool));
             app.get("/order_details/{orderId}", ctx -> getOrderDetails(ctx, connectionPool));
-//            app.post("/updatetotalprice", ctx -> updateTotalPrice(ctx, connectionPool));
+            app.post("/updatetotalprice", ctx -> updateTotalPrice(ctx, connectionPool));
             app.post("/setstatus2", ctx -> setStatus2(ctx, connectionPool));
 
         }
@@ -112,6 +112,23 @@ import java.util.List;
             double originalMarginAmount = originalPrice * (originalMargin / 100);
             double newMargin = ((newPrice - originalPrice + originalMarginAmount) / newPrice) * 100;
             return newMargin;
+        }
+
+        public static void updateTotalPrice(Context ctx, ConnectionPool connectionPool) {
+            try {
+                int orderId = Integer.parseInt(ctx.formParam("orderId"));
+                double newTotalPrice = Double.parseDouble(ctx.formParam("newTotalPrice"));
+
+                OrderMapper.updateTotalPrice(orderId, newTotalPrice, connectionPool);
+                ctx.attribute("messageupdateprice", newTotalPrice + " er nu prisen for ordre nr " + orderId + ".");
+                ctx.render("order_details");
+
+            } catch (NumberFormatException e) {
+
+
+            } catch (DatabaseException e) {
+                String s = "Fejl ved opdatering af totalpris: " + e.getMessage();
+            }
         }
 
         private static void setStatus2(Context ctx, ConnectionPool connectionPool) {
