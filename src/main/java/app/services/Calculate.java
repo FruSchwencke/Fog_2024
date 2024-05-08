@@ -104,7 +104,7 @@ public class Calculate {
                     result.add(materialList.get(0));
                 }
 
-            result.forEach(mat -> mat.setQuantity(2));
+            result.forEach(mat -> mat.setQuantity(quantity));
             return result;
 
         } catch (DatabaseException e) {
@@ -155,6 +155,66 @@ public class Calculate {
     }
 
 
+
+    // STERN
+
+    //public static List<Material> calculateStern(){
+
+
+    //}
+
+
+
+
+    // TAGPLADER
+
+    public static List<Material> calculateRoof(int length, int width, ConnectionPool connectionPool) throws DatabaseException {
+
+        // Get materials from database
+        String description = "Tagplader monteres på spær";
+        List<Material> materialList = MaterialMapper.getMaterialByDescription(description, connectionPool);
+
+
+        // Create list with available lengths
+        List<Integer> availableLengths = new ArrayList<>();
+        for (Material material : materialList) {
+            availableLengths.add(material.getLength());
+        }
+
+        // Calculate
+        int overlapWidth = 70;
+        int overlapLength = 200;
+        int quantity;
+
+        // Add the right lengths
+        List<Material> result = new ArrayList<>();
+
+        for (int i = availableLengths.size() - 1; i > 0; i--) {
+            if ((length) >= availableLengths.get(i)) {
+
+                // Width count
+                int itemWidth = materialList.get(i).getWidth() - overlapWidth;
+                quantity = (int) ceil((double) width / (double) itemWidth);
+
+                result.add(newItem(quantity, materialList.get(i).getMaterialId(), materialList.get(i)));
+                length -= availableLengths.get(i) - overlapLength;
+            }
+        }
+
+        // Minimum length
+        if (length > 0) {
+
+            // Width count
+            int itemWidth = materialList.get(0).getWidth() - overlapWidth;
+            quantity = (int) ceil((double) width / (double) itemWidth);
+
+            result.add(newItem(quantity, materialList.get(0).getMaterialId(), materialList.get(0)));
+        }
+        return result;
+
+
+
+    }
 
 
 }

@@ -80,4 +80,10 @@ public class CalculateTest {
     }
 
 
+    @Test
+    void calcRoofing() throws DatabaseException {
+        assertEquals(new Material(), Calculate.calculateRoof(6000, 6000, connectionPool));
+    }
+
+
 }
