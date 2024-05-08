@@ -168,18 +168,13 @@ public class Calculate {
 
     // TAGPLADER
 
-    public static List<Material> calculateRoof(int length, int width, ConnectionPool connectionPool) throws DatabaseException {
+    public static List<Material> calculateRoof(int carportLength, int carportWidth, ConnectionPool connectionPool) throws DatabaseException {
 
         // Get materials from database
         String description = "Tagplader monteres på spær";
         List<Material> materialList = MaterialMapper.getMaterialByDescription(description, connectionPool);
 
 
-        // Create list with available lengths
-        List<Integer> availableLengths = new ArrayList<>();
-        for (Material material : materialList) {
-            availableLengths.add(material.getLength());
-        }
 
         // Calculate
         int overlapWidth = 70;
@@ -188,16 +183,17 @@ public class Calculate {
 
         // Add the right lengths
         List<Material> result = new ArrayList<>();
-
-        for (int i = availableLengths.size() - 1; i > 0; i--) {
-            if ((length) >= availableLengths.get(i)) {
+        int length = carportWidth;
+        for (int i = materialList.size() - 1; i > 0; i--) {
+            if ((length) >= materialList.get(i).getLength()) {
 
                 // Width count
                 int itemWidth = materialList.get(i).getWidth() - overlapWidth;
-                quantity = (int) ceil((double) width / (double) itemWidth);
+                quantity = (int) ceil((double) carportLength / (double) itemWidth);
 
                 result.add(newItem(quantity, materialList.get(i).getMaterialId(), materialList.get(i)));
-                length -= availableLengths.get(i) - overlapLength;
+                length -= (materialList.get(i).getWidth() - overlapWidth) * quantity;
+               // length -= materialList.get(i).getLength() - overlapLength;
             }
         }
 
@@ -206,7 +202,7 @@ public class Calculate {
 
             // Width count
             int itemWidth = materialList.get(0).getWidth() - overlapWidth;
-            quantity = (int) ceil((double) width / (double) itemWidth);
+            quantity = (int) ceil((double) carportWidth / (double) itemWidth);
 
             result.add(newItem(quantity, materialList.get(0).getMaterialId(), materialList.get(0)));
         }
