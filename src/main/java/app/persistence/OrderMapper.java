@@ -11,12 +11,11 @@ import java.util.List;
 
 public class OrderMapper {
 
-    public static List<Order> getAllOrders(ConnectionPool connectionPool) throws SQLException {
+    public static List<Order> getAllOrders(ConnectionPool connectionPool)  throws DatabaseException{
         List<Order> allOrdersList = new ArrayList<>();
         String sql = "SELECT o.order_id, s.status_name " +
                 "FROM orders o " +
                 "JOIN status s ON o.status_id = s.status_id";
-
 
         try (
                 Connection connection = connectionPool.getConnection();
@@ -24,16 +23,50 @@ public class OrderMapper {
         ) {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                int orderId = rs.getInt("order_id");
-                String status = rs.getString("status_name");
+                    int orderId = rs.getInt("order_id");
+                    String status = rs.getString("status_name");
+                    Order order = new Order(orderId, status);
+                    allOrdersList.add(order);
+                }
+            } catch (SQLException e) {
 
-                Order order = new Order(orderId, status);
-                allOrdersList.add(order);
+                throw new DatabaseException("Ingen ordre at hente");
+            }
+        return allOrdersList;
+    }
+
+
+    public static Order getOrderPrUser (int userId, ConnectionPool connectionPool) {
+        String sql = "SELECT o.length, o.width, o.total_price, s.status_name " +
+                "FROM orders o " +
+                "JOIN status s ON o.status_id = s.status_id " +
+                "WHERE o.user_id = ?";
+
+        Order orderUser = null;
+        try (
+                Connection connection = connectionPool.getConnection();
+                PreparedStatement ps = connection.prepareStatement(sql)
+        ) {
+            ps.setInt(1, userId);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                int length = rs.getInt("length");
+                int width = rs.getInt("width");
+                double totalprice = rs.getDouble("total_price");
+                String status = rs.getString("status_name");
+                orderUser = new Order(length, width, status, totalprice);
 
             }
-            return allOrdersList;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
+        return orderUser;
     }
+
+
 
     public static Order getOrderDetails(int orderId, ConnectionPool connectionPool)
     {
@@ -149,6 +182,9 @@ public class OrderMapper {
             throw new DatabaseException(msg, e.getMessage());
         }
     }
+
+
+
 
 
 

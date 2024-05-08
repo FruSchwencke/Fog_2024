@@ -21,7 +21,6 @@ public class UserController {
       app.post("login", ctx -> login(ctx, connectionPool));
         app.get("login", ctx -> ctx.render("login"));
         app.get("logout", ctx -> logout(ctx));
-
         app.get("salesperson", ctx -> ctx.render("salesperson_page"));
 
 
@@ -126,32 +125,26 @@ public class UserController {
         }
 
     }
-
-
-
-
     private static void login(Context ctx, ConnectionPool connectionPool) {
         String email = ctx.formParam("email");
         String password = ctx.formParam("password");
-
         try {
             User user = UserMapper.login(email, password, connectionPool);
             if (user.getRole() == 1) {
                 ctx.sessionAttribute("currentUser", user);
-
+                Order orderUser = OrderMapper.getOrderPrUser(user.getUserId(),connectionPool);
+                ctx.attribute("orderUser", orderUser);
                 ctx.render("customer_page.html");
             } else {
                 List<Order> allOrdersList = OrderMapper.getAllOrders(connectionPool);
-                ctx.sessionAttribute("currentUser", user);
-                ctx.sessionAttribute("allOrdersList", allOrdersList);
+                ctx.attribute("allOrdersList", allOrdersList);
+               ctx.sessionAttribute("currentUser", user);
                 ctx.render("salesperson_page.html");
             }
         } catch (DatabaseException e) {
             ctx.attribute("message", e.getMessage());
             ctx.render("login.html");
 
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
 
     }

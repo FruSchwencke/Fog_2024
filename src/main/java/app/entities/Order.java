@@ -9,11 +9,19 @@ public class Order {
     private String textInput;
     private String status;
     private double totalprice;
+    private int statusId;
 
     public Order(int orderId, int length, int width, double totalprice) {
         this.orderId = orderId;
         this.length = length;
         this.width = width;
+        this.totalprice = totalprice;
+    }
+
+    public Order(int length, int width, String status, double totalprice) {
+        this.length = length;
+        this.width = width;
+        this.status = status;
         this.totalprice = totalprice;
     }
 
@@ -51,5 +59,9 @@ public class Order {
 
     public double getTotalprice() {
         return totalprice;
+    }
+
+    public int getStatusId() {
+        return statusId;
     }
 }
