@@ -174,17 +174,21 @@ public class Calculate {
         String description = "Tagplader monteres på spær";
         List<Material> materialList = MaterialMapper.getMaterialByDescription(description, connectionPool);
 
-
+//        // Create list with available lengths
+//        List<Integer> ListOfItemLengths = new ArrayList<>();
+//        for (Material material : materialList) {
+//            ListOfItemLengths.add(material.getLength());
+//        }
 
         // Calculate
         int overlapWidth = 70;
         int overlapLength = 200;
         int quantity;
 
-        // Add the right lengths
+        // Add the correct lengths
         List<Material> result = new ArrayList<>();
         int length = carportWidth;
-        for (int i = materialList.size() - 1; i > 0; i--) {
+        for (int i = materialList.size() - 1; i >= 0; i--) {
             if ((length) >= materialList.get(i).getLength()) {
 
                 // Width count
@@ -192,20 +196,20 @@ public class Calculate {
                 quantity = (int) ceil((double) carportLength / (double) itemWidth);
 
                 result.add(newItem(quantity, materialList.get(i).getMaterialId(), materialList.get(i)));
-                length -= (materialList.get(i).getWidth() - overlapWidth) * quantity;
+                // length -= (materialList.get(i).getWidth() - overlapWidth) * quantity;
                // length -= materialList.get(i).getLength() - overlapLength;
             }
         }
 
         // Minimum length
-        if (length > 0) {
-
-            // Width count
-            int itemWidth = materialList.get(0).getWidth() - overlapWidth;
-            quantity = (int) ceil((double) carportWidth / (double) itemWidth);
-
-            result.add(newItem(quantity, materialList.get(0).getMaterialId(), materialList.get(0)));
-        }
+//        if (length > 0) {
+//
+//            // Width count
+//            int itemWidth = materialList.get(0).getWidth() - overlapWidth;
+//            quantity = (int) ceil((double) carportWidth / (double) itemWidth);
+//
+//            result.add(newItem(quantity, materialList.get(0).getMaterialId(), materialList.get(0)));
+//        }
         return result;
 
 
