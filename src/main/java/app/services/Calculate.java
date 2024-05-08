@@ -163,36 +163,53 @@ public class Calculate {
         String sternFrontAndBack = "Understernbrædder til for- & bagende";
         List<Material> materialList2 = MaterialMapper.getMaterialByDescription(sternFrontAndBack, connectionPool);
 
-
-
-
-
-
-
-        return null;
-    }
-
-
-
-
-    // TAGPLADER
-
-    public static List<Material> calculateRoof(int carportLength, int carportWidth, ConnectionPool connectionPool) throws DatabaseException {
-
-        // Get materials from database
-        String description = "Tagplader monteres på spær";
-        List<Material> materialList = MaterialMapper.getMaterialByDescription(description, connectionPool);
-
-
-        // Calculate
-        int overlapWidth = 70;
         int quantity;
         boolean done = false;
         // Add the correct lengths
         List<Material> result = new ArrayList<>();
 
         for (int i = 0 ; i <= materialList.size() -1; i++) {
-            //if the carportWidth is greater or equal to an item on the ListOfItemLengths, then find the quantity needed.
+
+            if (materialList.get(i).getLength() >= carportLength && !done){
+
+                int itemLength = materialList.get(i).getLength();
+                quantity = 2;
+                result.add(newItem(quantity, materialList.get(i).getMaterialId(), materialList.get(i)));
+                done = true;
+            }
+        }
+
+        for (int i = 0 ; i <= materialList2.size() -1 ; i++) {
+
+            if (materialList2.get(i).getLength() >= carportWidth && !done){
+                int itemLength = materialList2.get(i).getLength();
+                quantity = 2;
+
+                result.add(newItem(quantity, materialList2.get(i).getMaterialId(), materialList2.get(i)));
+                done = true;
+            }
+        }
+        return result;
+    }
+
+
+    // TAGPLADER
+    public static List<Material> calculateRoof(int carportLength, int carportWidth, ConnectionPool connectionPool) throws DatabaseException {
+
+        // Get materials from database
+        String description = "Tagplader monteres på spær";
+        List<Material> materialList = MaterialMapper.getMaterialByDescription(description, connectionPool);
+
+        // Calculate
+        int overlapWidth = 70;
+        int quantity;
+        boolean done = false;
+
+        // A list for correct lengths
+        List<Material> result = new ArrayList<>();
+
+        for (int i = 0 ; i <= materialList.size() -1; i++) {
+            //if the length of the material is greater or equal to carportWidth, then find the quantity needed.
             if (materialList.get(i).getLength() >= carportWidth && !done) {
 
                 // how many items is needed to cover the length of the carport.
