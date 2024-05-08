@@ -82,7 +82,15 @@ public class CalculateTest {
 
     @Test
     void calcRoofing() throws DatabaseException {
-        assertEquals(new Material(), Calculate.calculateRoof(6000, 2250, connectionPool));
+        Material material = new Material(2003, "Plastmo Ecolite blåtonet", "Tagplader monteres på spær", 97.5,1,1090,3600,0,6);
+        List<Material> expected = new ArrayList<>();
+        expected.add(material);
+        List<Material> result = new ArrayList<>();
+        result = Calculate.calculateRoof(6000,3100, connectionPool);
+
+        //assertEquals only works here, because of the equals-override in Material Class. Where it is defined what equals is.
+        assertEquals(expected, result);
+
     }
 
 
