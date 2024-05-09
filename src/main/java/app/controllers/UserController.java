@@ -22,6 +22,7 @@ public class UserController {
         app.get("login", ctx -> ctx.render("login"));
         app.get("logout", ctx -> logout(ctx));
         app.get("salesperson", ctx -> ctx.render("salesperson_page"));
+        app.get("customer", ctx -> ctx.render("customer_page"));
 
 
 

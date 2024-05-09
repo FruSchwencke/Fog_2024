@@ -159,6 +159,28 @@ nav {
     font-size: 0.8rem;
 }
 
+ .fixed-circle {
+     position: fixed;
+     bottom: 30px;
+     right: 30px;
+ }
+.overlay-text {
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-0%, -100%);
+    background-color: green;
+    padding: 3px 3px;
+    border-radius: 5px;
+    border: 2px solid black;
+    font-size: 1rem;
+    align-content: center;
+}
+
+
+
+
 
 
 
@@ -203,4 +225,12 @@ nav {
         border-radius: 15px;
 
     }
+    .fixed-circle {
+        display: none;
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+    }
+
+
 }
