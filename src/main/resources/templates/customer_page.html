@@ -38,6 +38,11 @@
             <p>Status: <span th:text="${session.orderUser.status}"></span></p>
             <p th:if="${session.orderUser.status != 'Afventer'}">Total pris: <span th:text="${session.orderUser.totalPrice}"></span></p>
 
+            <form action="/setStatusAccepted" method="post" th:if="${session.orderUser.status == 'Tilbud færdiggjort'}">
+                <button type="submit">Accepter ordre</button>
+            </form>
+
+
         </div>
 
 

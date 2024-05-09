@@ -23,6 +23,8 @@ import java.util.List;
             app.get("/order_details/{orderId}", ctx -> getOrderDetails(ctx, connectionPool));
             app.post("/updatetotalprice", ctx -> updateTotalPrice(ctx, connectionPool));
             app.post("/setstatus2", ctx -> setStatus2(ctx, connectionPool));
+            app.post("/setStatusAccepted", ctx -> setStatusAccepted(ctx, connectionPool));
+
 
         }
 
@@ -121,20 +123,29 @@ import java.util.List;
             }
         }
 
-        private static void setStatusAccepted(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+        private static void setStatusAccepted(Context ctx, ConnectionPool connectionPool) {
 
             Order orderUser = ctx.sessionAttribute("orderUser");
 
-                int newStatusId = 3;
-               OrderMapper.updateStatus(orderUser.getOrderId(), newStatusId, connectionPool);
-               orderUser.setStatusId(newStatusId);
+            int newStatusId = 3;
+            try {
+                int orderId = orderUser.getOrderId();
 
-            ctx.sessionAttribute("orderUser", orderUser);
-            ctx.render("customer_page.html");
+                OrderMapper.updateStatus(orderId, newStatusId, connectionPool);
+
+                orderUser.setStatusId(newStatusId);
 
 
+                ctx.sessionAttribute("orderUser", orderUser);
 
+
+                ctx.render("customer_page.html");
+            } catch (DatabaseException e) {
+
+                throw new RuntimeException(e);
+            }
         }
+
 
         private static void setStatus4(Context ctx, ConnectionPool connectionPool) {
             try {
