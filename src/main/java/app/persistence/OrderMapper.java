@@ -36,8 +36,8 @@ public class OrderMapper {
     }
 
 
-    public static Order getOrderPrUser (int userId, ConnectionPool connectionPool) {
-        String sql = "SELECT o.length, o.width, o.total_price, s.status_name " +
+    public static Order getOrderPrUser(int userId, ConnectionPool connectionPool) {
+        String sql = "SELECT o.order_id, o.length, o.width, o.total_price, s.status_name " +
                 "FROM orders o " +
                 "JOIN status s ON o.status_id = s.status_id " +
                 "WHERE o.user_id = ?";
@@ -52,11 +52,12 @@ public class OrderMapper {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
+                int orderId = rs.getInt("order_id");
                 int length = rs.getInt("length");
                 int width = rs.getInt("width");
                 double totalprice = rs.getDouble("total_price");
                 String status = rs.getString("status_name");
-                orderUser = new Order(length, width, status, totalprice);
+                orderUser = new Order(orderId, length, width, status, totalprice);
 
             }
 
@@ -65,6 +66,7 @@ public class OrderMapper {
         }
         return orderUser;
     }
+
 
 
 
@@ -86,6 +88,7 @@ public class OrderMapper {
                 int width = rs.getInt("width");
                 double totalprice = rs.getDouble("total_price");
                 String textInput = rs.getString("text_input");
+
 
                 orderDetails = new Order(orderId, length, width, totalprice, textInput);
 

@@ -11,6 +11,15 @@ public class Order {
     private double totalprice;
     private int statusId;
 
+
+    public Order(int orderId, int length, int width, String status, double totalprice) {
+        this.orderId = orderId;
+        this.length = length;
+        this.width = width;
+        this.status = status;
+        this.totalprice = totalprice;
+    }
+
     public Order(int orderId, int length, int width, double totalprice, String textInput) {
         this.orderId = orderId;
         this.length = length;

@@ -25,7 +25,6 @@ import java.util.List;
             app.post("/setstatus2", ctx -> setStatus2(ctx, connectionPool));
             app.post("/setStatusAccepted", ctx -> setStatusAccepted(ctx, connectionPool));
 
-
         }
 
         private static void getAllOrders(Context ctx, ConnectionPool connectionPool)  {
@@ -135,10 +134,8 @@ import java.util.List;
 
                 orderUser.setStatusId(newStatusId);
 
-
                 ctx.sessionAttribute("orderUser", orderUser);
-
-
+                ctx.attribute("message", "Du har nu accepteret, sælger vil kontakte dig snarest");
                 ctx.render("customer_page.html");
             } catch (DatabaseException e) {
 
@@ -147,14 +144,16 @@ import java.util.List;
         }
 
 
-        private static void setStatus4(Context ctx, ConnectionPool connectionPool) {
+        private static void setStatusPaid(Context ctx, ConnectionPool connectionPool) {
             try {
                 int orderId = Integer.parseInt(ctx.formParam("orderId"));
                 int newStatusId = 4;
 
                 OrderMapper.updateStatus(orderId, newStatusId, connectionPool);
+                List<Order>allOrdersList = OrderMapper.getAllOrders(connectionPool);
+                ctx.attribute("allOrdersList", allOrdersList);
+                ctx.render("salesperson_page.html");
 
-                ctx.redirect("/salesperson");
             } catch (NumberFormatException | DatabaseException e) {
 
                 ctx.attribute("message", "Fejl ved opdatering af ordrestatus: " + e.getMessage());

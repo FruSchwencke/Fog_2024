@@ -55,30 +55,33 @@
                 <p>Besked: <span th:text="${orderDetails.textInput}"></span></p>
             </div>
 
-            <div class="calculater">
-                Opdater prisen
-                <form action="/updatetotalprice" method="post">
-                    <input type="hidden" id="updateprice" name="orderId" th:value="${orderDetails.orderId}">
-                    <label for="newTotalPrice">Ny Pris:</label>
-                    <input type="number" id="newTotalPrice" name="newTotalPrice" required><br><br>
-                    <input type="submit" value="Opdater Pris">
+                <div class="calculater">
+                    Opdater prisen
+                    <form action="/updatetotalprice" method="post">
+                        <input type="hidden" id="updateprice" name="orderId" th:value="${orderDetails.orderId}">
+                        <label for="newTotalPrice">Ny Pris:</label>
+                        <input type="number" id="newTotalPrice" name="newTotalPrice" required><br><br>
+                        <input type="submit" value="Opdater Pris">
+                    </form>
+                </div>
+                <form action="/setstatus2" method="post">
+                    <input type="hidden" id="sendoffer" name="orderId" th:value="${orderDetails.orderId}">
+                    <input type="submit" value="Send tilbud">
                 </form>
 
-            </div>
-            <form action="/setstatus2" method="post">
-                <input type="hidden" id="sendoffer" name="orderId" th:value="${orderDetails.orderId}">
-                <input type="submit" value="Send tilbud">
-            </form>
+
+
+
+
+
 
         </div>
 
-    </div>
 
 
 
 
-
-
+</div>
 </div>
 </body>
 </html>

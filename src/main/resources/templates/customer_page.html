@@ -32,15 +32,24 @@
     <div class="flex-container">
         <div>
 
-            SE DIN ORDRE HER!
-            <p>Længde: <span th:text="${session.orderUser.length}"></span></p>
-            <p>Bredde: <span th:text="${session.orderUser.width}"></span></p>
-            <p>Status: <span th:text="${session.orderUser.status}"></span></p>
-            <p th:if="${session.orderUser.status != 'Afventer'}">Total pris: <span th:text="${session.orderUser.totalPrice}"></span></p>
+            <div th:if="${session.orderUser != null}">
+                <h2>SE DIN ORDRE HER!</h2>
+                <p>Længde: <span th:text="${session.orderUser.length}"></span></p>
+                <p>Bredde: <span th:text="${session.orderUser.width}"></span></p>
+                <p>Status: <span th:text="${session.orderUser.status}"></span></p>
+                <p th:if="${session.orderUser.status != 'Afventer'}">Total pris: <span th:text="${session.orderUser.totalPrice}"></span></p>
 
-            <form action="/setStatusAccepted" method="post" th:if="${session.orderUser.status == 'Tilbud færdiggjort'}">
-                <button type="submit">Accepter ordre</button>
-            </form>
+                <form action="/setStatusAccepted" method="post" th:if="${session.orderUser.status == 'Tilbud færdiggjort'}">
+                    <button type="submit">Accepter ordre</button>
+                </form>
+                <p th:if="${message != null}" th:text="${message}"></p>
+            </div>
+
+            <div th:if="${session.orderUser == null}">
+                Du har ingen ordre, lav en her:
+              
+                </div>
+
 
 
         </div>
