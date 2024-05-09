@@ -106,6 +106,11 @@ public class UserController {
             ctx.render("createuser.html");
             return;
         }
+        if (!address.matches("^\\s*[^A-ZÆØÅa-zæøå0-9]+\\s*$")){
+            ctx.attribute("message", "Adressen indeholder ugyldige tegn");
+            ctx.render("createuser.html");
+            return;
+        }
 
         if (password1.equals(password2)) {
             try {
