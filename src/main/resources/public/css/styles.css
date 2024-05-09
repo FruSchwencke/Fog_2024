@@ -161,8 +161,8 @@ nav {
 
  .fixed-circle {
      position: fixed;
-     bottom: 25px;
-     right: 25px;
+     bottom: 30px;
+     right: 30px;
  }
 .overlay-text {
 
@@ -170,13 +170,15 @@ nav {
     top: 50%;
     left: 50%;
     transform: translate(-0%, -100%);
-    background-color: white;
+    background-color: green;
     padding: 3px 3px;
     border-radius: 5px;
     border: 2px solid black;
-    font-size: 1.1rem;
+    font-size: 1rem;
     align-content: center;
 }
+
+
 
 
 
