@@ -107,6 +107,11 @@ public class UserController {
             ctx.render("createuser.html");
             return;
         }
+        if (!address.matches("^\\s*[^A-ZÆØÅa-zæøå0-9]+\\s*$")){
+            ctx.attribute("message", "Adressen indeholder ugyldige tegn");
+            ctx.render("createuser.html");
+            return;
+        }
 
         if (password1.equals(password2)) {
             try {
@@ -134,7 +139,7 @@ public class UserController {
             if (user.getRole() == 1) {
                 ctx.sessionAttribute("currentUser", user);
                 Order orderUser = OrderMapper.getOrderPrUser(user.getUserId(),connectionPool);
-                ctx.attribute("orderUser", orderUser);
+                ctx.sessionAttribute("orderUser", orderUser);
                 ctx.render("customer_page.html");
             } else {
                 List<Order> allOrdersList = OrderMapper.getAllOrders(connectionPool);
