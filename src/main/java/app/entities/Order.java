@@ -11,12 +11,23 @@ public class Order {
     private double totalprice;
     private int statusId;
 
-    public Order(int orderId, int length, int width, double totalprice) {
+
+    public Order(int orderId, int length, int width, String status, double totalprice) {
+        this.orderId = orderId;
+        this.length = length;
+        this.width = width;
+        this.status = status;
+        this.totalprice = totalprice;
+    }
+
+    public Order(int orderId, int length, int width, double totalprice, String textInput) {
         this.orderId = orderId;
         this.length = length;
         this.width = width;
         this.totalprice = totalprice;
+        this.textInput = textInput;
     }
+
 
     public Order(int length, int width, String status, double totalprice) {
         this.length = length;
@@ -57,11 +68,19 @@ public class Order {
         return width;
     }
 
+    public String getTextInput() {
+        return textInput;
+    }
+
     public double getTotalprice() {
         return totalprice;
     }
 
     public int getStatusId() {
         return statusId;
+    }
+
+    public void setStatusId(int statusId) {
+        this.statusId = statusId;
     }
 }
