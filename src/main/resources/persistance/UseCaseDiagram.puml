@@ -1,22 +1,38 @@
 @startuml
 'https://plantuml.com/use-case-diagram
 
-:Main Admin: as Admin
-(Use the application) as (Use)
+left to right direction
+actor Customer as c
+actor Salesperson as s
 
-User -> (Start)
-User --> (Use)
+package FogCarport {
+  usecase (US-1) <<Create user>> as UC1
+  usecase (US-2)<<Login>> as UC2
+  usecase (US-3)<<Logout>> as UC3
+  usecase (US-4)<<Customized carport request>> as UC4
+  usecase (US-5)<<Accept offer on customized carport>> as UC5
+  usecase (US-6)<<Decline offer on customized carport>> as UC6
+  usecase (US-7)<<Add new material>> as UC7
+  usecase (US-8)<<Edit material>> as UC8
+  usecase (US-9)<<Access all order request>> as UC9
+  usecase (US-10)<<view order request>> as UC10
+  usecase (US-11)<<List of materials>> as UC11
+  usecase (US-12)<<Calculate offer>> as UC12
+  usecase (US-13)<<Company material list>> as UC13
 
-Admin ---> (Use)
-
-note right of Admin : This is an example.
-
-note right of (Use)
-A note can also
-be on several lines
-end note
-
-note "This note is connected\nto several objects." as N2
-(Start) .. N2
-N2 .. (Use)
+   c --> UC1
+   c --> UC2
+   s --> UC2
+   c --> UC3
+   c --> UC4
+   c --> UC5
+   c --> UC6
+   s --> UC7
+   s --> UC8
+   s --> UC9
+   s --> UC10
+   s --> UC11
+   s --> UC12
+   s --> UC13
+}
 @enduml
