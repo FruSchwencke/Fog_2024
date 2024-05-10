@@ -36,7 +36,7 @@ public class UserController {
 
     //name validate, that only allow letters, and the lenght has to be more than 2
     private static boolean nameValidate (String name){
-        String danishLetters = "^[a-zA-ZæøåÆØÅ]+$";
+        String danishLetters = "^[a-zA-ZæøåÆØÅ-]+$";
         return name.matches(danishLetters) && name.length() >=2;
     }
 
@@ -107,7 +107,7 @@ public class UserController {
             ctx.render("createuser.html");
             return;
         }
-        if (!address.matches("^\\s*[^A-ZÆØÅa-zæøå0-9]+\\s*$")){
+        if (!address.matches("^[A-Za-z0-9ÆØÅæøå ]+$")){
             ctx.attribute("message", "Adressen indeholder ugyldige tegn");
             ctx.render("createuser.html");
             return;
@@ -116,7 +116,7 @@ public class UserController {
         if (password1.equals(password2)) {
             try {
                 UserMapper.createuser(email, password1, firstName, lastName, phoneNumber, address, zipcode, connectionPool);
-                ctx.sessionAttribute("message", "du er hermed oprettet med " + email + ". Nu skal du logge på.");
+                ctx.attribute("message", "du er hermed oprettet med " + email + ". Nu skal du logge på.");
                 ctx.render("login.html");
 
             } catch (DatabaseException e) {

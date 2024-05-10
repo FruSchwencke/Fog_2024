@@ -44,7 +44,7 @@
                 <tbody>
                 <tr th:each="order : ${allOrdersList}">
                     <td>
-                        <a th:href="@{'/order_details/' + ${order.orderId}}">
+                        <a class="btn-gen" th:href="@{'/order_details/' + ${order.orderId}}">
                             <span th:text="${order.orderId}"></span>
                         </a>
                     </td>

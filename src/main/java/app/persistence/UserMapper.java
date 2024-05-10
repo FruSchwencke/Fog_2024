@@ -64,7 +64,11 @@ public class UserMapper {
     }
 
     public static User login(String email, String password, ConnectionPool connectionPool) throws DatabaseException {
-        String sql = "select * from users where email=?";
+        String sql = "SELECT u.*, z.* " +
+                "FROM users u " +
+                "JOIN zip_code z ON u.zip_code = z.zip_code " +
+                "WHERE u.email = ?";
+
 
 
         try (
@@ -83,8 +87,9 @@ public class UserMapper {
                     int role = rs.getInt("role_id");
                     String address = rs.getString("address");
                     String zipcode = rs.getString("zip_code");
+                    String city = rs.getString("city");
                     String phonenumber = rs.getString("phonenumber");
-                    return new User(userId, firstName, lastName, email, password, address, phonenumber, zipcode, role);
+                    return new User(userId, firstName, lastName, email, password, address, phonenumber, zipcode, city, role);
                 } else {
                     throw new DatabaseException("Forkert kodeord. Prøv igen.");
                 }
