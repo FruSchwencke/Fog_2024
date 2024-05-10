@@ -36,20 +36,20 @@
 
 
             <div th:if="${session.orderUser != null}">
-                <h3>SE DIN ORDRE HER!</h3>
+                <h3>Se din ordre her</h3>
                 <p>Længde: <span th:text="${session.orderUser.length}"></span></p>
                 <p>Bredde: <span th:text="${session.orderUser.width}"></span></p>
                 <p>Status: <span th:text="${session.orderUser.status}"></span></p>
                 <p th:if="${session.orderUser.status != 'Afventer'}">Total pris: <span th:text="${session.orderUser.totalPrice}"></span></p>
 
                 <form action="/setStatusAccepted" method="post" th:if="${session.orderUser.status == 'Tilbud færdiggjort'}">
-                    <button type="submit">Accepter ordre</button>
+                    <button class="btn-create" type="submit">Accepter ordre</button>
                 </form>
                 <p th:if="${message != null}" th:text="${message}"></p>
             </div>
 
             <div th:if="${session.orderUser == null}">
-                Du har ingen ordre, lav en her:
+                <h4>Du har ingen ordre</h4>
               
                 </div>
 
@@ -62,7 +62,7 @@
         <div>
             <a href="customize_page.html" th:href="@{/customize}">
                 <div>
-                    <h3>Gå igang her</h3>
+                    <h3>Klik på billedet for at starte</h3>
                     <h3>Carport m. Specialmål</h3>
                     <img class="indexbox" src="../public/images/LogoFlat.png" th:src="@{/images/LogoFlat.png}"/>
                 </div>
