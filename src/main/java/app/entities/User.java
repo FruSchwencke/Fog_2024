@@ -16,7 +16,7 @@ private String city;
 private int zipId;
 private int role;
 
-    public User(int userID, String firstName, String lastName, String email, String password, String address, String phonenumber, String zipcode, int role) {
+    public User(int userID, String firstName, String lastName, String email, String password, String address, String phonenumber, String zipcode,String city, int role) {
         this.userId = userID;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -25,6 +25,7 @@ private int role;
         this.address = address;
         this.phonenumber = phonenumber;
         this.zipcode = zipcode;
+        this.city = city;
         this.role = role;
     }
 
