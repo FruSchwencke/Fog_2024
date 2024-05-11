@@ -165,10 +165,12 @@ public class Calculate {
 
         int quantity;
         boolean done = false;
+
         // Add the correct lengths
         List<Material> result = new ArrayList<>();
 
         for (int i = 0 ; i <= materialList.size() -1; i++) {
+
 
             if (materialList.get(i).getLength() >= carportLength && !done){
 
@@ -178,6 +180,8 @@ public class Calculate {
                 done = true;
             }
         }
+
+        done = false;
 
         for (int i = 0 ; i <= materialList2.size() -1 ; i++) {
 

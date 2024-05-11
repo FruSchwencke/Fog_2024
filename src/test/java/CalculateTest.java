@@ -91,11 +91,16 @@ public class CalculateTest {
 
     @Test
     void calculatetern() throws DatabaseException {
-        Material material = new Material(2003, "Plastmo Ecolite blåtonet", "Tagplader monteres på spær", 97.5,1,1090,3600,0,6);
+        Material material = new Material(1213, "25x200 mm. trykimp. brædt", "Understernbrædder til siderne", 277.66,1,200,5700,25,2);
+        Material material2 = new Material(1233, "25x200 mm. trykimp. brædt", "Understernbrædder til for- & bagende", 277.66,1,200,5700,25,2);
+
+
         List<Material> expected = new ArrayList<>();
         expected.add(material);
+        expected.add(material2);
+
         List<Material> result = new ArrayList<>();
-        result = Calculate.calculateStern(6000,6000, connectionPool);
+        result = Calculate.calculateStern(5700,5700, connectionPool);
 
         //assertEquals only works here, because of the equals-override in Material Class. Where it is defined what equals is.
         assertEquals(expected, result);
