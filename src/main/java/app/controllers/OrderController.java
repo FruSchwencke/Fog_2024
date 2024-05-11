@@ -1,5 +1,6 @@
 package app.controllers;
 
+import app.entities.Material;
 import app.entities.Order;
 import app.entities.User;
 import app.exceptions.DatabaseException;
@@ -7,10 +8,13 @@ import app.persistence.ConnectionPool;
 import app.persistence.MaterialMapper;
 import app.persistence.OrderMapper;
 import app.persistence.UserMapper;
+import app.services.Calculate;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
     public class OrderController {
@@ -32,33 +36,53 @@ import java.util.List;
         }
 
 
-        public static void customizeCarportRoute(Context ctx, ConnectionPool connectionPool) {
 
+        public static void customizeCarportRoute(Context ctx, ConnectionPool connectionPool) {
             //These parameters represent the choices that the user has to make and the ability to send forward a text with remark or wishes, when customizing a carport
-                String width = ctx.formParam("choose_width");
-                String length = ctx.formParam("choose_length");
+                int width = Integer.parseInt(ctx.formParam("choose_width"));
+                int length = Integer.parseInt(ctx.formParam("choose_length"));
                 //String roof = ctx.formParam("choose_roof");
                 String input = ctx.formParam("text_input");
 
             // retrieving the userId
                 User currentUser = ctx.sessionAttribute("currentUser");
 
-
-            //
             try {
 
-                int orderId = OrderMapper.createOrder(currentUser.getUserId(), Integer.parseInt(width),Integer.parseInt(length), input, connectionPool);
-                MaterialMapper.createMaterialLine(1, orderId,1, connectionPool);
-                MaterialMapper.createMaterialLine(1, orderId,2, connectionPool);
-                MaterialMapper.createMaterialLine(1, orderId,3, connectionPool);
-                //todo: hvilke materialer og hvor mange materialer skal der til denne carport
+                int orderId = OrderMapper.createOrder(currentUser.getUserId(), width, length, input, connectionPool);
+
+                List<Material> materials = calculateMaterials(length, width, connectionPool);
+
+
+
+
+
 
             } catch (DatabaseException e) {
                 throw new RuntimeException(e);
             }
 
 
-        };
+        }
+
+        private static List<Material> calculateMaterials(int carportLength, int carportWidth, ConnectionPool connectionPool) throws DatabaseException {
+
+            List<Material> postList = Calculate.calculatePosts(carportLength,carportWidth,connectionPool);
+
+            List<Material> rafterList = Calculate.calculateRafter(carportLength,carportWidth,connectionPool);
+
+            List <Material> roofList = Calculate.calculateRoof(carportLength,carportWidth,connectionPool);
+
+            List <Material> sternList = Calculate.calculateStern(carportLength,carportWidth,connectionPool);
+
+            List <Material> beamList = Calculate.calculateBeam(carportLength,carportWidth,connectionPool);
+
+
+            List<Material> materialList = new ArrayList<>();
+
+            return materialList;
+        }
+
 
 
     }

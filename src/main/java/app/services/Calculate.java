@@ -25,11 +25,15 @@ public class Calculate {
 
 
     //STOLPER
-    public static int calculatePosts(int length, int width, ConnectionPool connectionPool){
+    public static List<Material> calculatePosts(int length, int width, ConnectionPool connectionPool){
         //Get material
         int materialId = 1601;
+        Material material = new Material();
+
         try {
-            Material material = MaterialMapper.getMaterialById(materialId, connectionPool);
+
+            material = MaterialMapper.getMaterialById(materialId, connectionPool);
+
         } catch (DatabaseException e) {
             throw new RuntimeException(e);
         }
@@ -60,8 +64,10 @@ public class Calculate {
         //calculating the quantity of posts needed by multiplying the quantities of posts (length & width) needed with each other.
         int quantityOfPosts = quantityByWidth * quantityByLength;
 
+        List<Material> materialList = new ArrayList<>();
+        materialList.add(material);
 
-        return quantityOfPosts;
+        return materialList;
     }
 
 

@@ -100,12 +100,12 @@ public class CalculateTest {
         expected.add(material2);
 
         List<Material> result = new ArrayList<>();
-        result = Calculate.calculateStern(5700,5700, connectionPool);
+        result = Calculate.calculateStern(5600,5600, connectionPool);
 
         //assertEquals only works here, because of the equals-override in Material Class. Where it is defined what equals is.
         assertEquals(expected, result);
-
     }
+
 
 
 }
