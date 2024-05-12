@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>FOG</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
+</head>
+
+<body>
+<div id="page">
+    <header>
+
+        <img src="../public/images/logofog.PNG" th:src="@{/images/logofog.PNG}" height="176" width="179"/>
+    </header>
+    <nav>
+        <div id="leftnav">
+
+        </div>
+
+        <div id="rightnav">
+
+            <button class="btn-gen"><a href="index.html" th:href="@{/logout}">Log ud</a></button>
+        </div>
+
+
+    </nav>
+    <div class="flex-container">
+        <h1>TAK FOR DIN BESTILLING</h1>
+        <button class="btn-create"><a href="customer_page.html" th:href="@{/customer}">Tryk her for at gå til din side</a></button>
+    </div>
+
+
+
+    <div class="fixed-circle">
+        <a href="https://www.johannesfog.dk/om-fog/forretninger/kontakt">
+            <img src="../public/images/phonelogo.png" th:src="@{/images/phonelogo.png}"/>
+            <span class="overlay-text"> Kontakt os her </span>
+        </a>
+    </div>
+
+
+</div>
+</body>
+</html>
