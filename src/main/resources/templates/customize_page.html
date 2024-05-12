@@ -28,51 +28,51 @@
     <div id="customize_page">
 
 
-        <form action="#" th:action="@{/customize}">
+        <form th:action="@{/customize}" method="post" class="createuser-form">
 
             <div class="flex-container">
 
                  <div>
+
 
                      <h3> Design en carport med specialmål her</h3>
                      <form class="createuser-form" method="post">
                             <div class="info-addmat">
                                 <p class="boxtitel2"><strong>Udfyld nedenstående felter omhyggeligt </strong></p>
                             </div>
+
                             <p class="boxtitel">Vælg carportens bredde</p>
                             <select name="choose_width" id="choose_width">
                                 <option id="0">Vælg carportens bredde</option>
-                                <option value="1">240 cm</option>
-                                <option value="2">270 cm</option>
-                                <option value="3">300 cm</option>
-                                <option value="4">330 cm</option>
-                                <option value="5">360 cm</option>
-                                <option value="6">390 cm</option>
-                                <option value="7">420 cm</option>
-                                <option value="8">450 cm</option>
-                                <option value="9">480 cm</option>
-                                <option value="10">510 cm</option>
-                                <option value="11">540 cm</option>
-                                <option value="12">570 cm</option>
-                                <option value="13">600 cm</option>
+                                <option value="2400">240 cm</option>
+                                <option value="2700">270 cm</option>
+                                <option value="3000">300 cm</option>
+                                <option value="3300">330 cm</option>
+                                <option value="3600">360 cm</option>
+                                <option value="3900">390 cm</option>
+                                <option value="4200">420 cm</option>
+                                <option value="4500">450 cm</option>
+                                <option value="4800">480 cm</option>
+                                <option value="5100">510 cm</option>
+                                <option value="5400">540 cm</option>
+                                <option value="5700">570 cm</option>
                             </select>
 
                             <p class="boxtitel">Vælg carportens længde</p>
                             <select  name="choose_length" id="choose_length">
                                 <option id="0">Vælg carportens længde</option>
-                                <option value="1">240 cm</option>
-                                <option value="2">270 cm</option>
-                                <option value="3">300 cm</option>
-                                <option value="4">330 cm</option>
-                                <option value="5">360 cm</option>
-                                <option value="6">390 cm</option>
-                                <option value="7">420 cm</option>
-                                <option value="8">450 cm</option>
-                                <option value="9">480 cm</option>
-                                <option value="10">510 cm</option>
-                                <option value="11">540 cm</option>
-                                <option value="12">570 cm</option>
-                                <option value="13">600 cm</option>
+                                <option value="2400">240 cm</option>
+                                <option value="2700">270 cm</option>
+                                <option value="3000">300 cm</option>
+                                <option value="3300">330 cm</option>
+                                <option value="3600">360 cm</option>
+                                <option value="3900">390 cm</option>
+                                <option value="4200">420 cm</option>
+                                <option value="4500">450 cm</option>
+                                <option value="4800">480 cm</option>
+                                <option value="5100">510 cm</option>
+                                <option value="5400">540 cm</option>
+                                <option value="5700">570 cm</option>
                             </select>
 
                             <p class="boxtitel">Vælg carportens flade tag</p>
@@ -83,6 +83,8 @@
                             </select>
 
                             <p class="boxtitel">Evt. bemærkninger / særlige ønsker </p>
+
+
 
                             <form name="text_input" id="text_input">
                                 <textarea style="height:150px; width:250px;"></textarea>
@@ -100,10 +102,15 @@
 
                     <div><p class="error" th:text="${message}"></p>
 
-                    </div>
 
-                </form>
 
+                        <div >
+                            <button type="submit">Bestil tilbud</button>
+                        </div>
+
+                        <div>
+                            <p class="error" th:text="${message}"></p>
+                        </div>
                  </div>
         </div>
     </form>

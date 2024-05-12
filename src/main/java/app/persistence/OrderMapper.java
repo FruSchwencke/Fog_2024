@@ -100,6 +100,8 @@ public class OrderMapper {
         return orderDetails;
     }
 
+  
+
     public static User getUserInformation(int orderId, ConnectionPool connectionPool) throws DatabaseException {
         String sql = "SELECT  u.first_name,  u.last_name, u.email, u.address, z.zip_code, z.city, u.phonenumber FROM orders o "
                 + "JOIN " + "users u ON o.user_id = u.user_id " +
@@ -130,9 +132,10 @@ public class OrderMapper {
             throw new DatabaseException("Der opstod en fejl");
         }
     }
+  
 
 
-    public static int createOrder(User user, int width, int length, int textInput, ConnectionPool connectionPool) throws DatabaseException {
+  public static int createOrder(int userId, int width, int length, String textInput, ConnectionPool connectionPool) throws DatabaseException {
 
         String sql = "insert into orders (user_id, width, length, text_input) values (?,?,?,?)";
 
@@ -140,10 +143,10 @@ public class OrderMapper {
                 Connection connection = connectionPool.getConnection();
                 PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
         ) {
-            ps.setInt(1, user.getUserId());
+            ps.setInt(1, userId);
             ps.setInt(2, width);
             ps.setInt(3, length);
-            ps.setInt(4, textInput);
+            ps.setString(4, textInput);
 
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected == 1)
@@ -167,6 +170,9 @@ public class OrderMapper {
             throw new DatabaseException(msg, e.getMessage());
         }
     }
+  
+  
+  
     public static void updateStatus(int orderId, int newStatusId, ConnectionPool connectionPool) throws DatabaseException {
         String sql = "UPDATE orders SET status_id = ? WHERE order_id = ?";
 
@@ -186,9 +192,6 @@ public class OrderMapper {
             throw new DatabaseException(msg, e.getMessage());
         }
     }
-
-
-
 
 
 
