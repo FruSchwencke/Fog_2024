@@ -65,6 +65,7 @@ public class Calculate {
         int quantityOfPosts = quantityByWidth * quantityByLength;
 
         List<Material> materialList = new ArrayList<>();
+        material.setQuantity(quantityOfPosts);
         materialList.add(material);
 
         return materialList;

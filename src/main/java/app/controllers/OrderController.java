@@ -7,21 +7,14 @@ import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
 import app.persistence.MaterialMapper;
 import app.persistence.OrderMapper;
-import app.persistence.UserMapper;
 import app.services.Calculate;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
-
-import java.io.StringWriter;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static java.util.Arrays.stream;
-import static java.util.stream.Nodes.collect;
 
 public class OrderController {
         public static void addRoutes(Javalin app, ConnectionPool connectionPool) {

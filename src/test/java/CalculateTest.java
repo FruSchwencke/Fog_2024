@@ -29,7 +29,15 @@ public class CalculateTest {
 
     @Test
     void calculatePosts(){
-        assertEquals(4, Calculate.calculatePosts(4000,3000, connectionPool));
+        Material material = new Material(1601,"97x97 mm. trykimp. stolpe","Stolper nedgraves 90cm. i jord",112.5,1,97,3000,97,4);
+        List<Material> expected = new ArrayList<>();
+        expected.add(material);
+        List<Material> result = new ArrayList<>();
+        result = Calculate.calculatePosts(2400,2400, connectionPool);
+
+        //assertEquals only works here, because of the equals-override in Material Class. Where it is defined what equals is.
+        assertEquals(expected, result);
+
     }
 
     @Test
