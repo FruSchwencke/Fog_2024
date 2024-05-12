@@ -11,9 +11,11 @@ import java.util.List;
 
 public class OrderMapper {
 
-    public static List<Order> getAllOrders(ConnectionPool connectionPool) throws SQLException {
+    public static List<Order> getAllOrders(ConnectionPool connectionPool)  throws DatabaseException{
         List<Order> allOrdersList = new ArrayList<>();
-        String sql = "SELECT order_id, status_id FROM orders";
+        String sql = "SELECT o.order_id, s.status_name " +
+                "FROM orders o " +
+                "JOIN status s ON o.status_id = s.status_id";
 
         try (
                 Connection connection = connectionPool.getConnection();
@@ -21,21 +23,57 @@ public class OrderMapper {
         ) {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                int orderId = rs.getInt("order_id");
-                String status = rs.getString("status_id");
+                    int orderId = rs.getInt("order_id");
+                    String status = rs.getString("status_name");
+                    Order order = new Order(orderId, status);
+                    allOrdersList.add(order);
+                }
+            } catch (SQLException e) {
 
-                Order order = new Order(orderId, status);
-                allOrdersList.add(order);
+                throw new DatabaseException("Ingen ordre at hente");
+            }
+        return allOrdersList;
+    }
+
+
+    public static Order getOrderPrUser(int userId, ConnectionPool connectionPool) {
+        String sql = "SELECT o.order_id, o.length, o.width, o.total_price, s.status_name " +
+                "FROM orders o " +
+                "JOIN status s ON o.status_id = s.status_id " +
+                "WHERE o.user_id = ?";
+
+        Order orderUser = null;
+        try (
+                Connection connection = connectionPool.getConnection();
+                PreparedStatement ps = connection.prepareStatement(sql)
+        ) {
+            ps.setInt(1, userId);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                int orderId = rs.getInt("order_id");
+                int length = rs.getInt("length");
+                int width = rs.getInt("width");
+                double totalprice = rs.getDouble("total_price");
+                String status = rs.getString("status_name");
+                orderUser = new Order(orderId, length, width, status, totalprice);
 
             }
-            return allOrdersList;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
+        return orderUser;
     }
+
+
+
 
     public static Order getOrderDetails(int orderId, ConnectionPool connectionPool)
     {
-        String sql = "SELECT lenght, width, total_price FROM orders WHERE order_id = ?";
-        Order order = null;
+        String sql = "SELECT length, width, total_price, text_input FROM orders WHERE order_id = ?";
+        Order orderDetails = null;
         try (
                 Connection connection = connectionPool.getConnection();
                 PreparedStatement ps = connection.prepareStatement(sql)
@@ -46,21 +84,58 @@ public class OrderMapper {
 
             if (rs.next()) {
 
-                int lenght = rs.getInt("length");
+                int length = rs.getInt("length");
                 int width = rs.getInt("width");
                 double totalprice = rs.getDouble("total_price");
+                String textInput = rs.getString("text_input");
 
-                order = new Order(orderId, lenght, width, totalprice);
+
+                orderDetails = new Order(orderId, length, width, totalprice, textInput);
 
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
-        return order;
+        return orderDetails;
     }
 
-    public static int createOrder(int userId, int width, int length, String textInput, ConnectionPool connectionPool) throws DatabaseException {
+  
+
+    public static User getUserInformation(int orderId, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "SELECT  u.first_name,  u.last_name, u.email, u.address, z.zip_code, z.city, u.phonenumber FROM orders o "
+                + "JOIN " + "users u ON o.user_id = u.user_id " +
+                "JOIN " + "zip_code z ON u.zip_code = z.zip_code " +
+                "WHERE o.order_id = ?";
+        try (
+                Connection connection = connectionPool.getConnection();
+                PreparedStatement ps = connection.prepareStatement(sql)
+        ) {
+            ps.setInt(1, orderId);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    String firstName = rs.getString("first_name");
+                    String lastName = rs.getString("last_name");
+                    String email = rs.getString("email");
+                    String address = rs.getString("address");
+                    String zipCode = rs.getString("zip_code");
+                    String city = rs.getString("city");
+                    String phoneNumber = rs.getString("phonenumber");
+
+                    return new User(firstName, lastName, email, address, zipCode, city, phoneNumber);
+                } else {
+                    throw new DatabaseException("Ingen bruger fundet for order id: " + orderId);
+                }
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Der opstod en fejl");
+        }
+    }
+  
+
+
+  public static int createOrder(int userId, int width, int length, String textInput, ConnectionPool connectionPool) throws DatabaseException {
 
         String sql = "insert into orders (user_id, width, length, text_input) values (?,?,?,?)";
 
@@ -82,7 +157,6 @@ public class OrderMapper {
                 return orderId;
 
 
-
             //TODO: go through error-handling
             } else {
                 throw new DatabaseException("Fejl. Prøv igen");
@@ -96,4 +170,51 @@ public class OrderMapper {
             throw new DatabaseException(msg, e.getMessage());
         }
     }
+  
+  
+  
+    public static void updateStatus(int orderId, int newStatusId, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "UPDATE orders SET status_id = ? WHERE order_id = ?";
+
+        try (
+                Connection connection = connectionPool.getConnection();
+                PreparedStatement ps = connection.prepareStatement(sql)
+        ) {
+            ps.setInt(1, newStatusId);
+            ps.setInt(2, orderId);
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected == 0) {
+                throw new DatabaseException("Ingen rækker blev påvirket. Ordren med id " + orderId + " blev ikke fundet.");
+            }
+        } catch (SQLException e) {
+            String msg = "Der er sket en fejl ved opdatering af ordrestatus. Prøv igen.";
+            throw new DatabaseException(msg, e.getMessage());
+        }
+    }
+
+
+
+    public static void updateTotalPrice(int orderId, double newTotalPrice, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "UPDATE orders SET total_price = ? WHERE order_id = ?";
+
+        try (
+                Connection connection = connectionPool.getConnection();
+                PreparedStatement ps = connection.prepareStatement(sql)
+        ) {
+            ps.setDouble(1, newTotalPrice);
+            ps.setInt(2, orderId);
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected != 1) {
+                throw new DatabaseException("Fejl ved opdatering af totalpris for ordre " + orderId);
+            }
+
+        } catch (SQLException e) {
+            throw new DatabaseException("Fejl i opdatering af pris", e.getMessage());
+        }
+    }
+
+
+
 }

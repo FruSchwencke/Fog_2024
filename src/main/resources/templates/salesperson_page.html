@@ -11,32 +11,62 @@
 <div id="page">
     <header>
 
-        <img src="../public/images/logofog.PNG" th:src="@{/images/logofog.PNG}"height="176" width="179"/>
+        <img src="../public/images/logofog.PNG" th:src="@{/images/logofog.PNG}" height="176" width="179"/>
     </header>
+    <nav>
+        <div id="leftnav">
 
-Dette er sales person
+        </div>
+        <div id="midnav">
+           <p class="Titel_nav"> Velkommen <strong><span th:if="${session.currentUser != null}" th:text="${session.currentUser.firstName}"></span></strong>, du er nu logget ind som medarbejder </p>
 
-    ORDRELISTE
-    <table>
-        <thead>
-        <tr>
-            <th>Ordrenummer</th>
-            <th>Status</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="order : ${allOrdersList}">
-            <td th:text="${order.orderId}"></td>
-            <td th:text="${order.status}"></td>
-        </tr>
-        </tbody>
-    </table>
+        </div>
 
-    <p th:if="${session.currentUser != null}">
-        <a href="index.html" th:href="@{/logout}">Log ud</a>
-    </p>
+        <div id="rightnav">
+
+            <button class="btn-gen"><a href="index.html" th:href="@{/logout}">Log ud</a></button>
+        </div>
 
 
+    </nav>
+    <div class="flex-container">
+        <div>
+
+
+            <h3>ORDRELISTE</h3>
+            <table>
+                <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="order : ${allOrdersList}">
+                    <td>
+                        <a class="btn-gen" th:href="@{'/order_details/' + ${order.orderId}}">
+                            <span th:text="${order.orderId}"></span>
+                        </a>
+                    </td>
+                    <td th:text="${order.status}"></td>
+                </tr>
+                </tbody>
+            </table>
+       </div>
+
+
+        <div>
+            <h3>Tilføj nyt materiale</h3>
+        <button class="btn-gen"><a href="addmaterial.html" th:href="@{/addmaterial}">Tilføj </a></button></div>
+        <div>
+            <h3>Opdater materiale</h3>
+        <button class="btn-gen"><a href="editMaterial.html" th:href="@{/editMaterial}">Søg og Opdater</a></button></div>
+
+        <div>
+            <h3>Virksomhedens Materiale liste</h3>
+            <button class="btn-gen"><a href="company_mat_list.html" th:href="@{/company_mat_list}">Fog Liste</a></button></div>
+
+    </div>
 </div>
 </body>
 </html>

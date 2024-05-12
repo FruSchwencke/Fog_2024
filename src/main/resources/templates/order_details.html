@@ -1,10 +1,87 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <title>FOG</title>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
 </head>
-<body>
 
+<body>
+<div id="page">
+    <header>
+
+        <img src="../public/images/logofog.PNG" th:src="@{/images/logofog.PNG}" height="176" width="179"/>
+    </header>
+    <nav>
+        <div id="leftnav">
+            <form th:action="@{/salesperson}" method="post">
+                <button type="submit" class="btn-gen">Tilbage</button>
+            </form>
+        </div>
+        <div id="midnav">
+            <p class="Titel_nav"> Velkommen <strong><span th:if="${session.currentUser != null}" th:text="${session.currentUser.firstName}"></span></strong>, du er nu logget ind som medarbejder </p>
+
+        </div>
+
+        <div id="rightnav">
+
+            <button class="btn-gen"><a href="index.html" th:href="@{/logout}">Log ud</a></button>
+        </div>
+
+
+    </nav>
+    <h1>Informationer om ordren</h1>
+
+    <div class="flex-container">
+
+        <div th:if="${orderDetails != null}">
+            <div>
+                <h2>Kontaktinformationer</h2>
+                <p><strong>Fornavn:</strong> <span th:text="${userInformation.firstName}"></span></p>
+                <p><strong>Efternavn:</strong> <span th:text="${userInformation.lastName}"></span></p>
+                <p><strong>Email:</strong> <span th:text="${userInformation.email}"></span></p>
+                <p><strong>Telefonnummer:</strong> <span th:text="${userInformation.phonenumber}"></span></p>
+                <p><strong>Adresse:</strong> <span th:text="${userInformation.address}"></span></p>
+                <p><strong>Postnummer:</strong> <span th:text="${userInformation.zipcode}"></span></p>
+                <p><strong>By:</strong> <span th:text="${userInformation.city}"></span></p>
+            </div>
+
+            <div>
+                <h2>Ordredetaljer</h2>
+                <p>Længde: <span th:text="${orderDetails.length}"></span></p>
+                <p>Bredde: <span th:text="${orderDetails.width}"></span></p>
+                <p>Samlet pris: <span th:text="${orderDetails.totalPrice}"></span></p>
+                <p>Besked: <span th:text="${orderDetails.textInput}"></span></p>
+            </div>
+
+                <div class="calculater">
+                    Opdater prisen
+                    <form action="/updatetotalprice" method="post">
+                        <input type="hidden" id="updateprice" name="orderId" th:value="${orderDetails.orderId}">
+                        <label for="newTotalPrice">Ny Pris:</label>
+                        <input type="number" id="newTotalPrice" name="newTotalPrice" required><br><br>
+                        <input type="submit" value="Opdater Pris">
+                    </form>
+                </div>
+                <form action="/setstatus2" method="post">
+                    <input type="hidden" id="sendoffer" name="orderId" th:value="${orderDetails.orderId}">
+                    <input type="submit" value="Send tilbud">
+                </form>
+
+
+
+
+
+
+
+        </div>
+
+
+
+
+
+</div>
+</div>
 </body>
 </html>

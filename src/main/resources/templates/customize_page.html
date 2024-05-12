@@ -17,23 +17,30 @@
     </header>
     <nav>
         <div id="leftnav">
-
+            <button class="btn-gen"><a href="customer_page.html" th:href="@{/customer}">Tilbage</a></button>
         </div>
+        <div id="midnav"><p class="Titel_nav"> Du er logget ind som <strong><span th:if="${session.currentUser != null}" th:text="${session.currentUser.firstName}"></span></strong> </p></div>
         <div id="rightnav">
-            <button class="btn-create"> <a href="createuser.html" th:href="@{/createuser}">Opret konto</a></button>
+            <button class="btn-gen"><a href="index.html" th:href="@{/logout}">Log ud</a></button>
         </div>
     </nav>
 
     <div id="customize_page">
 
-        <h1>Design en carport med specialmål her </h1>
-        <h2>Carport med fladt tag</h2>
-        <h3>Udfyld nedenstående felter omhyggeligt og tryk på "Bestil tilbud". Så vender vi hurtigt tilbage med et tilbud på din carport med specialmål</h3>
 
         <form th:action="@{/customize}" method="post" class="createuser-form">
 
             <div class="flex-container">
+
                  <div>
+
+
+                     <h3> Design en carport med specialmål her</h3>
+                     <form class="createuser-form" method="post">
+                            <div class="info-addmat">
+                                <p class="boxtitel2"><strong>Udfyld nedenstående felter omhyggeligt </strong></p>
+                            </div>
+
                             <p class="boxtitel">Vælg carportens bredde</p>
                             <select name="choose_width" id="choose_width">
                                 <option id="0">Vælg carportens bredde</option>
@@ -68,7 +75,7 @@
                                 <option value="5700">570 cm</option>
                             </select>
 
-                            <p class="boxtitel">Vælg carportens tag</p>
+                            <p class="boxtitel">Vælg carportens flade tag</p>
                             <select name="choose_roof" id="choose_roof">
                                 <option id="0" >Vælg carportens tag</option>
                                 <option value="1">Uden tagplader</option>
@@ -78,7 +85,23 @@
                             <p class="boxtitel">Evt. bemærkninger / særlige ønsker </p>
 
 
-                            <textarea name="text_input" id="text_input" style="height:150px; width:250px;"></textarea>
+
+                            <form name="text_input" id="text_input">
+                                <textarea style="height:150px; width:250px;"></textarea>
+                            </form>
+                            <br><br>
+                            <div class="info-addmat">
+                                <p class="boxtitel2"><strong>Vi vender hurtigt tilbage med et tilbud, når du har bestilt</strong></p>
+                            </div><br>
+
+                    <div>
+                        <form id="send_request" method="get" th:action="@{/pay}">
+                            <button class="btn-create" type="submit">Bestil tilbud</button>
+                        </form>
+                    </div>
+
+                    <div><p class="error" th:text="${message}"></p>
+
 
 
                         <div >

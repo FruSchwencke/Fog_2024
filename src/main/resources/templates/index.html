@@ -11,14 +11,21 @@
 
 <div id="page">
 
-        <header>
+    <header>
 
-            <img src="../public/images/logofog.PNG" th:src="@{/images/logofog.PNG}"height="176" width="179"/>
-        </header>
-        <nav>
-            <div id="leftnav">
+        <img src="../public/images/logofog.PNG" th:src="@{/images/logofog.PNG}" height="176" width="179"/>
+    </header>
+    <nav>
+        <div id="leftnav">
 
-            </div>
+        </div>
+
+        <div id="rightnav">
+            <button class="btn-create"><a href="login.html" th:href="@{/login}">Login</a></button>
+            <button class="btn-create"><a href="createuser.html" th:href="@{/createuser}">Opret konto</a></button>
+
+        </div>
+
 
             <div id="rightnav">
                  <button class="btn-create"> <a href="login.html" th:href="@{/login}">Login</a></button>
@@ -26,12 +33,32 @@
             </div>
 
 
-        </nav>
+    </nav>
+
+    <div class="flex-container">
+       <div> <a href="https://www.johannesfog.dk/have-fritid/carporte">
+            <div>
+                <h3>Standard carport</h3>
+                <img class="indexbox" src="../public/images/Logocarport.png" th:src="@{/images/Logocarport.png}"/>
+            </div>
+        </a>
+        </div>
+
+        <div>
+        <a href="login.html" th:href="@{/login}">
+            <div>
+                <h3>Carport m. Specialmål</h3>
+                <img class="indexbox" src="../public/images/LogoFlat.png" th:src="@{/images/LogoFlat.png}"/>
+            </div>
+        </a>
+        </div>
 
 
 
 
 
+
+    </div>
 
 
 </div>

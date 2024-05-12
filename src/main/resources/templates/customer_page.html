@@ -11,16 +11,88 @@
 <div id="page">
     <header>
 
-        <img src="../public/images/logofog.PNG" th:src="@{/images/logofog.PNG}"height="176" width="179"/>
+        <img src="../public/images/logofog.PNG" th:src="@{/images/logofog.PNG}" height="176" width="179"/>
     </header>
+    <nav>
+        <div id="leftnav">
+
+        </div>
+        <div id="midnav">
+            <p class="Titel_nav"> Velkommen <strong><span th:if="${session.currentUser != null}"
+                                                          th:text="${session.currentUser.firstName}"></span></strong>,
+                du er nu logget ind som kunde </p>
+
+        </div>
+
+        <div id="rightnav">
+
+            <button class="btn-gen"><a href="index.html" th:href="@{/logout}">Log ud</a></button>
+        </div>
+
+
+    </nav>
+    <div class="flex-container">
+        <div>
+
+
+            <div th:if="${session.orderUser != null}">
+                <h3>Se din ordre her</h3>
+                <p>Længde: <span th:text="${session.orderUser.length}"></span></p>
+                <p>Bredde: <span th:text="${session.orderUser.width}"></span></p>
+                <p>Status: <span th:text="${session.orderUser.status}"></span></p>
+                <p th:if="${session.orderUser.status != 'Afventer'}">Total pris: <span th:text="${session.orderUser.totalPrice}"></span></p>
+
+                <form action="/setStatusAccepted" method="post" th:if="${session.orderUser.status == 'Tilbud færdiggjort'}">
+                    <button class="btn-create" type="submit">Accepter ordre</button>
+                </form>
+                <p th:if="${message != null}" th:text="${message}"></p>
+            </div>
+
+            <div th:if="${session.orderUser == null}">
+                <h4>Du har ingen ordre</h4>
+              
+                </div>
 
 
 
-DETTE ER CUSTOMER
 
-    <p th:if="${session.currentUser != null}">
-        <a href="index.html" th:href="@{/logout}">Log ud</a>
-    </p>
+        </div>
+
+
+        <div>
+            <a href="customize_page.html" th:href="@{/customize}">
+                <div>
+                    <h3>Klik på billedet for at starte</h3>
+                    <h3>Carport m. Specialmål</h3>
+                    <img class="indexbox" src="../public/images/LogoFlat.png" th:src="@{/images/LogoFlat.png}"/>
+                </div>
+            </a>
+        </div>
+
+        <div>
+
+            <div th:if="${session.currentUser != null}">
+                <div>
+                    <h3>Kontaktinformationer</h3>
+                    <p><strong>Fornavn:</strong> <span th:text="${session.currentUser.firstName}"></span></p>
+                    <p><strong>Efternavn:</strong> <span th:text="${session.currentUser.lastName}"></span></p>
+                    <p><strong>Email:</strong> <span th:text="${session.currentUser.email}"></span></p>
+                    <p><strong>Telefonnummer:</strong> <span th:text="${session.currentUser.phonenumber}"></span></p>
+                    <p><strong>Adresse:</strong> <span th:text="${session.currentUser.address}"></span></p>
+                    <p><strong>Postnummer:</strong> <span th:text="${session.currentUser.zipcode}"></span></p>
+                    <p><strong>By:</strong> <span th:text="${session.currentUser.city}"></span></p>
+                </div>
+        </div>
+
+    </div>
+
+    <div class="fixed-circle">
+        <a href="https://www.johannesfog.dk/om-fog/forretninger/kontakt">
+            <img src="../public/images/phonelogo.png" th:src="@{/images/phonelogo.png}"/>
+            <span class="overlay-text"> Kontakt os her </span>
+        </a>
+    </div>
+
 
     <button class="btn-create"> <a href="customize_page.html" th:href="@{/customize}">Design carport</a></button>
 

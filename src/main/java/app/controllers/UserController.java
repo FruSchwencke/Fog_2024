@@ -21,6 +21,11 @@ public class UserController {
       app.post("login", ctx -> login(ctx, connectionPool));
         app.get("login", ctx -> ctx.render("login"));
         app.get("logout", ctx -> logout(ctx));
+        app.get("salesperson", ctx -> ctx.render("salesperson_page"));
+        app.get("customer", ctx -> ctx.render("customer_page"));
+
+
+
     }
 
     //made the email validate strict with use of regex.
@@ -31,7 +36,7 @@ public class UserController {
 
     //name validate, that only allow letters, and the lenght has to be more than 2
     private static boolean nameValidate (String name){
-        String danishLetters = "^[a-zA-ZæøåÆØÅ]+$";
+        String danishLetters = "^[a-zA-ZæøåÆØÅ-]+$";
         return name.matches(danishLetters) && name.length() >=2;
     }
 
@@ -102,11 +107,16 @@ public class UserController {
             ctx.render("createuser.html");
             return;
         }
+        if (!address.matches("^[A-Za-z0-9ÆØÅæøå ]+$")){
+            ctx.attribute("message", "Adressen indeholder ugyldige tegn");
+            ctx.render("createuser.html");
+            return;
+        }
 
         if (password1.equals(password2)) {
             try {
                 UserMapper.createuser(email, password1, firstName, lastName, phoneNumber, address, zipcode, connectionPool);
-                ctx.sessionAttribute("message", "du er hermed oprettet med " + email + ". Nu skal du logge på.");
+                ctx.attribute("message", "du er hermed oprettet med " + email + ". Nu skal du logge på.");
                 ctx.render("login.html");
 
             } catch (DatabaseException e) {
@@ -121,34 +131,26 @@ public class UserController {
         }
 
     }
-
-
-
-
     private static void login(Context ctx, ConnectionPool connectionPool) {
         String email = ctx.formParam("email");
         String password = ctx.formParam("password");
-
-
         try {
             User user = UserMapper.login(email, password, connectionPool);
             if (user.getRole() == 1) {
                 ctx.sessionAttribute("currentUser", user);
-
-
+                Order orderUser = OrderMapper.getOrderPrUser(user.getUserId(),connectionPool);
+                ctx.sessionAttribute("orderUser", orderUser);
                 ctx.render("customer_page.html");
             } else {
                 List<Order> allOrdersList = OrderMapper.getAllOrders(connectionPool);
                 ctx.attribute("allOrdersList", allOrdersList);
-                ctx.sessionAttribute("currentUser", user);
+               ctx.sessionAttribute("currentUser", user);
                 ctx.render("salesperson_page.html");
             }
         } catch (DatabaseException e) {
             ctx.attribute("message", e.getMessage());
             ctx.render("login.html");
 
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
 
     }

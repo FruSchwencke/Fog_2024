@@ -5,7 +5,10 @@ h1 {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 3rem;
 }
-
+h3 {
+    display: flex;
+    justify-content: center;
+}
 #page {
     padding:8px;
     min-height: 600px;
@@ -38,27 +41,14 @@ nav {
     justify-content: right;
 
 }
-/*******vertical-menu******/
 }
-.vertical-menu {
-    width: 200px; /* Set a width if you like */
-}
+#midnav {
+    height: 32px;
 
-.vertical-menu a {
-    background-color: #eee; /*  grey  */
-    color: black;
-    display: block; /* Make the links appear below each other */
-    padding: 12px;
-    text-decoration: none; /* Remove underline from links */
 }
-
-.vertical-menu a:hover {
-    background-color: #ccc; /* Dark grey  */
-}
-
-.vertical-menu a.active {
-    background-color: #04AA6D; /* Add a green color to the "active/current" link */
-    color: white;
+.Titel_nav {
+    margin-top: 3px;
+    font-size: 1.3rem;
 }
 
 /********* createuser styles *****************/
@@ -87,7 +77,7 @@ nav {
     flex-direction: column;
 
 }
-.createuser-form input[type=text], .createuser-form input[type=password] {
+.createuser-form input[type=text], .createuser-form input[type=password], .createuser-form input[type=number]{
     padding: 5px;
     font-size: 1.0rem;
     border-radius: 5px;
@@ -106,6 +96,16 @@ nav {
     border: 2px black solid;
 
 }
+.btn-gen{
+    display: flex;
+    justify-content: center;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: grey;
+    color: black;
+    font-size: 1.0rem;
+    border: 2px black solid;
+}
 .btn-create:hover {
     background-color: darkgreen;
     color: black;
@@ -115,6 +115,11 @@ nav {
 .btnend {
     display: flex;
     justify-content: end;
+}
+
+.errorbox {
+    display: flex;
+    justify-content: center;
 }
 
 .error:not(:empty) {
@@ -131,6 +136,49 @@ nav {
     display: flex;
     font-size: 1rem;
 }
+.calculater {
+    background-color: white;
+    margin: 10px;
+    padding: 40px;
+}
+
+/*addmaterial style*/
+.info-addmat {
+    display: flex;
+    width: 350px;
+    height: 32px;
+    justify-content: center;
+    background-color: lightgray;
+    border-radius: 5px;
+
+}
+.boxtitel2 {
+    margin: 5px;
+    display: flex;
+    align-items: center;
+    font-size: 0.8rem;
+}
+
+ .fixed-circle {
+     position: fixed;
+     bottom: 30px;
+     right: 30px;
+ }
+.overlay-text {
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-0%, -100%);
+    background-color: green;
+    padding: 3px 3px;
+    border-radius: 5px;
+    border: 2px solid black;
+    font-size: 1rem;
+    align-content: center;
+}
+
+
 
 
 
@@ -142,8 +190,13 @@ nav {
         display: flex;
         justify-content: center;
         background-color: #030531;
+
     }
     .boxtitel {
+        margin: 2px;
+        display: flex;
+    }
+    .boxtitel2 {
         margin: 2px;
         display: flex;
     }
@@ -156,9 +209,27 @@ nav {
     }
 
     nav {
-        flex-direction: column;
+        flex-direction: row;
         align-items: center;
-        gap:10px;
+        gap:5px;
+        margin-bottom: 5px;
+        padding: 8px;
+    }
+    .info-addmat {
+        flex-direction: column;
+
+        width: 209px;
+    }
+    .flex-container {
+        flex-direction: column;
+        border-radius: 15px;
+
+    }
+    .fixed-circle {
+        display: none;
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
     }
 
 
