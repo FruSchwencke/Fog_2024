@@ -2,18 +2,13 @@ package app;
 
 import app.config.SessionConfig;
 import app.config.ThymeleafConfig;
-
-import app.controllers.MaterialController;
-
 import app.controllers.OrderController;
-
 import app.controllers.UserController;
 
 
 import app.entities.Order;
 
 import app.persistence.ConnectionPool;
-import app.persistence.MaterialMapper;
 import app.persistence.OrderMapper;
 import app.persistence.UserMapper;
 import io.javalin.Javalin;
@@ -45,11 +40,7 @@ public class Main {
         // Routing
         app.get("/", ctx -> ctx.render("index.html"));
         UserController.addRoutes(app, connectionPool);
-
-        MaterialController.addRoutes(app, connectionPool);
-
         OrderController.addRoutes(app, connectionPool);
-
     }
 
 }

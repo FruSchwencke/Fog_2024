@@ -3,8 +3,6 @@ package app.entities;
 import java.util.Objects;
 
 public class Material {
-
-
     private int materialId;
     private String name;
     private String description;
@@ -13,6 +11,7 @@ public class Material {
     private int width;
     private int length;
     private int height;
+
     private int quantity;
 
     public Material(int materialId, String name, String description, double price, int unitId, int width, int length, int height, int quantity) {
@@ -41,15 +40,6 @@ public class Material {
         this.length = length;
         this.height = height;
     }
-  
-  
-     public Material(String name, String description, double price) {
-        this.name = name;
-        this.description = description;
-        this.price = price;
-    }
-
-  
 
     @Override
     public String toString() {
@@ -73,9 +63,9 @@ public class Material {
 
     public void setMaterialId(int materialId) {
         this.materialId = materialId;
+    }
 
-     
-    public int getName() {
+    public String getName() {
         return name;
     }
 
@@ -83,21 +73,17 @@ public class Material {
         this.name = name;
     }
 
-
     public String getDescription() {
         return description;
     }
-
 
     public void setDescription(String description) {
         this.description = description;
     }
 
-
     public double getPrice() {
         return price;
     }
-
 
     public void setPrice(double price) {
         this.price = price;
@@ -154,20 +140,5 @@ public class Material {
     @Override
     public int hashCode() {
         return Objects.hash(materialId, name, description, price, unitId, width, length, height, quantity);
-
- 
-
-    @Override
-    public String toString() {
-        return "Material{" +
-                "materialId=" + materialId +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", price=" + price +
-                ", unitId=" + unitId +
-                ", width=" + width +
-                ", length=" + length +
-                ", height=" + height +
-                '}';
     }
 }
