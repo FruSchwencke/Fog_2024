@@ -121,6 +121,10 @@ public class Material {
         this.height = height;
     }
 
+    public int getQuantity() {
+        return quantity;
+    }
+
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
