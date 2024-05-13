@@ -64,7 +64,14 @@
 
         <div>
             <h3>Virksomhedens Materiale liste</h3>
-            <button class="btn-gen"><a href="company_mat_list.html" th:href="@{/company_mat_list}">Fog Liste</a></button></div>
+            <button class="btn-gen"><a href="company_mat_list.html" th:href="@{/company_mat_list}">Fog Liste</a></button>
+            <br>
+            <br>
+            <br>
+            <div class="errorbox">
+                <p class="error" th:text="${message}"></p>
+            </div>
+        </div>
 
     </div>
 </div>

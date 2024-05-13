@@ -26,8 +26,16 @@
 
     </nav>
     <div class="flex-container">
-        <h1>TAK FOR DIN BESTILLING</h1>
-        <button class="btn-create"><a href="customer_page.html" th:href="@{/customer}">Tryk her for at gå til din side</a></button>
+       <div>
+           <h1>TAK FOR DIN BESTILLING</h1>
+           <p class="Titel_nav"> Kære  <strong><span th:if="${session.currentUser != null}"
+                                                         th:text="${session.currentUser.firstName}"></span></strong>,
+               vi vender hurtigst muligt tilbage med et tilbud </p>
+
+           <button class="btn-create"><a href="customer_page.html" th:href="@{/customer}">Tryk her for at gå til din side</a></button>
+       </div>
+
+
     </div>
 
 
