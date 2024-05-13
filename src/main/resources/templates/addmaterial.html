@@ -17,7 +17,9 @@
     </header>
     <nav>
         <div id="leftnav">
-            <button class="btn-create"><a href="salesperson_page.html" th:href="@{/salesperson}">Tilbage</a></button>
+            <form method="post" th:action="@{/salesperson}">
+                <button class="btn-create" type="submit"  >Tilbage</button>
+            </form>
         </div>
         <div id="midnav"> <p class="Titel_nav"> Velkommen <strong><span th:if="${session.currentUser != null}" th:text="${session.currentUser.firstName}"></span></strong>, du kan her tilføje et nyt materiale </p></div>
         <div id="rightnav">

@@ -16,7 +16,9 @@
     <nav>
         <div id="leftnav">
 
-            <button class="btn-create"><a href="salesperson_page.html" th:href="@{/salesperson}">Tilbage</a></button>
+            <form method="post" th:action="@{/salesperson}">
+                <button class="btn-create" type="submit"  >Tilbage</button>
+            </form>
         </div>
         <div id="midnav">
             <p class="Titel_nav"> Velkommen <strong><span th:if="${session.currentUser != null}"
@@ -72,7 +74,7 @@
                 <input class="btn-create" type="submit" value="Send tilbud">
             </form>
 
-
+            <div><p class="error" th:text="${message}"></p>
 
         </div>
 

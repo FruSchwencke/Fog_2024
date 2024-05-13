@@ -40,7 +40,8 @@ public class OrderController {
                 ctx.attribute("allOrdersList", allOrdersList);
                 ctx.render("salesperson_page.html");
             } catch (DatabaseException e) {
-                throw new RuntimeException(e); //på anden side.
+                ctx.attribute("message", "der var problemer med at oprette listen med alle ordre");
+                ctx.render("salesperson_page.html");
             }
 
         }
@@ -59,7 +60,8 @@ public class OrderController {
 
             ctx.render("order_details.html");
         } catch (NumberFormatException | DatabaseException e) {
-            throw new RuntimeException(e);
+            ctx.attribute("message", "der var problemer med at fremskaffe ordredetaljerne");
+            ctx.render("salesperson_page.html");
         }
     }
 
@@ -73,7 +75,6 @@ public class OrderController {
 
             // retrieving the userId
             User currentUser = ctx.sessionAttribute("currentUser");
-
             try {
                 // fetching a specific orderId on currentUser using the OrderMapper method createOrder
                 int orderId = OrderMapper.createOrder(currentUser.getUserId(), width, length, input, connectionPool);
@@ -125,16 +126,19 @@ public class OrderController {
             try {
                 int orderId = Integer.parseInt(ctx.formParam("orderId"));
                 double newTotalPrice = Double.parseDouble(ctx.formParam("newTotalPrice"));
+                if (newTotalPrice >= 0) {
+                    OrderMapper.updateTotalPrice(orderId, newTotalPrice, connectionPool);
+                    ctx.attribute("message", newTotalPrice + " er nu prisen for ordre nr " + orderId + ".");
+                    ctx.render("order_details");
+                }else {
+                    ctx.attribute("message", "tallet skal være større end nul");
+                    ctx.render("order_details");
 
-                OrderMapper.updateTotalPrice(orderId, newTotalPrice, connectionPool);
-                ctx.attribute("messageupdateprice", newTotalPrice + " er nu prisen for ordre nr " + orderId + ".");
+                }
+            } catch (DatabaseException | NumberFormatException e) {
+                ctx.attribute("message", "der var udfordringer med at opdatere prisen" + e.getMessage());
                 ctx.render("order_details");
 
-            } catch (NumberFormatException e) {
-
-
-            } catch (DatabaseException e) {
-                String s = "Fejl ved opdatering af totalpris: " + e.getMessage();
             }
         }
 
@@ -151,7 +155,7 @@ public class OrderController {
             } catch (NumberFormatException | DatabaseException e) {
 
                 ctx.attribute("message", "Fejl ved opdatering af ordrestatus: " + e.getMessage());
-
+                ctx.render("salesperson_page.html");
             }
         }
 
@@ -172,7 +176,8 @@ public class OrderController {
                 ctx.render("customer_page.html");
             } catch (DatabaseException e) {
 
-                throw new RuntimeException(e);
+                ctx.attribute("message, der skete en fejl under udførslen, prøv igen");
+                ctx.render("customer_page.html");
             }
         }
 

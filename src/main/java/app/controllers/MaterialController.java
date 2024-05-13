@@ -114,7 +114,7 @@ public class MaterialController {
             ctx.attribute("message1", "din opdatering er nu gennemført");
             ctx.render("editMaterial.html");
         } catch (DatabaseException | NumberFormatException e) {
-            ctx.attribute("message1", "udfyld alle felter for at undgå fejl");
+            ctx.attribute("message1", "udfyld alle felter for at kunne opdatere");
             ctx.render("editMaterial.html");
         }
     }
