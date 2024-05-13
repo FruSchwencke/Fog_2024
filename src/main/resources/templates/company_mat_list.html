@@ -17,9 +17,7 @@
 
     <nav>
         <div id="leftnav">
-            <form th:action="@{/salesperson}" method="post">
-                <button type="submit" class="btn-gen">Tilbage</button>
-            </form>
+            <button class="btn-create"><a href="salesperson_page.html" th:href="@{/salesperson}">Tilbage</a></button>
         </div>
         <div id="midnav"> <p class="Titel_nav"> Velkommen <strong><span th:if="${session.currentUser != null}" th:text="${session.currentUser.firstName}"></span></strong>, du kan her få hele virksomhedens matrialeliste </p></div>
         <div id="rightnav">
