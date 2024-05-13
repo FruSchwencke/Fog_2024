@@ -88,12 +88,14 @@ public class OrderController {
                         MaterialMapper.createMaterialLine(material.getQuantity(), orderId, material.getMaterialId(), connectionPool);
 
                     } catch (DatabaseException e) {
-                        throw new RuntimeException(e);
+                        ctx.attribute("message","kunne ikke oprette materiale linje");
+                        ctx.render("customize_page");
                     }
                 });
 
             } catch (DatabaseException e) {
-                throw new RuntimeException(e);
+                ctx.attribute("message", "kunne ikke oprette en ny ordre, prøv igen");
+                ctx.render("customize_page");
             }
             ctx.render("order_confirm_page.html");
         }
