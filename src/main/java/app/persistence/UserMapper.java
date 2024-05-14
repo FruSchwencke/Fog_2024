@@ -24,8 +24,8 @@ public class UserMapper {
            return rs.next();
 
     } catch (SQLException e) {
-        String msg= "der er sket en fejl";
-        throw new DatabaseException(msg, e.getMessage());
+
+        throw new DatabaseException("der skete en fejl ved indhentning af data", e.getMessage());
     }
 
     }

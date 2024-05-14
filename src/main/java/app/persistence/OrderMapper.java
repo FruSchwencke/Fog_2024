@@ -35,7 +35,7 @@ public class OrderMapper {
         return allOrdersList;
     }
 
-    public static Order getOrderPrUser(int userId, ConnectionPool connectionPool) {
+    public static Order getOrderPrUser(int userId, ConnectionPool connectionPool) throws DatabaseException {
         String sql = "SELECT o.order_id, o.length, o.width, o.total_price, s.status_name " +
                 "FROM orders o " +
                 "JOIN status s ON o.status_id = s.status_id " +
@@ -61,12 +61,12 @@ public class OrderMapper {
             }
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("kunne ikke indhente ordre med det brugerID", e.getMessage());
         }
         return orderUser;
     }
 
-    public static Order getOrderDetails(int orderId, ConnectionPool connectionPool) {
+    public static Order getOrderDetails(int orderId, ConnectionPool connectionPool) throws DatabaseException {
         String sql = "SELECT length, width, total_price, text_input FROM orders WHERE order_id = ?";
         Order orderDetails = null;
         try (
@@ -89,7 +89,7 @@ public class OrderMapper {
 
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("kunne ikke fremskaffe ordredetaljer med det ordreid", e.getMessage());
         }
 
         return orderDetails;
@@ -122,7 +122,7 @@ public class OrderMapper {
                 }
             }
         } catch (SQLException e) {
-            throw new DatabaseException("Der opstod en fejl");
+            throw new DatabaseException("Der opstod en fejl med at få bruger information på det ordreId", e.getMessage());
         }
     }
 
@@ -148,17 +148,13 @@ public class OrderMapper {
                 return orderId;
 
 
-                //TODO: go through error-handling
+
             } else {
-                throw new DatabaseException("Fejl. Prøv igen");
+                throw new DatabaseException("Fejl ved oprettelse af ordre. Prøv igen");
             }
 
         } catch (SQLException e) {
-            String msg = "Der er sket en fejl. Prøv igen";
-            if (e.getMessage().startsWith("ERROR: duplicate key value ")) {
-                msg = "Brugernavnet findes allerede. Vælg et andet";
-            }
-            throw new DatabaseException(msg, e.getMessage());
+           throw new DatabaseException("Der er sket en fejl, prøv igen",e.getMessage());
         }
     }
 
@@ -202,7 +198,7 @@ public class OrderMapper {
         }
     }
 
-    public static double getTotalPrice(int orderId, ConnectionPool connectionPool) {
+    public static double getTotalPrice(int orderId, ConnectionPool connectionPool) throws DatabaseException {
         String sql = "SELECT mll.quantity, m.price " +
                 "FROM material_list_lines mll " +
                 "JOIN materials m ON mll.m_id = m.m_id " +
@@ -225,7 +221,7 @@ public class OrderMapper {
                 totalPrice += lineTotal;
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("der var udfordringer med at fremskaffe prisen, prøv igen", e.getMessage());
         }
 
         return totalPrice;
