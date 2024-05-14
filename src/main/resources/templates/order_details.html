@@ -60,6 +60,13 @@
                 <p>Besked: <span th:text="${orderDetails.textInput}"></span></p>
             </div>
 
+            <form action="/getTotalPrice" method="get">
+                <input type="hidden" name="orderId" th:value="${orderDetails.orderId}">
+                <button type="submit">Get Total Price</button>
+            </form>
+
+            <p th:if="${totalPrice != null}">Total Price: <span th:text="${totalPrice}"></span></p>
+
             <div class="calculater">
                 <h3>Opdater prisen</h3>
                 <form class="createuser-form" action="/updatetotalprice" method="post">

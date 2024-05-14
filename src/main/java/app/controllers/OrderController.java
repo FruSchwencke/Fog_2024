@@ -30,6 +30,7 @@ public class OrderController {
             app.post("/offermade", ctx -> setStatusOfferMade(ctx, connectionPool));
             app.post("/setStatusAccepted", ctx -> setStatusAccepted(ctx, connectionPool));
             app.post("/setStatusDeclined", ctx -> setStatusDeclined(ctx, connectionPool));
+            app.get("/getTotalPrice", ctx -> getTotalPrice(ctx, connectionPool));
 
         }
 
@@ -124,7 +125,18 @@ public class OrderController {
             return newMargin;
         }
 
-        public static void updateTotalPrice(Context ctx, ConnectionPool connectionPool) {
+    public static void getTotalPrice(Context ctx, ConnectionPool connectionPool) {
+        int orderId = Integer.parseInt(ctx.queryParam("orderId"));
+
+        double totalPrice = OrderMapper.getTotalPrice(orderId, connectionPool);
+
+        ctx.attribute("totalPrice", totalPrice);
+
+        ctx.render("order_details.html");
+    }
+
+
+    public static void updateTotalPrice(Context ctx, ConnectionPool connectionPool) {
             try {
                 int orderId = Integer.parseInt(ctx.formParam("orderId"));
                 double newTotalPrice = Double.parseDouble(ctx.formParam("newTotalPrice"));

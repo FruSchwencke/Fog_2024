@@ -206,7 +206,7 @@ public class OrderMapper {
 
     public static double getTotalPrice(int orderId, ConnectionPool connectionPool) {
         String sql = "SELECT mll.quantity, m.price " +
-                "FROM material_line_list mll " +
+                "FROM material_list_lines mll " +
                 "JOIN materials m ON mll.m_id = m.m_id " +
                 "WHERE order_id = ?";
 
@@ -223,7 +223,7 @@ public class OrderMapper {
                 int quantity = rs.getInt("quantity");
                 double price = rs.getDouble("price");
                 double lineTotal = quantity * price;
-                
+
                 totalPrice += lineTotal;
             }
         } catch (SQLException e) {
