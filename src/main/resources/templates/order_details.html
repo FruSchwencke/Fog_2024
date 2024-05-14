@@ -80,6 +80,14 @@
                 <input class="btn-create" type="submit" value="Send tilbud">
             </form>
 
+            <form action="/setStatusPaid" method="post">
+                <input type="hidden" id="paid" name="orderId" th:value="${orderDetails.orderId}">
+                <input class="btn-create" type="submit" value="Betaling gennemført">
+            </form>
+
+
+
+
             <div><p class="error" th:text="${message}"></p>
 
         </div>
