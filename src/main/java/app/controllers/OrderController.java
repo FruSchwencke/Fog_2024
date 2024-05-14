@@ -132,7 +132,7 @@ public class OrderController {
 
         ctx.attribute("totalPrice", totalPrice);
 
-        ctx.render("order_details.html");
+        ctx.render("test.html");
     }
 
 
@@ -216,7 +216,6 @@ public class OrderController {
             ctx.render("customer_page.html");
         }
     }
-
 
         private static void setStatusPaid(Context ctx, ConnectionPool connectionPool) {
             try {
