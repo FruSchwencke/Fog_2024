@@ -218,7 +218,7 @@ public class OrderController {
                 OrderMapper.updateStatus(orderId, newStatusId, connectionPool);
                 List<Order>allOrdersList = OrderMapper.getAllOrders(connectionPool);
                 ctx.attribute("allOrdersList", allOrdersList);
-                ctx.attribute("message", "Kunden har nu betalt");
+                ctx.attribute("messageorder", "Kunden har nu betalt");
                 ctx.render("salesperson_page.html");
 
             } catch (NumberFormatException | DatabaseException e) {
