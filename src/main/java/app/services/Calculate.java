@@ -35,7 +35,7 @@ public class Calculate {
             material = MaterialMapper.getMaterialById(materialId, connectionPool);
 
         } catch (DatabaseException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("fejl ved fremskaffelse af materiale fra databasen", e);
         }
 
         // Calculate posts based on width
@@ -111,7 +111,7 @@ public class Calculate {
             return result;
 
         } catch (DatabaseException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("fejl ved materialet med den beskrivelse fra databasen",e);
         }
     }
 
