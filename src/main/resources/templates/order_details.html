@@ -56,16 +56,14 @@
                 <h3>Ordredetaljer</h3>
                 <p>Længde: <span th:text="${orderDetails.length}"></span></p>
                 <p>Bredde: <span th:text="${orderDetails.width}"></span></p>
-                <p>Samlet pris: <span th:text="${orderDetails.totalPrice}"></span></p>
+
                 <p>Besked: <span th:text="${orderDetails.textInput}"></span></p>
             </div>
 
-            <form action="/getTotalPrice" method="get">
-                <input type="hidden" name="orderId" th:value="${orderDetails.orderId}">
-                <button type="submit">Get Total Price</button>
-            </form>
+            <p th:if="${totalPrice != null}">Indkøbspris: <span th:text="${totalPrice}"></span></p>
 
-            <p th:if="${totalPrice != null}">Total Price: <span th:text="${totalPrice}"></span></p>
+            <p th:if="${orderDetails.totalPrice != 0.0}">Samlet pris: <span th:text="${orderDetails.totalPrice}"></span></p>
+
 
             <div class="calculater">
                 <h3>Opdater prisen</h3>
@@ -76,6 +74,7 @@
                     <input class="btn-gen" type="submit" value="Opdater Pris">
                 </form>
             </div>
+
             <form action="/offermade" method="post">
                 <input type="hidden" id="sendoffer" name="orderId" th:value="${orderDetails.orderId}">
                 <input class="btn-create" type="submit" value="Send tilbud">

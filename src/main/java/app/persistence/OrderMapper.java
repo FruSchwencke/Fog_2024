@@ -35,7 +35,6 @@ public class OrderMapper {
         return allOrdersList;
     }
 
-
     public static Order getOrderPrUser(int userId, ConnectionPool connectionPool) {
         String sql = "SELECT o.order_id, o.length, o.width, o.total_price, s.status_name " +
                 "FROM orders o " +
@@ -66,7 +65,6 @@ public class OrderMapper {
         }
         return orderUser;
     }
-
 
     public static Order getOrderDetails(int orderId, ConnectionPool connectionPool) {
         String sql = "SELECT length, width, total_price, text_input FROM orders WHERE order_id = ?";
