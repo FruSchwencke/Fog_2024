@@ -11,7 +11,7 @@ import java.util.List;
 
 public class OrderMapper {
 
-    public static List<Order> getAllOrders(ConnectionPool connectionPool)  throws DatabaseException{
+    public static List<Order> getAllOrders(ConnectionPool connectionPool) throws DatabaseException {
         List<Order> allOrdersList = new ArrayList<>();
         String sql = "SELECT o.order_id, s.status_name " +
                 "FROM orders o " +
@@ -23,18 +23,17 @@ public class OrderMapper {
         ) {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                    int orderId = rs.getInt("order_id");
-                    String status = rs.getString("status_name");
-                    Order order = new Order(orderId, status);
-                    allOrdersList.add(order);
-                }
-            } catch (SQLException e) {
-
-                throw new DatabaseException("Ingen ordre at hente");
+                int orderId = rs.getInt("order_id");
+                String status = rs.getString("status_name");
+                Order order = new Order(orderId, status);
+                allOrdersList.add(order);
             }
+        } catch (SQLException e) {
+
+            throw new DatabaseException("Ingen ordre at hente");
+        }
         return allOrdersList;
     }
-
 
     public static Order getOrderPrUser(int userId, ConnectionPool connectionPool) {
         String sql = "SELECT o.order_id, o.length, o.width, o.total_price, s.status_name " +
@@ -67,18 +66,14 @@ public class OrderMapper {
         return orderUser;
     }
 
-
-
-
-    public static Order getOrderDetails(int orderId, ConnectionPool connectionPool)
-    {
+    public static Order getOrderDetails(int orderId, ConnectionPool connectionPool) {
         String sql = "SELECT length, width, total_price, text_input FROM orders WHERE order_id = ?";
         Order orderDetails = null;
         try (
                 Connection connection = connectionPool.getConnection();
                 PreparedStatement ps = connection.prepareStatement(sql)
         ) {
-                ps.setInt(1, orderId);
+            ps.setInt(1, orderId);
 
             ResultSet rs = ps.executeQuery();
 
@@ -146,13 +141,11 @@ public class OrderMapper {
             ps.setString(4, textInput);
 
             int rowsAffected = ps.executeUpdate();
-            if (rowsAffected == 1)
-            {
+            if (rowsAffected == 1) {
                 ResultSet rs = ps.getGeneratedKeys();
                 rs.next();
                 int orderId = rs.getInt("order_id");
                 return orderId;
-
 
 
                 //TODO: go through error-handling
@@ -189,11 +182,6 @@ public class OrderMapper {
         }
     }
 
-
-
-
-
-
     public static void updateTotalPrice(int orderId, double newTotalPrice, ConnectionPool connectionPool) throws DatabaseException {
         String sql = "UPDATE orders SET total_price = ? WHERE order_id = ?";
 
@@ -214,6 +202,33 @@ public class OrderMapper {
         }
     }
 
+    public static double getTotalPrice(int orderId, ConnectionPool connectionPool) {
+        String sql = "SELECT mll.quantity, m.price " +
+                "FROM material_list_lines mll " +
+                "JOIN materials m ON mll.m_id = m.m_id " +
+                "WHERE order_id = ?";
 
+        double totalPrice = 0.0;
+
+        try (
+                Connection connection = connectionPool.getConnection();
+                PreparedStatement ps = connection.prepareStatement(sql)
+        ) {
+            ps.setInt(1, orderId);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int quantity = rs.getInt("quantity");
+                double price = rs.getDouble("price");
+                double lineTotal = quantity * price;
+
+                totalPrice += lineTotal;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return totalPrice;
+    }
 
 }

@@ -27,8 +27,10 @@ public class OrderController {
             app.post("/customize", ctx -> customizeCarportRoute(ctx, connectionPool));
             app.get("/order_details/{orderId}", ctx -> getOrderDetails(ctx, connectionPool));
             app.post("/updatetotalprice", ctx -> updateTotalPrice(ctx, connectionPool));
-            app.post("/setstatus2", ctx -> setStatus2(ctx, connectionPool));
+            app.post("/offermade", ctx -> setStatusOfferMade(ctx, connectionPool));
             app.post("/setStatusAccepted", ctx -> setStatusAccepted(ctx, connectionPool));
+            app.post("/setStatusDeclined", ctx -> setStatusDeclined(ctx, connectionPool));
+
 
         }
 
@@ -46,16 +48,17 @@ public class OrderController {
 
         }
 
-
         private static void getOrderDetails(Context ctx, ConnectionPool connectionPool) {
         try {
             int orderId = Integer.parseInt(ctx.pathParam("orderId"));
             Order orderDetails = OrderMapper.getOrderDetails(orderId, connectionPool);
             User userInformation = OrderMapper.getUserInformation(orderId, connectionPool);
+            double totalPrice = OrderMapper.getTotalPrice(orderId, connectionPool);
 
             if (orderDetails != null) {
                 ctx.attribute("orderDetails", orderDetails);
                 ctx.attribute("userInformation", userInformation);
+                ctx.attribute("totalPrice", totalPrice);
             }
 
             ctx.render("order_details.html");
@@ -124,27 +127,28 @@ public class OrderController {
             return newMargin;
         }
 
-        public static void updateTotalPrice(Context ctx, ConnectionPool connectionPool) {
+
+    public static void updateTotalPrice(Context ctx, ConnectionPool connectionPool) {
             try {
                 int orderId = Integer.parseInt(ctx.formParam("orderId"));
                 double newTotalPrice = Double.parseDouble(ctx.formParam("newTotalPrice"));
                 if (newTotalPrice >= 0) {
                     OrderMapper.updateTotalPrice(orderId, newTotalPrice, connectionPool);
                     ctx.attribute("message", newTotalPrice + " er nu prisen for ordre nr " + orderId + ".");
-                    ctx.render("order_details");
+                    ctx.render("order_details.html");
                 }else {
                     ctx.attribute("message", "tallet skal være større end nul");
-                    ctx.render("order_details");
+                    ctx.render("order_details.html");
 
                 }
             } catch (DatabaseException | NumberFormatException e) {
                 ctx.attribute("message", "der var udfordringer med at opdatere prisen" + e.getMessage());
-                ctx.render("order_details");
+                ctx.render("order_details.html");
 
             }
         }
 
-        private static void setStatus2(Context ctx, ConnectionPool connectionPool) {
+        private static void setStatusOfferMade(Context ctx, ConnectionPool connectionPool) {
             try {
                 int orderId = Integer.parseInt(ctx.formParam("orderId"));
                 int newStatusId = 2;
@@ -183,11 +187,32 @@ public class OrderController {
             }
         }
 
+    private static void setStatusDeclined(Context ctx, ConnectionPool connectionPool) {
+
+        Order orderUser = ctx.sessionAttribute("orderUser");
+
+        int newStatusId = 4;
+        try {
+            int orderId = orderUser.getOrderId();
+
+            OrderMapper.updateStatus(orderId, newStatusId, connectionPool);
+
+            orderUser.setStatusId(newStatusId);
+
+            ctx.sessionAttribute("orderUser", orderUser);
+            ctx.attribute("message", "Du har afslået tilbudet");
+            ctx.render("customer_page.html");
+        } catch (DatabaseException e) {
+
+            ctx.attribute("message, der skete en fejl under udførslen, prøv igen");
+            ctx.render("customer_page.html");
+        }
+    }
 
         private static void setStatusPaid(Context ctx, ConnectionPool connectionPool) {
             try {
                 int orderId = Integer.parseInt(ctx.formParam("orderId"));
-                int newStatusId = 4;
+                int newStatusId = 5;
 
                 OrderMapper.updateStatus(orderId, newStatusId, connectionPool);
                 List<Order>allOrdersList = OrderMapper.getAllOrders(connectionPool);
