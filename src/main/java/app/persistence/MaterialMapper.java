@@ -76,12 +76,12 @@ public class MaterialMapper {
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected != 1)
             {
-                throw new DatabaseException("Fejl i opdatering af en materialer");
+                throw new DatabaseException("Fejl i opdatering af ønsket materiale");
             }
         }
         catch (SQLException e)
         {
-            throw new DatabaseException("Fejl i opdatering af en materialer", e.getMessage());
+            throw new DatabaseException("Der skete en fejl i processen, prøv igen", e.getMessage());
         }
     }
     public static List<Material> companyMaterialList (ConnectionPool connectionPool) throws DatabaseException {
@@ -147,10 +147,10 @@ public class MaterialMapper {
                 }
 
             } catch (SQLException e) {
-                throw new DatabaseException(e.getMessage());
+                throw new DatabaseException("Fejl ved indhenting at informationer om valgte materialeID",e.getMessage());
             }
         } catch (SQLException e) {
-            throw new DatabaseException(e.getMessage());
+            throw new DatabaseException("havde udfordringer med connection", e.getMessage());
         }
         return material;
     }
@@ -207,10 +207,10 @@ public class MaterialMapper {
                     materialList.add(new Material(materialId, name, description, price, unitId, width, length, height));
                 }
             } catch (SQLException e) {
-                throw new DatabaseException(e.getMessage());
+                throw new DatabaseException("fejl ved indhentelse af materiale ud fra beskrivelsen", e.getMessage());
             }
         } catch (SQLException e) {
-            throw new DatabaseException(e.getMessage());
+            throw new DatabaseException("fejl med connection, prøv igen", e.getMessage());
         }
         return materialList;
     }
