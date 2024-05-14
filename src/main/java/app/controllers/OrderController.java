@@ -135,15 +135,15 @@ public class OrderController {
                 if (newTotalPrice >= 0) {
                     OrderMapper.updateTotalPrice(orderId, newTotalPrice, connectionPool);
                     ctx.attribute("message", newTotalPrice + " er nu prisen for ordre nr " + orderId + ".");
-                    ctx.render("order_details");
+                    ctx.render("order_details.html");
                 }else {
                     ctx.attribute("message", "tallet skal være større end nul");
-                    ctx.render("order_details");
+                    ctx.render("order_details.html");
 
                 }
             } catch (DatabaseException | NumberFormatException e) {
                 ctx.attribute("message", "der var udfordringer med at opdatere prisen" + e.getMessage());
-                ctx.render("order_details");
+                ctx.render("order_details.html");
 
             }
         }
