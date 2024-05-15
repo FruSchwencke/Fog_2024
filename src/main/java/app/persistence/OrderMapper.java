@@ -15,7 +15,8 @@ public class OrderMapper {
         List<Order> allOrdersList = new ArrayList<>();
         String sql = "SELECT o.order_id, s.status_name " +
                 "FROM orders o " +
-                "JOIN status s ON o.status_id = s.status_id";
+                "JOIN status s ON o.status_id = s.status_id " +
+                "ORDER BY s.status_id";
 
         try (
                 Connection connection = connectionPool.getConnection();
