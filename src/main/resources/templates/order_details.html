@@ -80,7 +80,9 @@
                 <input type="hidden" id="sendoffer" name="orderId" th:value="${orderDetails.orderId}">
                 <input class="btn-create" type="submit" value="Send tilbud">
             </form>
-
+                <br>
+                <br>
+                <br>
             <form action="/setStatusPaid" method="post" th:if="${orderDetails.status == 'Tilbud accepteret'}">
                 <input type="hidden" id="paid" name="orderId" th:value="${orderDetails.orderId}">
                 <input class="btn-create" type="submit" value="Betaling gennemført">
