@@ -239,7 +239,6 @@ public class MaterialMapper {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
         return orderMaterialList;
     }
 }
