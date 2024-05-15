@@ -30,6 +30,7 @@ public class OrderController {
             app.post("/offermade", ctx -> setStatusOfferMade(ctx, connectionPool));
             app.post("/setStatusAccepted", ctx -> setStatusAccepted(ctx, connectionPool));
             app.post("/setStatusDeclined", ctx -> setStatusDeclined(ctx, connectionPool));
+            app.post("/setStatusPaid", ctx -> setStatusPaid(ctx, connectionPool));
 
 
         }
@@ -217,6 +218,7 @@ public class OrderController {
                 OrderMapper.updateStatus(orderId, newStatusId, connectionPool);
                 List<Order>allOrdersList = OrderMapper.getAllOrders(connectionPool);
                 ctx.attribute("allOrdersList", allOrdersList);
+                ctx.attribute("messageorder", "Kunden har nu betalt");
                 ctx.render("salesperson_page.html");
 
             } catch (NumberFormatException | DatabaseException e) {

@@ -75,10 +75,22 @@
                 </form>
             </div>
 
+            <div class="message">
+                <p th:if="${messageorder != null}" th:text="${messageorder}"></p>
+            </div>
+
             <form action="/offermade" method="post">
                 <input type="hidden" id="sendoffer" name="orderId" th:value="${orderDetails.orderId}">
                 <input class="btn-create" type="submit" value="Send tilbud">
             </form>
+
+            <form action="/setStatusPaid" method="post">
+                <input type="hidden" id="paid" name="orderId" th:value="${orderDetails.orderId}">
+                <input class="btn-create" type="submit" value="Betaling gennemført">
+            </form>
+
+
+
 
             <div><p class="error" th:text="${message}"></p>
 
