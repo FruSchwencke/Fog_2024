@@ -15,7 +15,8 @@ public class OrderMapper {
         List<Order> allOrdersList = new ArrayList<>();
         String sql = "SELECT o.order_id, s.status_name " +
                 "FROM orders o " +
-                "JOIN status s ON o.status_id = s.status_id";
+                "JOIN status s ON o.status_id = s.status_id " +
+                "ORDER BY s.status_id";
 
         try (
                 Connection connection = connectionPool.getConnection();
@@ -67,7 +68,11 @@ public class OrderMapper {
     }
 
     public static Order getOrderDetails(int orderId, ConnectionPool connectionPool) throws DatabaseException {
-        String sql = "SELECT length, width, total_price, text_input FROM orders WHERE order_id = ?";
+        String sql = "SELECT o.order_id, o.length, o.width, o.total_price, o.text_input, s.status_name " +
+                "FROM orders o " +
+                "JOIN status s ON o.status_id = s.status_id " +
+                "WHERE o.order_id = ?";
+
         Order orderDetails = null;
         try (
                 Connection connection = connectionPool.getConnection();
@@ -83,9 +88,9 @@ public class OrderMapper {
                 int width = rs.getInt("width");
                 double totalprice = rs.getDouble("total_price");
                 String textInput = rs.getString("text_input");
+                String status = rs.getString("status_name");
 
-
-                orderDetails = new Order(orderId, length, width, totalprice, textInput);
+                orderDetails = new Order(orderId, length, width, totalprice, textInput, status);
 
             }
         } catch (SQLException e) {
@@ -222,7 +227,7 @@ public class OrderMapper {
                 totalPrice += lineTotal;
             }
         } catch (SQLException e) {
-            throw new DatabaseException("der var udfordringer med at fremskaffe prisen, prøv igen", e.getMessage());
+            throw new DatabaseException("der var udfordringer med at fremskaffe prisen", e.getMessage());
         }
 
         return totalPrice;

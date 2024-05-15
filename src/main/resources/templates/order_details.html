@@ -40,7 +40,6 @@
 
 
         <div th:if="${orderDetails != null}">
-            <div>
 
                 <h3>Kontaktinformationer</h3>
                 <p><strong>Fornavn:</strong> <span th:text="${userInformation.firstName}"></span></p>
@@ -54,16 +53,14 @@
 
             <div>
                 <h3>Ordredetaljer</h3>
+                <p>Status <span th:text="${orderDetails.status}"></span></p>
                 <p>Længde: <span th:text="${orderDetails.length}"></span></p>
                 <p>Bredde: <span th:text="${orderDetails.width}"></span></p>
 
                 <p>Besked: <span th:text="${orderDetails.textInput}"></span></p>
-            </div>
 
             <p th:if="${totalPrice != null}">Indkøbspris: <span th:text="${totalPrice}"></span></p>
-
             <p th:if="${orderDetails.totalPrice != 0.0}">Samlet pris: <span th:text="${orderDetails.totalPrice}"></span></p>
-
 
             <div class="calculater">
                 <h3>Opdater prisen</h3>
@@ -73,28 +70,55 @@
                     <input type="number" id="newTotalPrice" name="newTotalPrice" required><br><br>
                     <input class="btn-gen" type="submit" value="Opdater Pris">
                 </form>
-            </div>
 
             <div class="message">
                 <p th:if="${messageorder != null}" th:text="${messageorder}"></p>
             </div>
 
-            <form action="/offermade" method="post">
+
+            <form action="/offermade" method="post" th:if="${orderDetails.status == 'Afventer'}">
                 <input type="hidden" id="sendoffer" name="orderId" th:value="${orderDetails.orderId}">
                 <input class="btn-create" type="submit" value="Send tilbud">
             </form>
 
-            <form action="/setStatusPaid" method="post">
+            <form action="/setStatusPaid" method="post" th:if="${orderDetails.status == 'Tilbud accepteret'}">
                 <input type="hidden" id="paid" name="orderId" th:value="${orderDetails.orderId}">
                 <input class="btn-create" type="submit" value="Betaling gennemført">
             </form>
-
-
-
-
             <div><p class="error" th:text="${message}"></p>
-
         </div>
+
+            </div>
+            </div>
+
+
+
+
+
+            <div>
+
+                <h2>Materialeliste</h2>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Antal</th>
+                        <th>Materiale</th>
+                        <th>Enhed</th>
+                        <th>Beskrivelse</th>
+                        <th>Længde i mm</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="material : ${orderMaterialList}">
+                        <td th:text="${material.quantity}"></td>
+                        <td th:text="${material.name}"></td>
+                        <td th:text="${material.unitName}"></td>
+                        <td th:text="${material.description}"></td>
+                        <td th:text="${material.length}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+                </div>
 
 
     </div>
