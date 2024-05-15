@@ -29,6 +29,7 @@ Customerpage --> customize_page : on click "Carport m specialmål" picture
 Customerpage --> johannesfog : on click "Kontakt os her" picture
 customize_page --> order_confirm_page : on click "Bestil tilbud" button
 order_confirm_page --> Customerpage : on click "Tryk her for gå til din side" button
+order_confirm_page --> johannesfog : on click "Kontakt os her" picture
 }
 state Salesperson_page {
 c --> Salesperson_page : if role is Salesperson

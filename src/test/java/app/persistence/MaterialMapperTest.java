@@ -71,7 +71,7 @@ class MaterialMapperTest {
     void addMaterial() {
         try
         {
-            // creating an object
+            // assigning values to attributes
             String name = "bræt";
             String description = "stor";
             double price =12;
@@ -103,7 +103,7 @@ class MaterialMapperTest {
     @Test
     void updateMaterial() {
         try{
-            //arrange - creating an object
+            //arrange - assigning values to attributes
             int mId =1;
             String name ="bil";
             String description = "flot";
