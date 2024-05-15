@@ -14,7 +14,7 @@ public class Material {
 
     private int quantity;
 
-    private String unit;
+    private String unitName;
 
     public Material(int materialId, String name, String description, double price, int unitId, int width, int length, int height, int quantity) {
         this.materialId = materialId;
@@ -63,12 +63,12 @@ public class Material {
         this.price = price;
     }
 
-    public Material(String name, String description, int length, int quantity, String unit) {
+    public Material(String name, String description, int length, int quantity, String unitName) {
         this.name = name;
         this.description = description;
         this.length = length;
         this.quantity = quantity;
-        this.unit = unit;
+        this.unitName = unitName;
     }
 
     @Override
@@ -157,6 +157,10 @@ public class Material {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public String getUnitName() {
+        return unitName;
     }
 
     @Override

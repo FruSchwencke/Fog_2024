@@ -97,6 +97,31 @@
 
         </div>
 
+            <div>
+
+                <h2>Materialeliste</h2>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Material Name</th>
+                        <th>Description</th>
+                        <th>Length</th>
+                        <th>Quantity</th>
+                        <th>Unit</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="material : ${orderMaterialList}">
+                        <td th:text="${material.name}"></td>
+                        <td th:text="${material.description}"></td>
+                        <td th:text="${material.length}"></td>
+                        <td th:text="${material.quantity}"></td>
+                        <td th:text="${material.unitName}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+                </div>
+
 
     </div>
 </div>

@@ -242,9 +242,9 @@ public class MaterialMapper {
                 String name = rs.getString("material_name");
                 String description = rs.getString("description");
                 int lenght = rs.getInt("material_length");
-                String unit = rs.getString("unit_name");
+                String unitName = rs.getString("unit_name");
 
-                orderMaterialList.add(new Material(name, description, lenght, quantity, unit));
+                orderMaterialList.add(new Material(name, description, lenght, quantity, unitName));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
