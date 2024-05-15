@@ -20,12 +20,13 @@ public class Order {
         this.totalprice = totalprice;
     }
 
-    public Order(int orderId, int length, int width, double totalprice, String textInput) {
+    public Order(int orderId, int length, int width, double totalprice, String textInput, String status) {
         this.orderId = orderId;
         this.length = length;
         this.width = width;
         this.totalprice = totalprice;
         this.textInput = textInput;
+        this.status = status;
     }
 
 
