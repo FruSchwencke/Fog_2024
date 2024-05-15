@@ -182,7 +182,7 @@ public class OrderMapper {
         }
     }
 
-    public static void updateTotalPrice(int orderId, double newTotalPrice, ConnectionPool connectionPool) throws DatabaseException {
+    public static double updateTotalPrice(int orderId, double newTotalPrice, ConnectionPool connectionPool) throws DatabaseException {
         String sql = "UPDATE orders SET total_price = ? WHERE order_id = ?";
 
         try (
@@ -200,6 +200,7 @@ public class OrderMapper {
         } catch (SQLException e) {
             throw new DatabaseException("Fejl i opdatering af pris", e.getMessage());
         }
+        return newTotalPrice;
     }
 
     public static double getTotalPrice(int orderId, ConnectionPool connectionPool) {
