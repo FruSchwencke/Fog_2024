@@ -14,6 +14,8 @@ public class Material {
 
     private int quantity;
 
+    private String unit;
+
     public Material(int materialId, String name, String description, double price, int unitId, int width, int length, int height, int quantity) {
         this.materialId = materialId;
         this.name = name;
@@ -59,6 +61,14 @@ public class Material {
         this.name = name;
         this.description = description;
         this.price = price;
+    }
+
+    public Material(String name, String description, int length, int quantity, String unit) {
+        this.name = name;
+        this.description = description;
+        this.length = length;
+        this.quantity = quantity;
+        this.unit = unit;
     }
 
     @Override

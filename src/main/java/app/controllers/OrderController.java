@@ -55,11 +55,13 @@ public class OrderController {
             Order orderDetails = OrderMapper.getOrderDetails(orderId, connectionPool);
             User userInformation = OrderMapper.getUserInformation(orderId, connectionPool);
             double totalPrice = OrderMapper.getTotalPrice(orderId, connectionPool);
+            List<Material> orderMaterialList = MaterialMapper.getOrderMaterialList(orderId, connectionPool);
 
             if (orderDetails != null) {
                 ctx.attribute("orderDetails", orderDetails);
                 ctx.attribute("userInformation", userInformation);
                 ctx.attribute("totalPrice", totalPrice);
+                ctx.attribute("orderMaterialList", orderMaterialList);
             }
 
             ctx.render("order_details.html");

@@ -227,7 +227,7 @@ public class OrderMapper {
                 totalPrice += lineTotal;
             }
         } catch (SQLException e) {
-            throw new DatabaseException("der var udfordringer med at fremskaffe prisen, prøv igen", e.getMessage());
+            throw new DatabaseException("der var udfordringer med at fremskaffe prisen", e.getMessage());
         }
 
         return totalPrice;

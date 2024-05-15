@@ -215,4 +215,41 @@ public class MaterialMapper {
         return materialList;
     }
 
+    public static List <Material> getOrderMaterialList (int orderId, ConnectionPool connectionpool){
+        List<Material> orderMaterialList = new ArrayList<>();
+
+        String sql = "SELECT mll.quantity, " +
+                "       m.name AS material_name, " +
+                "       m.description, " +
+                "       m.length AS material_length, " +
+                "       u.name AS unit_name " +
+                "FROM material_list_lines mll " +
+                "JOIN materials m ON mll.m_id = m.m_id " +
+                "JOIN unit u ON m.unit_id = u.unit_id " +
+                "WHERE mll.order_id = ?";
+
+
+        try (
+                Connection connection = connectionpool.getConnection();
+                PreparedStatement ps = connection.prepareStatement(sql)
+        ) {
+
+            ps.setInt(1, orderId);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int quantity = rs.getInt("quantity");
+                String name = rs.getString("material_name");
+                String description = rs.getString("description");
+                int lenght = rs.getInt("material_length");
+                String unit = rs.getString("unit_name");
+
+                orderMaterialList.add(new Material(name, description, lenght, quantity, unit));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return orderMaterialList;
+    }
+
 }
