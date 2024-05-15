@@ -45,6 +45,7 @@
                 <form action="/setStatusAccepted" method="post" th:if="${session.orderUser.status == 'Tilbud færdiggjort'}">
                     <button class="btn-create" type="submit">Accepter ordre</button>
                 </form>
+                <br>
                 <form action="/setStatusDeclined" method="post" th:if="${session.orderUser.status == 'Tilbud færdiggjort'}">
                     <button class="btn-create" type="submit">Afslå ordre</button>
                 </form>
@@ -71,7 +72,8 @@
             </a>
         </div>
         <div th:if="${session.orderUser != null}">
-            <p>Har du brug for flere carporte? Giv os et kald.</p>
+            <h3>Har du brug for flere carporte?</h3>
+               <h3> Giv os et kald.</h3>
         </div>
 
         <div>

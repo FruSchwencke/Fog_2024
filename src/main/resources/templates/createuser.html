@@ -15,7 +15,7 @@
     </header>
     <nav>
         <div id="leftnav">
-
+            <button class="btn-gen"><a href="index.html" th:href="@{/}">Tilbage</a></button>
         </div>
         <div id="rightnav">
             <button class="btn-create"> <a href="login.html" th:href="@{/login}">Login</a></button>
@@ -33,6 +33,8 @@
                 <input type="text" name="address" placeholder="Angiv adresse"/>
                 <p class="boxtitel">postnummer</p>
                 <input type="number" name="zip_code" placeholder="Angiv postnummer"/>
+                <p class="boxtitel">By</p>
+                <input type="gray" class="grayed-out" name="City" placeholder="Bynavn hentes automatisk" disabled tabindex="-1"/>
                 <p class="boxtitel">telefonnummer</p>
                 <input type="number" name="phonenumber" placeholder="Angiv telefonnummer"/>
                 <p class="boxtitel">email</p>
