@@ -135,6 +135,13 @@ public class OrderController {
                 double newTotalPrice = Double.parseDouble(ctx.formParam("newTotalPrice"));
                 if (newTotalPrice >= 0) {
                     OrderMapper.updateTotalPrice(orderId, newTotalPrice, connectionPool);
+                    Order orderDetails = OrderMapper.getOrderDetails(orderId, connectionPool);
+                    User userInformation = OrderMapper.getUserInformation(orderId, connectionPool);
+                    double totalPrice = OrderMapper.getTotalPrice(orderId, connectionPool);
+
+                    ctx.attribute("orderDetails", orderDetails);
+                    ctx.attribute("userInformation", userInformation);
+                    ctx.attribute("totalPrice", totalPrice);
                     ctx.attribute("message", newTotalPrice + " er nu prisen for ordre nr " + orderId + ".");
                     ctx.render("order_details.html");
                 }else {
