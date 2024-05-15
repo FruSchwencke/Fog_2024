@@ -1,0 +1,48 @@
+@startuml
+'https://plantuml.com/state-diagram
+
+scale 500 width
+scale 500 height
+
+
+state Navbar:   - alle sider her en "logud" knap, når man er logget ind
+state Navbar :  - Når logget ind, findes der en "tilbage" som sender dig til salesperson_page/customer_page
+state Navbar :  - Når man ikke er logger ind, sender "tilbage" knappen dig til Index
+
+[*] --> Index
+Index --> Login : on click "log på" button
+Index --> Create_user : on click "Opret Konto" button
+Index --> Johannesfog : on click "Standard Carport" link
+Index --> Login :on click "Carport m specialmål" button
+
+Create_user --> Login : on submit "Opret Konto" button
+Login --> Create_user : on click "Opret Konto" button
+Login --> Login : incorrect login
+
+
+
+state c <<choice>>
+Login --> c : on click "Log på", looking for user role
+state As_customer {
+c --> Customerpage :if role is customer
+Customerpage --> customize_page : on click "Carport m specialmål" picture
+Customerpage --> johannesfog : on click "Kontakt os her" picture
+customize_page --> order_confirm_page : on click "Bestil tilbud" button
+order_confirm_page --> Customerpage : on click "Tryk her for gå til din side" button
+}
+state Salesperson_page {
+c --> Salesperson_page : if role is Salesperson
+Salesperson_page --> Order_details : on click "order ID{}" button
+Salesperson_page --> addMaterial : on click "tilføj" button
+Salesperson_page --> editMaterial : on click "Søg og Opdater" button
+Salesperson_page --> company_mat_list : on click "Fog Liste" button
+
+}
+
+
+
+
+
+
+
+@enduml
