@@ -61,7 +61,7 @@
         </div>
 
 
-        <div>
+        <div th:if="${session.orderUser == null}">
             <a href="customize_page.html" th:href="@{/customize}">
                 <div>
                     <h3>Klik på billedet for at starte</h3>
@@ -69,6 +69,9 @@
                     <img class="indexbox" src="../public/images/LogoFlat.png" th:src="@{/images/LogoFlat.png}"/>
                 </div>
             </a>
+        </div>
+        <div th:if="${session.orderUser != null}">
+            <p>Har du brug for flere carporte? Giv os et kald.</p>
         </div>
 
         <div>
