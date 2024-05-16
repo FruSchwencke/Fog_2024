@@ -8,6 +8,7 @@ import app.persistence.ConnectionPool;
 import app.persistence.MaterialMapper;
 import app.persistence.OrderMapper;
 import app.services.Calculate;
+import app.services.CarportSvg;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 
@@ -227,6 +228,19 @@ public class OrderController {
 
             }
         }
+
+
+
+
+
+
+    public static void showSvgDrawing (Context ctx, ConnectionPool connectionPool) {
+
+
+
+
+    }
+
 
 
     }
