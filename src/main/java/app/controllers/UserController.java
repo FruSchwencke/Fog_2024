@@ -23,7 +23,7 @@ public class UserController {
         app.get("logout", ctx -> logout(ctx));
         app.get("salesperson", ctx -> ctx.render("salesperson_page"));
         app.get("customer", ctx -> ctx.render("customer_page"));
-
+        app.get("getOrderForCurrentUser", ctx -> getOrderForCurrentUser(ctx,connectionPool));
 
 
     }
@@ -153,6 +153,24 @@ public class UserController {
 
         }
 
+    }
+    private static void getOrderForCurrentUser(Context ctx, ConnectionPool connectionPool) {
+        User currentUser = ctx.sessionAttribute("currentUser");
+        try{
+            if (currentUser != null) {
+                Order orderUser = OrderMapper.getOrderPrUser(currentUser.getUserId(), connectionPool);
+                ctx.sessionAttribute("orderUser", orderUser);
+                ctx.render("customer_page.html");
+                // Render the appropriate page or perform further actions
+            } else {
+                ctx.attribute("message","du er ikke logget på");
+                ctx.render("login.html");
+                // Handle case where user is not logged in
+            }
+        }catch (DatabaseException e){
+            ctx.attribute("message", e.getMessage());
+            ctx.render("login");
+        }
     }
     private static void logout(Context ctx)
     {
