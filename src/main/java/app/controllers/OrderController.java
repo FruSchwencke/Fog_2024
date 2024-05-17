@@ -134,35 +134,36 @@ public class OrderController {
 
 
     public static void updateTotalPrice(Context ctx, ConnectionPool connectionPool) {
-            try {
-                int orderId = Integer.parseInt(ctx.formParam("orderId"));
-                double newTotalPrice = Double.parseDouble(ctx.formParam("newTotalPrice"));
-                if (newTotalPrice >= 0) {
-                    OrderMapper.updateTotalPrice(orderId, newTotalPrice, connectionPool);
-                    Order orderDetails = OrderMapper.getOrderDetails(orderId, connectionPool);
-                    User userInformation = OrderMapper.getUserInformation(orderId, connectionPool);
-                    double costPrice = OrderMapper.getCostPrice(orderId, connectionPool);
-                    double suggestedPrice = costPrice * 1.30;
+        try {
+            int orderId = Integer.parseInt(ctx.formParam("orderId"));
+            double newTotalPrice = Double.parseDouble(ctx.formParam("newTotalPrice"));
+            double costPrice = OrderMapper.getCostPrice(orderId, connectionPool);
 
-                    ctx.attribute("orderDetails", orderDetails);
-                    ctx.attribute("userInformation", userInformation);
-                    ctx.attribute("costPrice", costPrice);
-                    ctx.attribute("suggestedPrice", suggestedPrice);
-                    ctx.attribute("message", newTotalPrice + " er nu prisen for ordre nr " + orderId + ".");
-                    ctx.render("order_details.html");
-                }else {
-                    ctx.attribute("message", "tallet skal være større end nul");
-                    ctx.render("order_details.html");
+            User userInformation = OrderMapper.getUserInformation(orderId, connectionPool);
+            double suggestedPrice = costPrice * 1.30;
 
-                }
-            } catch (DatabaseException | NumberFormatException e) {
-                ctx.attribute("message", "der var udfordringer med at opdatere prisen" + e.getMessage());
-                ctx.render("order_details.html");
-
+            if (newTotalPrice >= costPrice) {
+                OrderMapper.updateTotalPrice(orderId, newTotalPrice, connectionPool);
+                ctx.attribute("message", newTotalPrice + " er nu prisen for ordre nr " + orderId + ".");
+            } else {
+                ctx.attribute("message", "Du kan ikke afgive tilbud, som er mindre end indkøbsprisen");
             }
-        }
 
-        private static void setStatusOfferMade(Context ctx, ConnectionPool connectionPool) {
+            Order orderDetails = OrderMapper.getOrderDetails(orderId, connectionPool);
+            ctx.attribute("orderDetails", orderDetails);
+            ctx.attribute("userInformation", userInformation);
+            ctx.attribute("costPrice", costPrice);
+            ctx.attribute("suggestedPrice", suggestedPrice);
+            ctx.render("order_details.html");
+
+        } catch (DatabaseException | NumberFormatException e) {
+            ctx.attribute("message", "Der var udfordringer med at opdatere prisen: " + e.getMessage());
+            ctx.render("order_details.html");
+        }
+    }
+
+
+    private static void setStatusOfferMade(Context ctx, ConnectionPool connectionPool) {
             try {
                 int orderId = Integer.parseInt(ctx.formParam("orderId"));
                 int newStatusId = 2;
