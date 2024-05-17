@@ -45,6 +45,11 @@
                     <p th:if="${session.orderUser.status == 'Tilbud færdiggjort'}">
                         Tak for din forespørgsel på bestilling af carport. <br>
                         Vi har nu nu et tilbud klar </p>
+
+                    <p th:if="${session.orderUser.status == 'Betaling gennemført'}">
+                        Vi har nu modtaget din betaling. <br>
+                        Vi vender snarest muligt tilbage med leveringsdato </p>
+
                     </div>
 
                 Informationer om din ordre:
