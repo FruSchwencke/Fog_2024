@@ -196,7 +196,7 @@ public class OrderController {
                 ctx.render("customer_page.html");
             } catch (DatabaseException e) {
 
-                ctx.attribute("message, der skete en fejl under udførslen, prøv igen");
+                ctx.attribute("message", "der skete en fejl under udførslen, prøv igen");
                 ctx.render("customer_page.html");
             }
         }
