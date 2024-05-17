@@ -37,9 +37,8 @@ public class OrderController {
 
     private static void getAllOrders(Context ctx, ConnectionPool connectionPool) {
 
-        List<Order> allOrdersList = null;
         try {
-            allOrdersList = OrderMapper.getAllOrders(connectionPool);
+           List <Order> allOrdersList = OrderMapper.getAllOrders(connectionPool);
             ctx.attribute("allOrdersList", allOrdersList);
             ctx.render("salesperson_page.html");
         } catch (DatabaseException e) {

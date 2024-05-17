@@ -58,7 +58,7 @@
 
             <p th:if="${session.costPrice != null}">Indkøbspris: <span th:text="${session.costPrice}"></span></p>
             <p th:if="${session.suggestedPrice != null}">Pris med 30 % dækningsgrad: <span th:text="${session.suggestedPrice}"></span></p>
-            <p th:if="${session.orderDetails.totalPrice != 0.0}">Samlet pris: <span th:text="${session.orderDetails.totalPrice}"></span></p>
+            <p th:if="${session.orderDetails.totalPrice != 0.0}">Salgspris: <span th:text="${session.orderDetails.totalPrice}"></span></p>
 
             <div class="calculater">
                 <h3>Opdater prisen</h3>
