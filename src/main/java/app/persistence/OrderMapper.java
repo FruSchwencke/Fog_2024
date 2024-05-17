@@ -174,6 +174,7 @@ public class OrderMapper {
             ps.setInt(2, orderId);
 
             int rowsAffected = ps.executeUpdate();
+
             if (rowsAffected == 0) {
                 throw new DatabaseException("Ingen rækker blev påvirket. Ordren med id " + orderId + " blev ikke fundet.");
             }
