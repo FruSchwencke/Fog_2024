@@ -187,6 +187,7 @@ nav {
 
 /*Order-details.*/
 .Material-list {
+
             width: 100%;
             border-collapse: collapse;
         }
@@ -210,6 +211,30 @@ nav {
     background-color: #f1f1f1;
 }
 
+.Material-list2 {
+
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.Material-list2 th,
+.Material-list2 td {
+    border: 1px solid #d3d3d3; /* Lysegrå linje */
+    padding: 8px;
+    text-align: left;
+}
+
+.Material-list2 th {
+    background-color: #f2f2f2;
+}
+
+.Material-list2 tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.Material-list2 tr:hover {
+    background-color: #f1f1f1;
+}
 
 
 /****** Media query *******/
@@ -259,6 +284,22 @@ nav {
         bottom: 20px;
         right: 20px;
     }
+    .Material-list2 {
+        display: none;
+    }
 
+
+    .Material-list th, .Material-list td{
+        width: 100%;
+        padding: 2px ;
+        font-size: 0.8rem;
+    }
+    .responsive-message {
+        text-align: center;
+        font-size: 16px;
+        padding: 10px;
+        background-color: #f2dede;
+        color: #a94442;
+    }
 
 }
