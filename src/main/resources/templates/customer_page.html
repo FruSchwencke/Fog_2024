@@ -46,6 +46,9 @@
                         Tak for din forespørgsel på bestilling af carport. <br>
                         Vi har nu nu et tilbud klar </p>
                     </div>
+
+                Informationer om din ordre:
+                <p>Ordre id:  <span th:text="${session.orderUser.orderId}"></span></p>
                 <p>Status: <span th:text="${session.orderUser.status}"></span></p>
                 <p>Længde: <span th:text="${session.orderUser.length}"></span></p>
                 <p>Bredde: <span th:text="${session.orderUser.width}"></span></p>

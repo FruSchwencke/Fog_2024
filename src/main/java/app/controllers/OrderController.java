@@ -152,10 +152,8 @@ public class OrderController {
                 } else {
                     ctx.attribute("messageUpdatePrice", "Du kan ikke afgive tilbud, som er mindre end indkøbsprisen");
                 }
-
                 Order orderDetails = OrderMapper.getOrderDetails(orderId, connectionPool);
                 ctx.sessionAttribute("orderDetails", orderDetails);
-
                 ctx.render("order_details.html");
 
             } catch (DatabaseException | NumberFormatException e) {
@@ -231,7 +229,7 @@ public class OrderController {
                 OrderMapper.updateStatus(orderId, newStatusId, connectionPool);
                 List<Order> allOrdersList = OrderMapper.getAllOrders(connectionPool);
                 ctx.attribute("allOrdersList", allOrdersList);
-                ctx.attribute("messageorder", "Kunden har nu betalt");
+                ctx.attribute("messageorder", "Kunden med" + orderId + "har nu betalt.");
                 ctx.render("salesperson_page.html");
 
             } catch (NumberFormatException | DatabaseException e) {
