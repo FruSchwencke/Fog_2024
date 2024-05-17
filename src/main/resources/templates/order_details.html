@@ -53,19 +53,19 @@
 
             <div>
                 <h3>Ordredetaljer</h3>
-                <p>Status <span th:text="${orderDetails.status}"></span></p>
-                <p>Længde: <span th:text="${orderDetails.length}"></span></p>
-                <p>Bredde: <span th:text="${orderDetails.width}"></span></p>
+                <p><strong>Status:</strong> <span th:text="${orderDetails.status}"></span></p>
+                <p><strong>Længde:</strong> <span th:text="${orderDetails.length}"></span></p>
+                <p><strong>Bredde</strong> <span th:text="${orderDetails.width}"></span></p>
 
-                <p>Besked: <span th:text="${orderDetails.textInput}"></span></p>
+                <p><strong>Besked:</strong> <span th:text="${orderDetails.textInput}"></span></p>
 
-            <p th:if="${costPrice != null}">Indkøbspris: <span th:text="${costPrice}"></span></p>
-                <p th:if="${suggestedPrice != null}">Pris med 30 % dækningsgrad: <span th:text="${suggestedPrice}"></span></p>
-            <p th:if="${orderDetails.totalPrice != 0.0}">Samlet pris: <span th:text="${orderDetails.totalPrice}"></span></p>
+            <p th:if="${costPrice != null}"><strong>Indkøbspris:</strong> <span th:text="${costPrice}"></span></p>
+                <p th:if="${suggestedPrice != null}"><strong>Pris med 30 % dækningsgrad:</strong> <span th:text="${suggestedPrice}"></span></p>
+                <p th:if="${orderDetails.totalPrice != 0.0}"><strong>Samlet pris:</strong> <span th:text="${orderDetails.totalPrice}"></span></p>
 
             <div class="calculater">
-                <h3>Opdater prisen</h3>
-                <form class="createuser-form" action="/updatetotalprice" method="post">
+                <form th:if="${orderDetails.status != 'Tilbud accepteret'}" class="createuser-form" action="/updatetotalprice" method="post">
+                    <h3>Opdater prisen</h3>
                     <input type="hidden" id="updateprice" name="orderId" th:value="${orderDetails.orderId}">
                     <label for="newTotalPrice">Ny Pris:</label>
                     <input type="number" id="newTotalPrice" name="newTotalPrice" required><br><br>
@@ -101,7 +101,7 @@
 
             <div>
 
-                <h2>Materialeliste</h2>
+                <h3>Materialeliste</h3>
                 <table class="Material-list">
                     <thead>
                     <tr>
