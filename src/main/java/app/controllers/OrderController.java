@@ -54,13 +54,15 @@ public class OrderController {
             int orderId = Integer.parseInt(ctx.pathParam("orderId"));
             Order orderDetails = OrderMapper.getOrderDetails(orderId, connectionPool);
             User userInformation = OrderMapper.getUserInformation(orderId, connectionPool);
-            double totalPrice = OrderMapper.getTotalPrice(orderId, connectionPool);
+            double costPrice = OrderMapper.getCostPrice(orderId, connectionPool);
+            double suggestedPrice = costPrice * 1.30;
             List<Material> orderMaterialList = MaterialMapper.getOrderMaterialList(orderId, connectionPool);
 
             if (orderDetails != null) {
                 ctx.attribute("orderDetails", orderDetails);
                 ctx.attribute("userInformation", userInformation);
-                ctx.attribute("totalPrice", totalPrice);
+                ctx.attribute("costPrice", costPrice);
+                ctx.attribute("suggestedPrice", suggestedPrice);
                 ctx.attribute("orderMaterialList", orderMaterialList);
             }
 
@@ -139,11 +141,13 @@ public class OrderController {
                     OrderMapper.updateTotalPrice(orderId, newTotalPrice, connectionPool);
                     Order orderDetails = OrderMapper.getOrderDetails(orderId, connectionPool);
                     User userInformation = OrderMapper.getUserInformation(orderId, connectionPool);
-                    double totalPrice = OrderMapper.getTotalPrice(orderId, connectionPool);
+                    double costPrice = OrderMapper.getCostPrice(orderId, connectionPool);
+                    double suggestedPrice = costPrice * 1.30;
 
                     ctx.attribute("orderDetails", orderDetails);
                     ctx.attribute("userInformation", userInformation);
-                    ctx.attribute("totalPrice", totalPrice);
+                    ctx.attribute("costPrice", costPrice);
+                    ctx.attribute("suggestedPrice", suggestedPrice);
                     ctx.attribute("message", newTotalPrice + " er nu prisen for ordre nr " + orderId + ".");
                     ctx.render("order_details.html");
                 }else {

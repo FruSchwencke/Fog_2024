@@ -204,13 +204,13 @@ public class OrderMapper {
         return newTotalPrice;
     }
 
-    public static double getTotalPrice(int orderId, ConnectionPool connectionPool) throws DatabaseException {
+    public static double getCostPrice(int orderId, ConnectionPool connectionPool) throws DatabaseException {
         String sql = "SELECT mll.quantity, m.price " +
                 "FROM material_list_lines mll " +
                 "JOIN materials m ON mll.m_id = m.m_id " +
                 "WHERE order_id = ?";
 
-        double totalPrice = 0.0;
+        double costPrice = 0.0;
 
         try (
                 Connection connection = connectionPool.getConnection();
@@ -224,13 +224,12 @@ public class OrderMapper {
                 double price = rs.getDouble("price");
                 double lineTotal = quantity * price;
 
-                totalPrice += lineTotal;
+                costPrice += lineTotal;
             }
         } catch (SQLException e) {
             throw new DatabaseException("der var udfordringer med at fremskaffe prisen", e.getMessage());
         }
-
-        return totalPrice;
+        return costPrice;
     }
 
 }

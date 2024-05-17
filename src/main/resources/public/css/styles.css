@@ -185,8 +185,30 @@ nav {
     pointer-events: none; /* Disable mouse events */
 }
 
+/*Order-details.*/
+.Material-list {
+            width: 100%;
+            border-collapse: collapse;
+        }
 
+.Material-list th,
+.Material-list td {
+    border: 1px solid #d3d3d3; /* Lysegrå linje */
+    padding: 8px;
+    text-align: left;
+}
 
+   .Material-list th {
+    background-color: #f2f2f2;
+}
+
+.Material-list tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.Material-list tr:hover {
+    background-color: #f1f1f1;
+}
 
 
 

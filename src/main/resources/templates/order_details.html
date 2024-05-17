@@ -59,7 +59,8 @@
 
                 <p>Besked: <span th:text="${orderDetails.textInput}"></span></p>
 
-            <p th:if="${totalPrice != null}">Indkøbspris: <span th:text="${totalPrice}"></span></p>
+            <p th:if="${costPrice != null}">Indkøbspris: <span th:text="${costPrice}"></span></p>
+                <p th:if="${suggestedPrice != null}">Pris med 30 % dækningsgrad: <span th:text="${suggestedPrice}"></span></p>
             <p th:if="${orderDetails.totalPrice != 0.0}">Samlet pris: <span th:text="${orderDetails.totalPrice}"></span></p>
 
             <div class="calculater">
@@ -75,18 +76,19 @@
                 <p th:if="${messageorder != null}" th:text="${messageorder}"></p>
             </div>
 
-
+                <div class ="send offer" th:if="${orderDetails.totalPrice != 0.0}">
             <form action="/offermade" method="post" th:if="${orderDetails.status == 'Afventer'}">
                 <input type="hidden" id="sendoffer" name="orderId" th:value="${orderDetails.orderId}">
                 <input class="btn-create" type="submit" value="Send tilbud">
             </form>
-                <br>
-                <br>
+                    </div>
+
 
             <form action="/setStatusPaid" method="post" th:if="${orderDetails.status == 'Tilbud accepteret'}">
                 <input type="hidden" id="paid" name="orderId" th:value="${orderDetails.orderId}">
                 <input class="btn-create" type="submit" value="Betaling gennemført">
             </form>
+
             <div><p class="error" th:text="${message}"></p>
         </div>
 
@@ -100,7 +102,7 @@
             <div>
 
                 <h2>Materialeliste</h2>
-                <table class="createuser-form">
+                <table class="Material-list">
                     <thead>
                     <tr>
                         <th>Antal</th>
