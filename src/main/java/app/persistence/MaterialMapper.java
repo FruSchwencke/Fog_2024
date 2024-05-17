@@ -7,6 +7,7 @@ import app.exceptions.DatabaseException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.DataFormatException;
 
 
 public class MaterialMapper {
@@ -204,7 +205,7 @@ public class MaterialMapper {
         return materialList;
     }
 
-    public static List<Material> getOrderMaterialList(int orderId, ConnectionPool connectionpool) {
+    public static List<Material> getOrderMaterialList(int orderId, ConnectionPool connectionpool) throws DatabaseException {
         List<Material> orderMaterialList = new ArrayList<>();
 
         String sql = "SELECT mll.quantity, " +
@@ -237,7 +238,7 @@ public class MaterialMapper {
             }
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Der skete en fejl under udarbejdelsen af listen", e.getMessage());
         }
         return orderMaterialList;
     }

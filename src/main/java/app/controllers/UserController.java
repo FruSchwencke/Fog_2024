@@ -72,7 +72,11 @@ public class UserController {
             ctx.render("createuser.html");
             return;
         }
-
+        if (phoneNumber.length() != 8){
+            ctx.attribute("message", "dit telefonnummer skal være på 8 tal");
+            ctx.render("createuser.html");
+            return;
+        }
         //strict email validation
         if (!emailValidate(email)) {
             ctx.attribute("message", "Email du har prøvet at oprette er ugyldig");

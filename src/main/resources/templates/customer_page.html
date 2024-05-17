@@ -58,12 +58,14 @@
                 <form action="/setStatusDeclined" method="post" th:if="${session.orderUser.status == 'Tilbud færdiggjort'}">
                     <button class="btn-create" type="submit">Afslå ordre</button>
                 </form>
-                <p th:if="${message != null}" th:text="${message}"></p>
+                <p class="error" th:if="${message != null}" th:text="${message}"></p>
             </div>
 
             <div th:if="${session.orderUser == null}">
                 <h4>Du har ingen ordre</h4>
-              
+                <div><p class="error" th:text="${message}"></p>
+
+                </div>
                 </div>
 
 
