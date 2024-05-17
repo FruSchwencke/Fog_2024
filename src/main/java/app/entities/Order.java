@@ -84,4 +84,8 @@ public class Order {
     public void setStatusId(int statusId) {
         this.statusId = statusId;
     }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }

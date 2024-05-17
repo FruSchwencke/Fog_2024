@@ -182,14 +182,12 @@ public class OrderController {
         private static void setStatusAccepted(Context ctx, ConnectionPool connectionPool) {
 
             Order orderUser = ctx.sessionAttribute("orderUser");
-
             int newStatusId = 3;
+
             try {
                 int orderId = orderUser.getOrderId();
-
                 OrderMapper.updateStatus(orderId, newStatusId, connectionPool);
-
-                orderUser.setStatusId(newStatusId);
+                orderUser.setStatus("Tilbud accepteret");
 
                 ctx.sessionAttribute("orderUser", orderUser);
                 ctx.attribute("message", "Du har nu accepteret, sælger vil kontakte dig snarest");
@@ -206,15 +204,14 @@ public class OrderController {
         Order orderUser = ctx.sessionAttribute("orderUser");
 
         int newStatusId = 4;
+
         try {
             int orderId = orderUser.getOrderId();
-
             OrderMapper.updateStatus(orderId, newStatusId, connectionPool);
-
-            orderUser.setStatusId(newStatusId);
+            orderUser.setStatus("Tilbud afslået");
 
             ctx.sessionAttribute("orderUser", orderUser);
-            ctx.attribute("message", "Du har afslået tilbudet");
+            ctx.attribute("message", "Du har nu valgt at afslå tilbuddet på denne ordre.");
             ctx.render("customer_page.html");
         } catch (DatabaseException e) {
 
