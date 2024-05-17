@@ -37,9 +37,8 @@ public class OrderController {
 
     private static void getAllOrders(Context ctx, ConnectionPool connectionPool) {
 
-        List<Order> allOrdersList = null;
         try {
-            allOrdersList = OrderMapper.getAllOrders(connectionPool);
+           List <Order> allOrdersList = OrderMapper.getAllOrders(connectionPool);
             ctx.attribute("allOrdersList", allOrdersList);
             ctx.render("salesperson_page.html");
         } catch (DatabaseException e) {
@@ -59,11 +58,11 @@ public class OrderController {
             List<Material> orderMaterialList = MaterialMapper.getOrderMaterialList(orderId, connectionPool);
 
             if (orderDetails != null) {
-                ctx.attribute("orderDetails", orderDetails);
-                ctx.attribute("userInformation", userInformation);
-                ctx.attribute("costPrice", costPrice);
-                ctx.attribute("suggestedPrice", suggestedPrice);
-                ctx.attribute("orderMaterialList", orderMaterialList);
+                ctx.sessionAttribute("orderDetails", orderDetails);
+                ctx.sessionAttribute("userInformation", userInformation);
+                ctx.sessionAttribute("costPrice", costPrice);
+                ctx.sessionAttribute("suggestedPrice", suggestedPrice);
+                ctx.sessionAttribute("orderMaterialList", orderMaterialList);
             }
 
             ctx.render("order_details.html");
@@ -133,23 +132,18 @@ public class OrderController {
                 int orderId = Integer.parseInt(ctx.formParam("orderId"));
                 double newTotalPrice = Double.parseDouble(ctx.formParam("newTotalPrice"));
                 double costPrice = OrderMapper.getCostPrice(orderId, connectionPool);
-                List<Material> orderMaterialList = MaterialMapper.getOrderMaterialList(orderId, connectionPool);
-                User userInformation = OrderMapper.getUserInformation(orderId, connectionPool);
-                double suggestedPrice = costPrice * 1.30;
+
 
                 if (newTotalPrice >= costPrice) {
                     OrderMapper.updateTotalPrice(orderId, newTotalPrice, connectionPool);
-                    ctx.attribute("message", newTotalPrice + " er nu prisen for ordre nr " + orderId + ".");
+                    ctx.attribute("messageUpdatePrice", newTotalPrice + " er nu prisen for ordre nr " + orderId + ".");
                 } else {
-                    ctx.attribute("message", "Du kan ikke afgive tilbud, som er mindre end indkøbsprisen");
+                    ctx.attribute("messageUpdatePrice", "Du kan ikke afgive tilbud, som er mindre end indkøbsprisen");
                 }
 
                 Order orderDetails = OrderMapper.getOrderDetails(orderId, connectionPool);
-                ctx.attribute("orderDetails", orderDetails);
-                ctx.attribute("userInformation", userInformation);
-                ctx.attribute("costPrice", costPrice);
-                ctx.attribute("suggestedPrice", suggestedPrice);
-                ctx.attribute("orderMaterialList", orderMaterialList);
+                ctx.sessionAttribute("orderDetails", orderDetails);
+
                 ctx.render("order_details.html");
 
             } catch (DatabaseException | NumberFormatException e) {
