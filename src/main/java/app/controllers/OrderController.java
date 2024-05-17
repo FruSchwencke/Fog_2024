@@ -20,36 +20,36 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class OrderController {
-        public static void addRoutes(Javalin app, ConnectionPool connectionPool) {
-            app.get("/salesperson", ctx -> getAllOrders(ctx, connectionPool));
-            app.post("/salesperson", ctx -> getAllOrders(ctx, connectionPool));
-            app.get("/customize", ctx -> ctx.render("customize_page.html"));
-            app.post("/customize", ctx -> customizeCarportRoute(ctx, connectionPool));
-            app.get("/order_details/{orderId}", ctx -> getOrderDetails(ctx, connectionPool));
-            app.post("/updatetotalprice", ctx -> updateTotalPrice(ctx, connectionPool));
-            app.post("/offermade", ctx -> setStatusOfferMade(ctx, connectionPool));
-            app.post("/setStatusAccepted", ctx -> setStatusAccepted(ctx, connectionPool));
-            app.post("/setStatusDeclined", ctx -> setStatusDeclined(ctx, connectionPool));
-            app.post("/setStatusPaid", ctx -> setStatusPaid(ctx, connectionPool));
+    public static void addRoutes(Javalin app, ConnectionPool connectionPool) {
+        app.get("/salesperson", ctx -> getAllOrders(ctx, connectionPool));
+        app.post("/salesperson", ctx -> getAllOrders(ctx, connectionPool));
+        app.get("/customize", ctx -> ctx.render("customize_page.html"));
+        app.post("/customize", ctx -> customizeCarportRoute(ctx, connectionPool));
+        app.get("/order_details/{orderId}", ctx -> getOrderDetails(ctx, connectionPool));
+        app.post("/updatetotalprice", ctx -> updateTotalPrice(ctx, connectionPool));
+        app.post("/offermade", ctx -> setStatusOfferMade(ctx, connectionPool));
+        app.post("/setStatusAccepted", ctx -> setStatusAccepted(ctx, connectionPool));
+        app.post("/setStatusDeclined", ctx -> setStatusDeclined(ctx, connectionPool));
+        app.post("/setStatusPaid", ctx -> setStatusPaid(ctx, connectionPool));
 
 
+    }
+
+    private static void getAllOrders(Context ctx, ConnectionPool connectionPool) {
+
+        List<Order> allOrdersList = null;
+        try {
+            allOrdersList = OrderMapper.getAllOrders(connectionPool);
+            ctx.attribute("allOrdersList", allOrdersList);
+            ctx.render("salesperson_page.html");
+        } catch (DatabaseException e) {
+            ctx.attribute("message", "der var problemer med at oprette listen med alle ordre");
+            ctx.render("salesperson_page.html");
         }
 
-        private static void getAllOrders(Context ctx, ConnectionPool connectionPool)  {
+    }
 
-            List<Order>allOrdersList = null;
-            try {
-                allOrdersList = OrderMapper.getAllOrders(connectionPool);
-                ctx.attribute("allOrdersList", allOrdersList);
-                ctx.render("salesperson_page.html");
-            } catch (DatabaseException e) {
-                ctx.attribute("message", "der var problemer med at oprette listen med alle ordre");
-                ctx.render("salesperson_page.html");
-            }
-
-        }
-
-        private static void getOrderDetails(Context ctx, ConnectionPool connectionPool) {
+    private static void getOrderDetails(Context ctx, ConnectionPool connectionPool) {
         try {
             int orderId = Integer.parseInt(ctx.pathParam("orderId"));
             Order orderDetails = OrderMapper.getOrderDetails(orderId, connectionPool);
@@ -74,7 +74,7 @@ public class OrderController {
     }
 
 
-        public static void customizeCarportRoute(Context ctx, ConnectionPool connectionPool) {
+        public static void customizeCarportRoute (Context ctx, ConnectionPool connectionPool){
             //These parameters represent the choices that the user has to make and the ability to send forward a text with remark or wishes, when customizing a carport
             int width = Integer.parseInt(ctx.formParam("choose_width"));
             int length = Integer.parseInt(ctx.formParam("choose_length"));
@@ -96,7 +96,7 @@ public class OrderController {
                         MaterialMapper.createMaterialLine(material.getQuantity(), orderId, material.getMaterialId(), connectionPool);
 
                     } catch (DatabaseException e) {
-                        ctx.attribute("message","kunne ikke oprette materiale linje");
+                        ctx.attribute("message", "kunne ikke oprette materiale linje");
                         ctx.render("customize_page");
                     }
                 });
@@ -108,14 +108,15 @@ public class OrderController {
             ctx.render("order_confirm_page.html");
         }
 
-        private static List<Material> calculateMaterials(int carportLength, int carportWidth, ConnectionPool connectionPool) throws DatabaseException {
+        private static List<Material> calculateMaterials ( int carportLength, int carportWidth, ConnectionPool
+        connectionPool) throws DatabaseException {
 
             // each method for calculation is called and assigned a list
-            List<Material> postList = Calculate.calculatePosts(carportLength,carportWidth,connectionPool);
-            List<Material> rafterList = Calculate.calculateRafter(carportLength,carportWidth,connectionPool);
-            List <Material> roofList = Calculate.calculateRoof(carportLength,carportWidth,connectionPool);
-            List <Material> sternList = Calculate.calculateStern(carportLength,carportWidth,connectionPool);
-            List <Material> beamList = Calculate.calculateBeam(carportLength,carportWidth,connectionPool);
+            List<Material> postList = Calculate.calculatePosts(carportLength, carportWidth, connectionPool);
+            List<Material> rafterList = Calculate.calculateRafter(carportLength, carportWidth, connectionPool);
+            List<Material> roofList = Calculate.calculateRoof(carportLength, carportWidth, connectionPool);
+            List<Material> sternList = Calculate.calculateStern(carportLength, carportWidth, connectionPool);
+            List<Material> beamList = Calculate.calculateBeam(carportLength, carportWidth, connectionPool);
 
             // All lists are then combined into one list using Stream.concat
             List<Material> materialList = Stream.concat(Stream.concat(Stream.concat(Stream.concat(postList.stream(), rafterList.stream()), roofList.stream()), sternList.stream()), beamList.stream()).collect(Collectors.toList());
@@ -124,51 +125,47 @@ public class OrderController {
         }
 
 
-        public static double calculateMargin(double originalPrice, double newPrice) {
-
-            double originalMargin = 30.0;
-            double originalMarginAmount = originalPrice * (originalMargin / 100);
-            double newMargin = ((newPrice - originalPrice + originalMarginAmount) / newPrice) * 100;
-            return newMargin;
-        }
 
 
-    public static void updateTotalPrice(Context ctx, ConnectionPool connectionPool) {
+
+        public static void updateTotalPrice (Context ctx, ConnectionPool connectionPool){
             try {
                 int orderId = Integer.parseInt(ctx.formParam("orderId"));
                 double newTotalPrice = Double.parseDouble(ctx.formParam("newTotalPrice"));
-                if (newTotalPrice >= 0) {
+                double costPrice = OrderMapper.getCostPrice(orderId, connectionPool);
+                List<Material> orderMaterialList = MaterialMapper.getOrderMaterialList(orderId, connectionPool);
+                User userInformation = OrderMapper.getUserInformation(orderId, connectionPool);
+                double suggestedPrice = costPrice * 1.30;
+
+                if (newTotalPrice >= costPrice) {
                     OrderMapper.updateTotalPrice(orderId, newTotalPrice, connectionPool);
-                    Order orderDetails = OrderMapper.getOrderDetails(orderId, connectionPool);
-                    User userInformation = OrderMapper.getUserInformation(orderId, connectionPool);
-                    double costPrice = OrderMapper.getCostPrice(orderId, connectionPool);
-                    double suggestedPrice = costPrice * 1.30;
-
-                    ctx.attribute("orderDetails", orderDetails);
-                    ctx.attribute("userInformation", userInformation);
-                    ctx.attribute("costPrice", costPrice);
-                    ctx.attribute("suggestedPrice", suggestedPrice);
                     ctx.attribute("message", newTotalPrice + " er nu prisen for ordre nr " + orderId + ".");
-                    ctx.render("order_details.html");
-                }else {
-                    ctx.attribute("message", "tallet skal være større end nul");
-                    ctx.render("order_details.html");
-
+                } else {
+                    ctx.attribute("message", "Du kan ikke afgive tilbud, som er mindre end indkøbsprisen");
                 }
-            } catch (DatabaseException | NumberFormatException e) {
-                ctx.attribute("message", "der var udfordringer med at opdatere prisen" + e.getMessage());
+
+                Order orderDetails = OrderMapper.getOrderDetails(orderId, connectionPool);
+                ctx.attribute("orderDetails", orderDetails);
+                ctx.attribute("userInformation", userInformation);
+                ctx.attribute("costPrice", costPrice);
+                ctx.attribute("suggestedPrice", suggestedPrice);
+                ctx.attribute("orderMaterialList", orderMaterialList);
                 ctx.render("order_details.html");
 
+            } catch (DatabaseException | NumberFormatException e) {
+                ctx.attribute("message", "Der var udfordringer med at opdatere prisen: " + e.getMessage());
+                ctx.render("order_details.html");
             }
         }
 
-        private static void setStatusOfferMade(Context ctx, ConnectionPool connectionPool) {
+
+        private static void setStatusOfferMade (Context ctx, ConnectionPool connectionPool){
             try {
                 int orderId = Integer.parseInt(ctx.formParam("orderId"));
                 int newStatusId = 2;
 
                 OrderMapper.updateStatus(orderId, newStatusId, connectionPool);
-                List<Order>allOrdersList = OrderMapper.getAllOrders(connectionPool);
+                List<Order> allOrdersList = OrderMapper.getAllOrders(connectionPool);
                 ctx.attribute("allOrdersList", allOrdersList);
                 ctx.render("salesperson_page.html");
 
@@ -179,7 +176,7 @@ public class OrderController {
             }
         }
 
-        private static void setStatusAccepted(Context ctx, ConnectionPool connectionPool) {
+        private static void setStatusAccepted (Context ctx, ConnectionPool connectionPool){
 
             Order orderUser = ctx.sessionAttribute("orderUser");
             int newStatusId = 3;
@@ -199,34 +196,34 @@ public class OrderController {
             }
         }
 
-    private static void setStatusDeclined(Context ctx, ConnectionPool connectionPool) {
+        private static void setStatusDeclined (Context ctx, ConnectionPool connectionPool){
 
-        Order orderUser = ctx.sessionAttribute("orderUser");
+            Order orderUser = ctx.sessionAttribute("orderUser");
 
-        int newStatusId = 4;
+            int newStatusId = 4;
 
-        try {
-            int orderId = orderUser.getOrderId();
-            OrderMapper.updateStatus(orderId, newStatusId, connectionPool);
-            orderUser.setStatus("Tilbud afslået");
+            try {
+                int orderId = orderUser.getOrderId();
+                OrderMapper.updateStatus(orderId, newStatusId, connectionPool);
+                orderUser.setStatus("Tilbud afslået");
 
-            ctx.sessionAttribute("orderUser", orderUser);
-            ctx.attribute("message", "Du har nu valgt at afslå tilbuddet på denne ordre.");
-            ctx.render("customer_page.html");
-        } catch (DatabaseException e) {
+                ctx.sessionAttribute("orderUser", orderUser);
+                ctx.attribute("message", "Du har nu valgt at afslå tilbuddet på denne ordre.");
+                ctx.render("customer_page.html");
+            } catch (DatabaseException e) {
 
-            ctx.attribute("message, der skete en fejl under udførslen, prøv igen");
-            ctx.render("customer_page.html");
+                ctx.attribute("message, der skete en fejl under udførslen, prøv igen");
+                ctx.render("customer_page.html");
+            }
         }
-    }
 
-        private static void setStatusPaid(Context ctx, ConnectionPool connectionPool) {
+        private static void setStatusPaid (Context ctx, ConnectionPool connectionPool){
             try {
                 int orderId = Integer.parseInt(ctx.formParam("orderId"));
                 int newStatusId = 5;
 
                 OrderMapper.updateStatus(orderId, newStatusId, connectionPool);
-                List<Order>allOrdersList = OrderMapper.getAllOrders(connectionPool);
+                List<Order> allOrdersList = OrderMapper.getAllOrders(connectionPool);
                 ctx.attribute("allOrdersList", allOrdersList);
                 ctx.attribute("messageorder", "Kunden har nu betalt");
                 ctx.render("salesperson_page.html");
@@ -240,5 +237,6 @@ public class OrderController {
 
 
     }
+
 
 
