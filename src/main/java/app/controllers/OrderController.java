@@ -138,7 +138,7 @@ public class OrderController {
             int orderId = Integer.parseInt(ctx.formParam("orderId"));
             double newTotalPrice = Double.parseDouble(ctx.formParam("newTotalPrice"));
             double costPrice = OrderMapper.getCostPrice(orderId, connectionPool);
-
+            List<Material> orderMaterialList = MaterialMapper.getOrderMaterialList(orderId, connectionPool);
             User userInformation = OrderMapper.getUserInformation(orderId, connectionPool);
             double suggestedPrice = costPrice * 1.30;
 
@@ -154,6 +154,7 @@ public class OrderController {
             ctx.attribute("userInformation", userInformation);
             ctx.attribute("costPrice", costPrice);
             ctx.attribute("suggestedPrice", suggestedPrice);
+            ctx.attribute("orderMaterialList", orderMaterialList);
             ctx.render("order_details.html");
 
         } catch (DatabaseException | NumberFormatException e) {
