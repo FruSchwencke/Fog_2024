@@ -232,4 +232,23 @@ public class OrderMapper {
         return costPrice;
     }
 
+    //made for handling an error when you submitted a carport request - you could press "back" in browser, and then make a new request for a carport.
+
+    public static boolean userHasOrder(int userId, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "SELECT COUNT(*) FROM orders WHERE user_id = ?";
+
+        try (Connection conn = connectionPool.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, userId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()){
+                    return rs.getInt(1) > 0;
+
+                }
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException( "kunne ikke undersøge for eksisterende ordre", e.getMessage());
+        }
+        return false;
+    }
 }

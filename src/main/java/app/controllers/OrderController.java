@@ -84,6 +84,18 @@ public class OrderController {
             // retrieving the userId
             User currentUser = ctx.sessionAttribute("currentUser");
             try {
+                //returning a user if they allready have an order
+                 if (OrderMapper.userHasOrder(currentUser.getUserId(), connectionPool)) {
+                   Order orderUser = OrderMapper.getOrderPrUser(currentUser.getUserId(), connectionPool);
+                     if(orderUser != null){
+                         int newStatusId = 1;
+                         orderUser.setStatusId(newStatusId);
+                     }
+                     ctx.sessionAttribute("orderUser", orderUser);
+                     ctx.attribute("message", "Du har allerede en ordre, kontakt os gerne hvis du ønsker flere");
+                     ctx.render("customer_page.html");
+                     return;
+                 }
                 // fetching a specific orderId on currentUser using the OrderMapper method createOrder
                 int orderId = OrderMapper.createOrder(currentUser.getUserId(), width, length, input, connectionPool);
                 // calling the method that collects all the results from the calculations based on the customer choice
