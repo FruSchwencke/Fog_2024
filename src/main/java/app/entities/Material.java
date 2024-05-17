@@ -71,6 +71,18 @@ public class Material {
         this.unitName = unitName;
     }
 
+    public Material(int materialId, String name, String description, double price, int unitId, int width, int length, int height, String unitName) {
+        this.materialId = materialId;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.unitId = unitId;
+        this.width = width;
+        this.length = length;
+        this.height = height;
+        this.unitName = unitName;
+    }
+
     @Override
     public String toString() {
         return "Material{" +

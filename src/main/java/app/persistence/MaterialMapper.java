@@ -81,7 +81,9 @@ public class MaterialMapper {
 
     public static List<Material> companyMaterialList(ConnectionPool connectionPool) throws DatabaseException {
         List<Material> materials = new ArrayList<>();
-        String sql = "Select * from materials";
+        String sql = "SELECT m.m_id, m.name AS material_name, m.description, m.price, m.unit_id, u.name AS unit_name, m.width, m.length, m.height " +
+                "FROM materials m " +
+                "INNER JOIN unit u ON m.unit_id = u.unit_id";
 
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -89,14 +91,16 @@ public class MaterialMapper {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 int materialId = rs.getInt("m_id");
-                String name = rs.getString("name");
+                String name = rs.getString("material_name");
                 String description = rs.getString("description");
                 double price = rs.getDouble("price");
                 int unitId = rs.getInt("unit_id");
+                String unitName = rs.getString("unit_name");
                 int width = rs.getInt("width");
                 int length = rs.getInt("length");
                 int height = rs.getInt("height");
-                Material material = new Material(materialId, name, description, price, unitId, width, length, height);
+                Material material = new Material(materialId,name,description,price,unitId,width,length,height,unitName);
+
                 materials.add(material);
 
             }
