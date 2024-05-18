@@ -57,6 +57,19 @@
 
             <div>
                 <h3>Ordredetaljer</h3>
+                
+                <div class="send offer" th:if="${session.orderDetails.totalPrice != 0.0}">
+                    <form action="/offermade" method="post" th:if="${session.orderDetails.status == 'Afventer'}">
+                        <input type="hidden" id="sendoffer" name="orderId"
+                               th:value="${session.orderDetails.orderId}">
+                        <input class="btn-create" type="submit" value="Send tilbud">
+                    </form>
+                </div>
+
+                <div class="message">
+                    <p th:text="${messageUpdatePrice}"> kr. </p>
+                </div>
+
                 <p><strong>Status:</strong> <span th:text="${session.orderDetails.status}"></span></p>
                 <p><strong>Længde:</strong> <span th:text="${session.orderDetails.length /10}"></span> cm</p>
                 <p><strong>Bredde:</strong> <span th:text="${session.orderDetails.width /10}"></span> cm</p>
@@ -79,17 +92,7 @@
                         <input class="btn-gen" type="submit" value="Opdater Pris">
                     </form>
 
-                    <div class="message">
-                        <p th:text="${messageUpdatePrice}"></p>
-                    </div>
 
-                    <div class="send offer" th:if="${session.orderDetails.totalPrice != 0.0}">
-                        <form action="/offermade" method="post" th:if="${session.orderDetails.status == 'Afventer'}">
-                            <input type="hidden" id="sendoffer" name="orderId"
-                                   th:value="${session.orderDetails.orderId}">
-                            <input class="btn-create" type="submit" value="Send tilbud">
-                        </form>
-                    </div>
 
                     <form action="/setStatusPaid" method="post"
                           th:if="${session.orderDetails.status == 'Tilbud accepteret'}">
