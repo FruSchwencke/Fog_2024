@@ -54,7 +54,7 @@ public class OrderController {
             Order orderDetails = OrderMapper.getOrderDetails(orderId, connectionPool);
             User userInformation = OrderMapper.getUserInformation(orderId, connectionPool);
             double costPrice = OrderMapper.getCostPrice(orderId, connectionPool);
-            double suggestedPrice = costPrice * 1.30;
+            double suggestedPrice = calculateSuggestedPrice(costPrice);
             List<Material> orderMaterialList = MaterialMapper.getOrderMaterialList(orderId, connectionPool);
 
             if (orderDetails != null) {
@@ -136,9 +136,6 @@ public class OrderController {
         }
 
 
-
-
-
         public static void updateTotalPrice (Context ctx, ConnectionPool connectionPool){
             try {
                 int orderId = Integer.parseInt(ctx.formParam("orderId"));
@@ -152,10 +149,8 @@ public class OrderController {
                 } else {
                     ctx.attribute("messageUpdatePrice", "Du kan ikke afgive tilbud, som er mindre end indkøbsprisen");
                 }
-
                 Order orderDetails = OrderMapper.getOrderDetails(orderId, connectionPool);
                 ctx.sessionAttribute("orderDetails", orderDetails);
-
                 ctx.render("order_details.html");
 
             } catch (DatabaseException | NumberFormatException e) {
@@ -205,7 +200,6 @@ public class OrderController {
         private static void setStatusDeclined (Context ctx, ConnectionPool connectionPool){
 
             Order orderUser = ctx.sessionAttribute("orderUser");
-
             int newStatusId = 4;
 
             try {
@@ -231,7 +225,7 @@ public class OrderController {
                 OrderMapper.updateStatus(orderId, newStatusId, connectionPool);
                 List<Order> allOrdersList = OrderMapper.getAllOrders(connectionPool);
                 ctx.attribute("allOrdersList", allOrdersList);
-                ctx.attribute("messageorder", "Kunden har nu betalt");
+                ctx.attribute("messageorder", "Kunden med" + orderId + "har nu betalt.");
                 ctx.render("salesperson_page.html");
 
             } catch (NumberFormatException | DatabaseException e) {
@@ -240,9 +234,13 @@ public class OrderController {
 
             }
         }
-
-
+    private static double calculateSuggestedPrice(double costPrice) {
+        double suggestedPrice = costPrice * 1.30;
+        return Math.ceil(suggestedPrice);
     }
+
+
+}
 
 
 

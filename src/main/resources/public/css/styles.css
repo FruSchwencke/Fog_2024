@@ -12,6 +12,7 @@ h3 {
 #page {
     padding:8px;
     min-height: 600px;
+    font-family: Arial, Helvetica, sans-serif;
 
 }
 header {
@@ -187,10 +188,9 @@ nav {
 
 /*Order-details.*/
 .Material-list {
-
-            width: 100%;
-            border-collapse: collapse;
-        }
+    width: 100%;
+    border-collapse: collapse;
+}
 
 .Material-list th,
 .Material-list td {
@@ -199,8 +199,13 @@ nav {
     text-align: left;
 }
 
-   .Material-list th {
+.Material-list th {
     background-color: #f2f2f2;
+    font-size: 16px; /* Størrelse på tekst i <th> */
+}
+
+.Material-list td {
+    font-size: 12px; /* Størrelse på tekst i <td> */
 }
 
 .Material-list tr:nth-child(even) {
@@ -210,6 +215,7 @@ nav {
 .Material-list tr:hover {
     background-color: #f1f1f1;
 }
+
 
 .Material-list2 {
 
