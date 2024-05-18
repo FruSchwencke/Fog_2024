@@ -70,7 +70,6 @@ public class UserMapper {
                 "WHERE u.email = ?";
 
 
-
         try (
                 Connection connection = connectionPool.getConnection();
                 PreparedStatement ps = connection.prepareStatement(sql)
