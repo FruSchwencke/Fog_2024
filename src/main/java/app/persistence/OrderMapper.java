@@ -73,7 +73,6 @@ public class OrderMapper {
                 "JOIN status s ON o.status_id = s.status_id " +
                 "WHERE o.order_id = ?";
 
-        Order orderDetails = null;
         try (
                 Connection connection = connectionPool.getConnection();
                 PreparedStatement ps = connection.prepareStatement(sql)
@@ -83,22 +82,22 @@ public class OrderMapper {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-
                 int length = rs.getInt("length");
                 int width = rs.getInt("width");
                 double totalprice = rs.getDouble("total_price");
                 String textInput = rs.getString("text_input");
                 String status = rs.getString("status_name");
 
-                orderDetails = new Order(orderId, length, width, totalprice, textInput, status);
-
+                return new Order(orderId, length, width, totalprice, textInput, status);
+            } else {
+                throw new DatabaseException("Ingen ordre fundet for ordre id: " + orderId);
             }
         } catch (SQLException e) {
-            throw new DatabaseException("kunne ikke fremskaffe ordredetaljer med det ordreid", e.getMessage());
+            throw new DatabaseException("Kunne ikke fremskaffe ordredetaljer med det ordreid", e.getMessage());
         }
-
-        return orderDetails;
     }
+
+
 
     public static User getUserInformation(int orderId, ConnectionPool connectionPool) throws DatabaseException {
         String sql = "SELECT  u.first_name,  u.last_name, u.email, u.address, z.zip_code, z.city, u.phonenumber FROM orders o "

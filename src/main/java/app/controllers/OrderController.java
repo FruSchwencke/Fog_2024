@@ -136,9 +136,6 @@ public class OrderController {
         }
 
 
-
-
-
         public static void updateTotalPrice (Context ctx, ConnectionPool connectionPool){
             try {
                 int orderId = Integer.parseInt(ctx.formParam("orderId"));
@@ -203,7 +200,6 @@ public class OrderController {
         private static void setStatusDeclined (Context ctx, ConnectionPool connectionPool){
 
             Order orderUser = ctx.sessionAttribute("orderUser");
-
             int newStatusId = 4;
 
             try {
