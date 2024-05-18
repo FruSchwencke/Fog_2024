@@ -28,7 +28,7 @@
             <div id="midnav">
                 <p class="Titel_nav"> Velkommen <strong><span th:if="${session.currentUser != null}"
                                                               th:text="${session.currentUser.firstName}"></span></strong>,
-                    du kan her se informationer om ordren </p>
+                    du kan her se informationer om ordre nr: <strong><span th:text="${session.orderDetails.orderid}"></span><strong> </p>
 
             </div>
 

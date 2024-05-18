@@ -11,8 +11,8 @@ import java.util.zip.DataFormatException;
 
 
 public class MaterialMapper {
-    public static void addMaterial(String name, String description, double price, int unitId, int width, int length, int height, ConnectionPool connectionPool) throws DatabaseException {
-        String sql = "insert into materials (name, description, price, unit_id, width, length, height) values (?,?,?,?,?,?,?)";
+    public static void addMaterial(String name, String description, double price, int unitId, Integer width, Integer length, Integer height, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "INSERT INTO materials (name, description, price, unit_id, width, length, height) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (
                 Connection connection = connectionPool.getConnection();
@@ -22,9 +22,24 @@ public class MaterialMapper {
             ps.setString(2, description);
             ps.setDouble(3, price);
             ps.setInt(4, unitId);
-            ps.setInt(5, width);
-            ps.setInt(6, length);
-            ps.setInt(7, height);
+
+            if (width != null) {
+                ps.setInt(5, width);
+            } else {
+                ps.setNull(5, java.sql.Types.INTEGER);
+            }
+
+            if (length != null) {
+                ps.setInt(6, length);
+            } else {
+                ps.setNull(6, java.sql.Types.INTEGER);
+            }
+
+            if (height != null) {
+                ps.setInt(7, height);
+            } else {
+                ps.setNull(7, java.sql.Types.INTEGER);
+            }
 
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected != 1) {
@@ -33,10 +48,10 @@ public class MaterialMapper {
 
         } catch (SQLException e) {
             String msg = "Der er sket en fejl. Prøv igen";
-
             throw new DatabaseException(msg, e.getMessage());
         }
     }
+
 
     public static Material findMaterialForUpdateMaterial(int materialId, ConnectionPool connectionPool) throws DatabaseException {
         Material material = null;
