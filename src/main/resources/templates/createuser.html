@@ -25,28 +25,28 @@
         <div>
             <h3>Opret Konto</h3>
             <form class="createuser-form" method="post">
-                <p class="boxtitel">fornavn</p>
+                <p class="boxtitel">Fornavn</p>
                 <input type="text" name="first_name" placeholder="Angiv fornavn"/>
-                <p class="boxtitel">efternavn</p>
+                <p class="boxtitel">Efternavn</p>
                 <input type="text" name="last_name" placeholder="Angiv efternavn"/>
-                <p class="boxtitel">adresse</p>
+                <p class="boxtitel">Adresse</p>
                 <input type="text" name="address" placeholder="Angiv adresse"/>
-                <p class="boxtitel">postnummer</p>
+                <p class="boxtitel">Postnummer</p>
                 <input type="number" name="zip_code" placeholder="Angiv postnummer"/>
                 <p class="boxtitel">By</p>
                 <input type="gray" class="grayed-out" name="City" placeholder="Bynavn hentes automatisk" disabled tabindex="-1"/>
-                <p class="boxtitel">telefonnummer</p>
+                <p class="boxtitel">Telefonnummer</p>
                 <input type="number" name="phonenumber" placeholder="Angiv telefonnummer"/>
-                <p class="boxtitel">email</p>
+                <p class="boxtitel">Email</p>
                 <input type="text" name="email" placeholder="navn@eksempel.dk"/>
-                <p class="boxtitel">kodeord</p>
+                <p class="boxtitel">Kodeord</p>
                 <input type="password" name="password1" placeholder="Opret kodeord"/>
-                <p class="boxtitel">gentag kodeord</p>
+                <p class="boxtitel">Gentag kodeord</p>
                 <input type="password" name="password2" placeholder="Gentag kodeord"/> <br>
                 <br>
 
                 <div class="btnend">
-                    <button class="btn-create" type="submit" formaction="/createuser">opret konto</button>
+                    <button class="btn-create" type="submit" formaction="/createuser">Opret konto</button>
                 </div>
                 <div class="errorbox"><p class="error" th:text="${message}"></p>
 
