@@ -52,13 +52,13 @@
 
                     </div>
 
-                Informationer om din ordre:
-                <p>Ordre id:  <span th:text="${session.orderUser.orderId}"></span></p>
-                <p>Status: <span th:text="${session.orderUser.status}"></span></p>
-                <p>Længde: <span th:text="${session.orderUser.length / 10}"></span> cm</p>
-                <p>Bredde: <span th:text="${session.orderUser.width / 10}"></span> cm</p>
+                <h3>Informationer om din ordre: </h3>
+                <p><strong>Ordre id: </strong> <span th:text="${session.orderUser.orderId}"></span></p>
+                <p><strong>Status: </strong> <span th:text="${session.orderUser.status}"></span></p>
+                <p><strong>Længde:</strong> <span th:text="${session.orderUser.length / 10}"></span> cm</p>
+                <p><strong>Bredde:</strong> <span th:text="${session.orderUser.width / 10}"></span> cm</p>
 
-                <p th:if="${session.orderUser.status != 'Afventer'}">Total pris: <span th:text="${session.orderUser.totalPrice}"></span> kr</p>
+                <p th:if="${session.orderUser.status != 'Afventer'}"><strong>Total pris: </strong> <span th:text="${session.orderUser.totalPrice}"></span> kr</p>
 
                 <form action="/setStatusAccepted" method="post" th:if="${session.orderUser.status == 'Tilbud færdiggjort'}">
                     <button class="btn-create" type="submit">Accepter ordre</button>
