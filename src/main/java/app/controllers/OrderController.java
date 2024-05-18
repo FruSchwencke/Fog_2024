@@ -54,7 +54,7 @@ public class OrderController {
             Order orderDetails = OrderMapper.getOrderDetails(orderId, connectionPool);
             User userInformation = OrderMapper.getUserInformation(orderId, connectionPool);
             double costPrice = OrderMapper.getCostPrice(orderId, connectionPool);
-            double suggestedPrice = costPrice * 1.30;
+            double suggestedPrice = calculateSuggestedPrice(costPrice);
             List<Material> orderMaterialList = MaterialMapper.getOrderMaterialList(orderId, connectionPool);
 
             if (orderDetails != null) {
@@ -238,9 +238,13 @@ public class OrderController {
 
             }
         }
-
-
+    private static double calculateSuggestedPrice(double costPrice) {
+        double suggestedPrice = costPrice * 1.30;
+        return Math.ceil(suggestedPrice);
     }
+
+
+}
 
 
 
