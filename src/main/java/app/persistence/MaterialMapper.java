@@ -227,11 +227,8 @@ public class MaterialMapper {
     public static List<Material> getOrderMaterialList(int orderId, ConnectionPool connectionpool) throws DatabaseException {
         List<Material> orderMaterialList = new ArrayList<>();
 
-        String sql = "SELECT mll.quantity, " +
-                "       m.name AS material_name, " +
-                "       m.description, " +
-                "       m.length AS material_length, " +
-                "       u.name AS unit_name " +
+        String sql = "SELECT mll.quantity, m.name AS material_name, m.description, " +
+                  "m.length AS material_length, u.name AS unit_name " +
                 "FROM material_list_lines mll " +
                 "JOIN materials m ON mll.m_id = m.m_id " +
                 "JOIN unit u ON m.unit_id = u.unit_id " +

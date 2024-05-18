@@ -239,7 +239,6 @@ public class OrderController {
         return Math.ceil(suggestedPrice);
     }
 
-
 }
 
 
