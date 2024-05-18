@@ -54,11 +54,10 @@ public class MaterialController {
         String lengthParam = ctx.formParam("length");
         String heightParam = ctx.formParam("height");
 
+        Integer width = null;
+        Integer length = null;
+        Integer height = null;
 
-        int width = 0;
-        int length = 0;
-        int height = 0;
-        // set 0 in database if nothing is assigned in formparam
         if (widthParam != null && !widthParam.isEmpty()) {
             width = Integer.parseInt(widthParam);
         }
