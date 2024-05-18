@@ -14,58 +14,67 @@
     <header>
         <img src="../public/images/logofog.PNG" th:src="@{/images/logofog.PNG}" height="176" width="179"/>
     </header>
-
-    <nav>
-        <div id="leftnav">
-            <form method="post" th:action="@{/salesperson}">
-                <button class="btn-create" type="submit"  >Tilbage</button>
-            </form>
+    <div>
+        <div th:if="${session.currentUser == null}">
+            <h2>Du er ikke logget ind</h2>
+            <a href="/login" class="btn-create">Login</a>
         </div>
-        <div id="midnav"> <p class="Titel_nav"> Velkommen <strong><span th:if="${session.currentUser != null}" th:text="${session.currentUser.firstName}"></span></strong>, du kan her få hele virksomhedens matrialeliste </p></div>
-        <div id="rightnav">
-            <button class="btn-gen"><a href="index.html" th:href="@{/logout}">Log ud</a></button>
-        </div>
-    </nav>
 
-    <div class="flex-container">
-        <div>
-            <h3>Virksomhedens materiale liste</h3>
-            <div>
-                <form method="post" th:action="@{/company_mat_list}">
-                    <button class="btn-create" type="submit">Søg</button>
-
-            </form> </div>
-            <div class="responsive-message">
-                <p> Du skal være på en PC for at kunne tilgå listen</p>
+        <nav th:if="${session.currentUser != null}">
+            <div id="leftnav">
+                <form method="post" th:action="@{/salesperson}">
+                    <button class="btn-create" type="submit">Tilbage</button>
+                </form>
             </div>
-            <table class="Material-list2">
-                <thead>
-                <tr>
-                    <th>Materiale ID</th>
-                    <th>Navn</th>
-                    <th>Beskrivelse</th>
-                    <th>Pris</th>
-                    <th>Enhed ID</th>
-                    <th>Bredde</th>
-                    <th>Længde</th>
-                    <th>Højde</th>
-                    <th>Enheds navn</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="material : ${materials}">
-                    <td th:text="${material.materialId}"></td>
-                    <td th:text="${material.name}"></td>
-                    <td th:text="${material.description}"></td>
-                    <td th:text="${material.price}"></td>
-                    <td th:text="${material.unitId}"></td>
-                    <td th:text="${material.width}"></td>
-                    <td th:text="${material.length}"></td>
-                    <td th:text="${material.height}"></td>
-                    <td th:text="${material.unitName}"></td>
-                </tr>
-                </tbody>
-            </table>
+            <div id="midnav"><p class="Titel_nav"> Velkommen <strong><span th:if="${session.currentUser != null}"
+                                                                           th:text="${session.currentUser.firstName}"></span></strong>,
+                du kan her få hele virksomhedens matrialeliste </p></div>
+            <div id="rightnav">
+                <button class="btn-gen"><a href="index.html" th:href="@{/logout}">Log ud</a></button>
+            </div>
+        </nav>
+
+        <div class="flex-container" th:if="${session.currentUser != null}">
+            <div>
+                <h3>Virksomhedens materiale liste</h3>
+                <div>
+                    <form method="post" th:action="@{/company_mat_list}">
+                        <button class="btn-create" type="submit">Søg</button>
+
+                    </form>
+                </div>
+                <div class="responsive-message">
+                    <p> Du skal være på en PC for at kunne tilgå listen</p>
+                </div>
+                <table class="Material-list2">
+                    <thead>
+                    <tr>
+                        <th>Materiale ID</th>
+                        <th>Navn</th>
+                        <th>Beskrivelse</th>
+                        <th>Pris</th>
+                        <th>Enhed ID</th>
+                        <th>Bredde</th>
+                        <th>Længde</th>
+                        <th>Højde</th>
+                        <th>Enheds navn</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="material : ${materials}">
+                        <td th:text="${material.materialId}"></td>
+                        <td th:text="${material.name}"></td>
+                        <td th:text="${material.description}"></td>
+                        <td th:text="${material.price}"></td>
+                        <td th:text="${material.unitId}"></td>
+                        <td th:text="${material.width}"></td>
+                        <td th:text="${material.length}"></td>
+                        <td th:text="${material.height}"></td>
+                        <td th:text="${material.unitName}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
