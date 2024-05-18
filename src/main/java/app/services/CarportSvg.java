@@ -24,7 +24,7 @@ public class CarportSvg {
         rafterList.add(new Material(1,"rafter","lala",1,1,1,1,1,5));
 
         List<Material> sternList = new ArrayList<>();
-        sternList.add(new Material(1,"rafter","lala",1,1,1,1,1,4));
+        sternList.add(new Material(1,"rafter","lala",1,1,1,1,1,2));
 
         drawPosts(450,250, postList);
         drawBeams(450,250,beamList);
@@ -92,10 +92,10 @@ public class CarportSvg {
         double y = 87.5;
         double offsetW1 = 45;
         double offsetL1 = 120;
-        double lengthBetween = 35;
+        double lengthBetween = (length / rafters.get(0).getQuantity());
 
         for (int i = 0; i < rafters.get(0).getQuantity(); i++) {
-                svg.addRectangle((x+(lengthBetween*i))+offsetL1, y+9, 250, 1.95, "stroke-width:1px; stroke:#000000; fill:purple;");
+                svg.addRectangle(x + offsetL1 + (lengthBetween * i), y+9, 250, 1.95, "stroke-width:1px; stroke:#000000; fill:purple;");
                 svg.addN();
         }
     }
@@ -106,17 +106,21 @@ public class CarportSvg {
         int x = 120;
         int y = 60;
         double offsetW1 = 35;
-        double offsetL1 = 110;
+        double offsetL1 = 100;
 
-        for (int i = 0; i < sterns.get(0).getQuantity(); i++) {
+        for (int i = 0; i < (sterns.get(0).getQuantity() / 2); i++) {
+            for (int j = 0; j < 2; j++) {
+                svg.addRectangle(x +offsetL1,y+offsetW1*j,1.95,450,"stroke-width:1px; stroke:#000000; fill:green");
+                svg.addN();}
 
-                svg.addRectangle(x + offsetL1, y + offsetW1, 450, 1.95, "stroke-width:1px; stroke:#000000; fill:green");
-                svg.addRectangle(x + offsetW1, y + offsetL1, 1.95, 250, "stroke-width:1px; stroke:#000000; fill:red");
+            for (int j = 0; j < 2; j++) {
+                svg.addRectangle(x + offsetL1 + (offsetW1*j), y + offsetL1, 250, 1.95, "stroke-width:1px; stroke:#000000; fill:red");
                 svg.addN();
-
+            }
         }
 
     }
+
 
     public static void drawCarport(double length, double width, List<Material> postList, List<Material> rafterList, List <Material> sternList, List <Material> beamList){
 
