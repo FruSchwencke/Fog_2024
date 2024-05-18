@@ -35,7 +35,7 @@ public class MaterialController {
         //setting default value
         double price;
         int unitId;
-        // handling excptions
+
         try {
             price = Double.parseDouble(ctx.formParam("price"));
             unitId = Integer.parseInt(ctx.formParam("unit"));
