@@ -13,7 +13,7 @@ package app.services;
             "     x=\"%d\" y=\"%d\"\n" +
             "     viewBox=\"%s\"  width=\"%s\" \n" +
              "xmlns=\"http://www.w3.org/2000/svg\" \n"+
-            "     preserveAspectRatio=\"xMinYMin\">";
+            "     preserveAspectRatio=\"xMinYMin\"\n>";
 
 
     //template for drawing posts, beams, rafters, sterns and roof
@@ -75,9 +75,13 @@ package app.services;
     }
 
 
-
     @Override
     public String toString() {
         return svg.append("</svg>").toString();
     }
+
+
+     public String addN() {
+         return svg.append("\n\"").toString();
+     }
 }

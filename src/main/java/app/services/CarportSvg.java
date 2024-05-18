@@ -16,7 +16,13 @@ public class CarportSvg {
     public static void main(String[] args) {
         List<Material> postList = new ArrayList<>();
         postList.add(new Material(1,"post","lala",1,1,1,1,1,4));
+
+        List<Material> beamList = new ArrayList<>();
+        beamList.add(new Material(1,"beam","lala",1,1,1,1,1,2));
+
         drawPosts(450,250, postList);
+        drawBeams(450,250,beamList);
+
         String finalSvg = svg.toString();
         try {
 
@@ -51,6 +57,7 @@ public class CarportSvg {
         for (int i = 0; i < (posts.get(0).getQuantity() / 2); i++) {
             for (int j = 0; j < 2; j++) {
                 svg.addRectangle(x + (length * i) + offsetL1 - (15 * 0.5),y + (width * j) + offsetW1 - (15 * 0.5),15,15,"stroke-width:1px; stroke:#000000; fill:#ffffff");
+                svg.addN();
             }
         }
 
@@ -59,9 +66,18 @@ public class CarportSvg {
 
 
     //REMMER
-    public static void drawBeams(int x, int y, double length, double width){
+    public static void drawBeams(double length, double width, List<Material> beams){
 
-        svg.addRectangle(x,y,length,width,"stroke-width:1px; stroke:#000000; fill:#ffffff");
+        int x = 120;
+        int y = 60;
+        double offsetW1 = 35;
+
+        for (int i = 0; i < beams.get(0).getQuantity(); i++) {
+
+            svg.addRectangle(x, y + (width * i) + offsetW1, 19.5 , 3600, "stroke-width:1px; stroke:#000000; fill:#ffffff");
+            svg.addN();
+        }
+
     }
 
 
