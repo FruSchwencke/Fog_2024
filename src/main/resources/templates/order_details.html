@@ -28,7 +28,7 @@
             <div id="midnav">
                 <p class="Titel_nav"> Velkommen <strong><span th:if="${session.currentUser != null}"
                                                               th:text="${session.currentUser.firstName}"></span></strong>,
-                    du kan her se informationer om ordre nr: <strong><span th:text="${session.orderDetails.orderid}"></span><strong> </p>
+                    du kan her se informationer om ordre nr: <strong><span th:text="${session.orderDetails.orderid}"></span></strong> </p>
 
             </div>
 
@@ -53,8 +53,6 @@
                 <p><strong>Adresse:</strong> <span th:text="${session.userInformation.address}"></span></p>
                 <p><strong>Postnummer:</strong> <span th:text="${session.userInformation.zipcode}"></span></p>
                 <p><strong>By:</strong> <span th:text="${session.userInformation.city}"></span></p>
-
-                ..
             </div>
 
             <div>
