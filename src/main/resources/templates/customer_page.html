@@ -45,8 +45,10 @@
 
 
                     <h3>Informationer om din ordre: </h3>
+                    <p th:if="${session.orderUser.status != 'Betaling gennemført'}"><strong>Status på dine ordre: </strong> <span th:text="${session.orderUser.status}"></span></p>
                     <p><strong>Ordre id: </strong> <span th:text="${session.orderUser.orderId}"></span></p>
-                    <p><strong>Status: </strong> <span th:text="${session.orderUser.status}"></span></p>
+                    <h2>Dine ønskede mål: </h2>
+                    <br>
                     <p><strong>Længde:</strong> <span th:text="${session.orderUser.length / 10}"></span> cm</p>
                     <p><strong>Bredde:</strong> <span th:text="${session.orderUser.width / 10}"></span> cm</p>
 
@@ -87,18 +89,18 @@
             </div>
             <div >
                 <div class="orderUser-start">
-                <h3 class="orderUser-text" th:if="${session.orderUser.status == 'Afventer'}">
-                    Tak for din forespørgsel på bestilling af carport. <br>
-                    En medarbejder vil gennemgå dine mål. <br>
-                    Vi vender tilbage med tilbud snarest</h3>
+                    <h3 class="orderUser-text" th:if="${session.orderUser.status == 'Afventer'}">
+                        Tak for din forespørgsel på bestilling af carport. <br>
+                        En medarbejder vil gennemgå dine mål. <br>
+                        Vi vender tilbage med tilbud snarest</h3>
 
-                <h3 class="orderUser-text"  th:if="${session.orderUser.status == 'Tilbud færdiggjort'}">
-                    Tak for din forespørgsel på bestilling af carport. <br>
-                    Vi har nu et tilbud klar </h3>
+                    <h3 class="orderUser-text"  th:if="${session.orderUser.status == 'Tilbud færdiggjort'}">
+                        Tak for din forespørgsel på bestilling af carport. <br>
+                        Vi har nu et tilbud klar </h3>
 
-                <h3 class="orderUser-text" th:if="${session.orderUser.status == 'Betaling gennemført'}">
-                    Vi har nu modtaget din betaling. <br>
-                    Vi vender snarest muligt tilbage med leveringsdato </h3>
+                    <h3 class="orderUser-text" th:if="${session.orderUser.status == 'Betaling gennemført'}">
+                        Vi har nu modtaget din betaling. <br>
+                        Vi vender snarest muligt tilbage med leveringsdato </h3>
                 </div>
                 <br>
                 <br>
