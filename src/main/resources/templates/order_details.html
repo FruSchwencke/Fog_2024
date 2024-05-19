@@ -75,16 +75,20 @@
                 </form>
 
                 <h2>Ordredetaljer</h2>
-
                 <p><strong>Status:</strong> <span th:text="${session.orderDetails.status}"></span></p>
+                <p th:if="${session.orderDetails.textInput != ''}">
+                    <strong>Kommentar:</strong> <span th:text="${session.orderDetails.textInput}"></span></p>
+                <p th:if="${session.orderDetails.textInput == ''}">
+                    Der er ikke tilføjet kommentar til ordren.</p>
+                <h2>Information vedr. pris</h2>
+
                 <p th:if="${session.orderDetails.status =='Afventer'}"><strong>Ønskede mål: </strong></p>
                 <p th:if="${session.orderDetails.status !='Afventer'}"><strong>Mål: </strong></p>
                 <p>Længde:<span th:text="${session.orderDetails.length /10}"></span> cm</p>
                 <p>Bredde:<span th:text="${session.orderDetails.width /10}"></span> cm</p>
-                <p><strong>Besked:</strong> <span th:text="${session.orderDetails.textInput}"></span></p>
-                <h2>Information vedr. pris</h2>
-                <p th:if="${session.orderDetails.totalPrice != 0.0}"><strong>Salgspris: </strong>
-                    <span th:text="${session.orderDetails.totalPrice}"></span> kr</p>
+
+                <p th:if="${session.orderDetails.totalPrice != 0.0}"><strong>Salgspris:
+                    <span th:text="${session.orderDetails.totalPrice}"></span> kr </strong></p>
                 <p th:if="${session.costPrice != null}"><strong>Indkøbspris:</strong>
                     <span th:text="${session.costPrice}"></span> kr</p>
                 <p th:if="${session.suggestedPrice != null}"><strong> Pris med 30 % dækningsgrad: </strong>
