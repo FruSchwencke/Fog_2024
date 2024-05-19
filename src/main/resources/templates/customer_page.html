@@ -49,10 +49,10 @@
                     <p><strong>Ordre id: </strong> <span th:text="${session.orderUser.orderId}"></span></p>
                     <p th:if="${session.orderUser.status != 'Afventer'}"><strong>Total pris: </strong> <span
                             th:text="${session.orderUser.totalPrice}"></span> kr</p>
-                    <h3 th:if="${session.orderUser.status == 'Afventer' or session.orderUser.status == 'Tilbud færdiggjort'}">
-                        Dine ønskede mål: </h3>
-                    <h3 th:if="${session.orderUser.status == 'Tilbud accepteret' or session.orderUser.status == 'Tilbud afvist' or session.orderUser.status == 'Betaling gennemført'}">
-                        Mål på din carport: </h3>
+                    <h2 th:if="${session.orderUser.status == 'Afventer' or session.orderUser.status == 'Tilbud færdiggjort'}">
+                        Dine ønskede mål: </h2>
+                    <h2 th:if="${session.orderUser.status == 'Tilbud accepteret' or session.orderUser.status == 'Tilbud afvist' or session.orderUser.status == 'Betaling gennemført'}">
+                        Mål på din carport: </h2>
 
                     <p><strong>Længde:</strong> <span th:text="${session.orderUser.length / 10}"></span> cm</p>
                     <p><strong>Bredde:</strong> <span th:text="${session.orderUser.width / 10}"></span> cm</p>
@@ -92,7 +92,7 @@
                 </a>
             </div>
             <div >
-                <div class="orderUser-start">
+                <div class="orderUser-start" th:if="${session.orderUser != 0}">
                     <h3 class="orderUser-text" th:if="${session.orderUser.status == 'Afventer'}">
                         Tak for din forespørgsel på bestilling af carport. <br>
                         En medarbejder vil gennemgå dine mål. <br>
