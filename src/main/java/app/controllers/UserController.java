@@ -62,13 +62,13 @@ public class UserController {
 
         //firsName must be atleast 2 characters and only letters
         if (!nameValidate(firstName)) {
-            ctx.attribute("message", "Brug kun bogstaver i fornavn og på minimum 2 langt, prøv igen");
+            ctx.attribute("message", "Brug kun bogstaver i fornavn. Benyt mindst 2 bogstaver, prøv igen");
             ctx.render("createuser.html");
             return;
         }
         //Lastname must be atleast 2 characters and only letters
         if (!nameValidate(lastName)) {
-            ctx.attribute("message", "Brug kun bogstaver i efternavn og på minimum 2 langt, prøv igen");
+            ctx.attribute("message", "Brug kun bogstaver i efternavn. Benyt mindst 2 bogstaver, prøv igen");
             ctx.render("createuser.html");
             return;
         }
