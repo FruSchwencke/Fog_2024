@@ -47,13 +47,17 @@
                     <h3>Informationer om din ordre: </h3>
                     <p th:if="${session.orderUser.status != 'Betaling gennemført'}"><strong>Status på dine ordre: </strong> <span th:text="${session.orderUser.status}"></span></p>
                     <p><strong>Ordre id: </strong> <span th:text="${session.orderUser.orderId}"></span></p>
-                    <h2>Dine ønskede mål: </h2>
-                    <br>
+                    <p th:if="${session.orderUser.status != 'Afventer'}"><strong>Total pris: </strong> <span
+                            th:text="${session.orderUser.totalPrice}"></span> kr</p>
+                    <h3 th:if="${session.orderUser.status == 'Afventer' or session.orderUser.status == 'Tilbud færdiggjort'}">
+                        Dine ønskede mål: </h3>
+                    <h3 th:if="${session.orderUser.status == 'Tilbud accepteret' or session.orderUser.status == 'Tilbud afvist' or session.orderUser.status == 'Betaling gennemført'}">
+                        Mål på din carport: </h3>
+
                     <p><strong>Længde:</strong> <span th:text="${session.orderUser.length / 10}"></span> cm</p>
                     <p><strong>Bredde:</strong> <span th:text="${session.orderUser.width / 10}"></span> cm</p>
 
-                    <p th:if="${session.orderUser.status != 'Afventer'}"><strong>Total pris: </strong> <span
-                            th:text="${session.orderUser.totalPrice}"></span> kr</p>
+
 
                     <form action="/setStatusAccepted" method="post"
                           th:if="${session.orderUser.status == 'Tilbud færdiggjort'}">
