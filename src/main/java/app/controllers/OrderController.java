@@ -163,7 +163,7 @@ public class OrderController {
         private static void setStatusOfferMade (Context ctx, ConnectionPool connectionPool){
             try {
                 int orderId = Integer.parseInt(ctx.formParam("orderId"));
-                int newStatusId = 2;
+                int newStatusId = 5;
 
                 OrderMapper.updateStatus(orderId, newStatusId, connectionPool);
                 List<Order> allOrdersList = OrderMapper.getAllOrders(connectionPool);
@@ -181,7 +181,7 @@ public class OrderController {
         private static void setStatusAccepted (Context ctx, ConnectionPool connectionPool){
 
             Order orderUser = ctx.sessionAttribute("orderUser");
-            int newStatusId = 3;
+            int newStatusId = 2;
 
             try {
                 int orderId = orderUser.getOrderId();
@@ -221,7 +221,7 @@ public class OrderController {
         private static void setStatusPaid (Context ctx, ConnectionPool connectionPool){
             try {
                 int orderId = Integer.parseInt(ctx.formParam("orderId"));
-                int newStatusId = 5;
+                int newStatusId = 3;
 
                 OrderMapper.updateStatus(orderId, newStatusId, connectionPool);
                 List<Order> allOrdersList = OrderMapper.getAllOrders(connectionPool);
