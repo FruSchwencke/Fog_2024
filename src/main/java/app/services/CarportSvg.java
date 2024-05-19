@@ -57,14 +57,14 @@ public class CarportSvg {
 
     //STOLPER
     public static void drawPosts(double length, double width, List<Material> posts){
-        int x = 120;
+        double x = 120;
         int y = 60;
         double offsetW1 = 35;
         double offsetL1 = 110;
 
         for (int i = 0; i < (posts.get(0).getQuantity() / 2); i++) {
             for (int j = 0; j < 2; j++) {
-                svg.addRectangle(x + (length * i) + offsetL1 - (15 * 0.5),y + (width * j) + offsetW1 - (15 * 0.5),15,15,"stroke-width:1px; stroke:#000000; fill:grey");
+                svg.addRectangle((x + ((length-offsetL1) * i) + offsetL1) - (15 * 0.5),y + (width * j) + offsetW1 - (15 * 0.5),15,15,"stroke-width:1px; stroke:#000000; fill:grey");
                 svg.addN();
             }
         }
@@ -80,7 +80,7 @@ public class CarportSvg {
         double offsetL1 = 110;
 
         for (int i = 0; i < beams.get(0).getQuantity(); i++) {
-            svg.addRectangle(x + offsetL1, y + (width * i) + offsetW1, 1.95 , 450, "stroke-width:1px; stroke:#000000; fill:lightgray:");
+            svg.addRectangle(x + offsetL1 - (15 * 0.5), y + (width * i) + offsetW1, 1.95 , 450, "stroke-width:1px; stroke:#000000; fill:lightgray:");
             svg.addN();
         }
     }
@@ -88,15 +88,21 @@ public class CarportSvg {
     //SPÆR
     public static void drawRafters(double length, double width, List<Material> rafters){
 
-        int x = 120;
-        double y = 87.5;
-        double offsetW1 = 45;
+        double x = 120;
+        double y = 60;
+        double rafterHeight = rafters.get(0).getHeight();
         double offsetL1 = 120;
-        double lengthBetween = (length / rafters.get(0).getQuantity());
+        int quantity = rafters.get(0).getQuantity();
+        double lengthBetween = (length  / (quantity-1))-rafterHeight;
 
-        for (int i = 0; i < rafters.get(0).getQuantity(); i++) {
-                svg.addRectangle(x + offsetL1 + (lengthBetween * i), y+9, 250, 1.95, "stroke-width:1px; stroke:#000000; fill:purple;");
+        for (int i = 0; i < quantity; i++) {
+            if (i == quantity - 1) {
+                svg.addRectangle(((x + (lengthBetween * i)) + offsetL1) -rafterHeight, y + 9, 250, rafterHeight, "stroke-width:1px; stroke:#000000; fill:purple;");
                 svg.addN();
+            }else{
+                svg.addRectangle((x + (lengthBetween * i)) + offsetL1, y + 9, 250, rafterHeight, "stroke-width:1px; stroke:#000000; fill:purple;");
+                svg.addN();
+            }
         }
     }
 
