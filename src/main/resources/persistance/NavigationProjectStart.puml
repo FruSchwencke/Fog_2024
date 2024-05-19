@@ -31,8 +31,5 @@ Dimensions --> Roof_etcetera : on submit "tilføj dimensioner" button
 Roof_etcetera --> Information : on submit "Tilføj Tag" button
 Information --> Login : on click "Login eller opret konto" button
 Customerpage --> Dimensions : As customer on click "Byg-selv carporte" button
-Order_details --> Customerpage : on click "Send tilbud" button
-Customerpage --> Adminpage : on click "Accepter tilbud" button
-Customerpage --> Adminpage : on click "Send forespørgsel" button
 Information --> Customerpage : As customer "Se forespøgsel" button
 @enduml

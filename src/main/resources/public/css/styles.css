@@ -299,7 +299,10 @@ nav {
     .Material-list2 {
         display: none;
     }
+    .Material-list {
+        scale: 85%;
 
+    }
 
     .Material-list th, .Material-list td{
         width: 100%;
