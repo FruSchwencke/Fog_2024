@@ -56,12 +56,14 @@
             </div>
 
             <div>
-                <h2>Ordredetaljer</h2>
+                <div class="message">
+                    <p th:text="${messageUpdatePrice}"> kr. </p>
+                </div>
 
                 <div class="send offer" th:if="${session.orderDetails.totalPrice != 0.0}">
                     <form action="/offermade" method="post" th:if="${session.orderDetails.status == 'Afventer'}">
                         <input type="hidden" id="sendoffer" name="orderId"
-                               th:value="${session.orderDetails.orderId}">
+                        th:value="${session.orderDetails.orderId}">
                         <input class="btn-create" type="submit" value="Send tilbud">
                     </form>
                 </div>
@@ -72,27 +74,24 @@
                     <input class="btn-create" type="submit" value="Betaling gennemført">
                 </form>
 
-                <div class="message">
-                    <p th:text="${messageUpdatePrice}"> kr. </p>
-                </div>
+                <h2>Ordredetaljer</h2>
 
                 <p><strong>Status:</strong> <span th:text="${session.orderDetails.status}"></span></p>
                 <p th:if="${session.orderDetails.status =='Afventer'}"><strong>Ønskede mål: </strong></p>
                 <p th:if="${session.orderDetails.status !='Afventer'}"><strong>Mål: </strong></p>
                 <p>Længde:<span th:text="${session.orderDetails.length /10}"></span> cm</p>
                 <p>Bredde:<span th:text="${session.orderDetails.width /10}"></span> cm</p>
-                <br>
                 <p><strong>Besked:</strong> <span th:text="${session.orderDetails.textInput}"></span></p>
+                <h2>Information vedr. pris</h2>
+                <p th:if="${session.orderDetails.totalPrice != 0.0}"><strong>Salgspris: </strong>
+                    <span th:text="${session.orderDetails.totalPrice}"></span> kr</p>
+                <p th:if="${session.costPrice != null}"><strong>Indkøbspris:</strong>
+                    <span th:text="${session.costPrice}"></span> kr</p>
+                <p th:if="${session.suggestedPrice != null}"><strong> Pris med 30 % dækningsgrad: </strong>
+                    <span th:text="${session.suggestedPrice}"></span> kr</p>
 
-                <p th:if="${session.costPrice != null}"><strong>Indkøbspris:</strong> <span
-                        th:text="${session.costPrice}"></span> kr</p>
-                <p th:if="${session.suggestedPrice != null}"><strong>Pris med 30 % dækningsgrad: </strong><span
-                        th:text="${session.suggestedPrice}"></span> kr</p>
-                <h3 th:if="${session.orderDetails.totalPrice != 0.0}"><strong>Salgspris: </strong><span
-                        th:text="${session.orderDetails.totalPrice}"></span> kr</h3>
-
-                <div class="calculater" th:if="${session.orderDetails.status != 'Betaling gennemført'}" >
-                    <h3>Opdater prisen</h3>
+                <div class="calculater" th:if="${session.orderDetails.status != 'Tilbud accepteret' && session.orderDetails.status != 'Betaling gennemført'}">
+                <h3>Opdater prisen</h3>
                     <form class="createuser-form" action="/updatetotalprice" method="post">
                         <input type="hidden" id="updateprice" name="orderId" th:value="${session.orderDetails.orderId}">
 
@@ -100,9 +99,6 @@
                         <input type="number" id="newTotalPrice" name="newTotalPrice" required><br><br>
                         <input class="btn-gen" type="submit" value="Opdater Pris">
                     </form>
-
-
-
 
                 </div>
             </div>
