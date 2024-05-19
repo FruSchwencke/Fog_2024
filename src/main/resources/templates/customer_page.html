@@ -38,20 +38,26 @@
 
         </nav>
         <div class="flex-container" th:if="${session.currentUser != null}">
-            <div>
+            <div class ="1-box-customer">
 
 
                 <div th:if="${session.orderUser != null}">
 
 
                     <h3>Informationer om din ordre: </h3>
+                    <p th:if="${session.orderUser.status != 'Betaling gennemført'}"><strong>Status på din ordre: </strong> <span th:text="${session.orderUser.status}"></span></p>
                     <p><strong>Ordre id: </strong> <span th:text="${session.orderUser.orderId}"></span></p>
-                    <p><strong>Status: </strong> <span th:text="${session.orderUser.status}"></span></p>
+                    <p th:if="${session.orderUser.status != 'Afventer'}"><strong>Total pris: </strong> <span
+                            th:text="${session.orderUser.totalPrice}"></span> kr</p>
+                    <h2 th:if="${session.orderUser.status == 'Afventer' or session.orderUser.status == 'Tilbud færdiggjort'}">
+                        Dine ønskede mål: </h2>
+                    <h2 th:if="${session.orderUser.status == 'Tilbud accepteret' or session.orderUser.status == 'Tilbud afvist' or session.orderUser.status == 'Betaling gennemført'}">
+                        Mål på din carport: </h2>
+
                     <p><strong>Længde:</strong> <span th:text="${session.orderUser.length / 10}"></span> cm</p>
                     <p><strong>Bredde:</strong> <span th:text="${session.orderUser.width / 10}"></span> cm</p>
 
-                    <p th:if="${session.orderUser.status != 'Afventer'}"><strong>Total pris: </strong> <span
-                            th:text="${session.orderUser.totalPrice}"></span> kr</p>
+
 
                     <form action="/setStatusAccepted" method="post"
                           th:if="${session.orderUser.status == 'Tilbud færdiggjort'}">
@@ -62,19 +68,16 @@
                           th:if="${session.orderUser.status == 'Tilbud færdiggjort'}">
                         <button class="btn-create" type="submit">Afslå ordre</button>
                     </form>
-                    <p class="error" th:if="${message != null}" th:text="${message}"></p>
+
                 </div>
 
                 <div th:if="${session.orderUser == null}">
-                    <h4>Du har ingen ordre</h4>
-                    <div><p class="error" th:text="${message}"></p>
+                    <h4>Du har ingen igangværende ordre</h4>
 
-                    </div>
                 </div>
-
-
             </div>
 
+            <div class="2-box-customer">
 
             <div th:if="${session.orderUser == null}">
                 <a href="customize_page.html" th:href="@{/customize}">
@@ -85,32 +88,39 @@
                     </div>
                 </a>
             </div>
-            <div >
-                <div class="orderUser-start">
-                <h3 class="orderUser-text" th:if="${session.orderUser.status == 'Afventer'}">
-                    Tak for din forespørgsel på bestilling af carport. <br>
-                    En medarbejder vil gennemgå dine mål. <br>
-                    Vi vender tilbage med tilbud snarest</h3>
+            <div th:if="${session.orderUser != null}">
+                <div class="orderUser-start" th:if="${session.orderUser != null}">
 
-                <h3 class="orderUser-text"  th:if="${session.orderUser.status == 'Tilbud færdiggjort'}">
-                    Tak for din forespørgsel på bestilling af carport. <br>
-                    Vi har nu et tilbud klar </h3>
+                    <h3 class="orderUser-text" th:if="${session.orderUser.status == 'Afventer'}">
+                        Tak for din forespørgsel på bestilling af carport. <br>
+                        En medarbejder vil gennemgå dine mål. <br>
+                        Vi vender tilbage med tilbud snarest</h3>
 
-                <h3 class="orderUser-text" th:if="${session.orderUser.status == 'Betaling gennemført'}">
-                    Vi har nu modtaget din betaling. <br>
-                    Vi vender snarest muligt tilbage med leveringsdato </h3>
+                    <h3 class="orderUser-text"  th:if="${session.orderUser.status == 'Tilbud færdiggjort'}">
+                        Tak for din forespørgsel på bestilling af carport. <br>
+                        Vi har nu et tilbud klar </h3>
+
+                    <h3 class="orderUser-text" th:if="${message != null}" th:text="${message}"></h3>
+
+                    <h3 class="orderUser-text" th:if="${session.orderUser.status == 'Betaling gennemført'}">
+                        Vi har nu modtaget din betaling. <br>
+                        Vi vender snarest muligt tilbage med leveringsdato </h3>
+
                 </div>
+
                 <br>
                 <br>
                 <br>
-                <br>
-                <div th:if="${session.orderUser != null}">
+
                     <h4>Har du brug for flere carporte?</h4>
                     <h4> Giv os et kald.</h4>
-                </div>
+
+            </div>
             </div>
 
-            <div>
+
+
+            <div class = "3-box-customer">
 
                 <div th:if="${session.currentUser != null}">
                     <div>

@@ -145,7 +145,7 @@ public class OrderController {
 
                 if (newTotalPrice >= costPrice) {
                     OrderMapper.updateTotalPrice(orderId, newTotalPrice, connectionPool);
-                    ctx.attribute("messageUpdatePrice", newTotalPrice + " er nu prisen for ordre nr " + orderId + ".");
+                    ctx.attribute("messageUpdatePrice", "Salgsprisen for ordrenummer " + orderId + " er nu " + newTotalPrice + " kr.");
                 } else {
                     ctx.attribute("messageUpdatePrice", "Du kan ikke afgive tilbud, som er mindre end indkøbsprisen");
                 }
@@ -163,11 +163,12 @@ public class OrderController {
         private static void setStatusOfferMade (Context ctx, ConnectionPool connectionPool){
             try {
                 int orderId = Integer.parseInt(ctx.formParam("orderId"));
-                int newStatusId = 2;
+                int newStatusId = 5;
 
                 OrderMapper.updateStatus(orderId, newStatusId, connectionPool);
                 List<Order> allOrdersList = OrderMapper.getAllOrders(connectionPool);
                 ctx.attribute("allOrdersList", allOrdersList);
+                ctx.attribute("messageorder", "Der er nu afsedt tilbud til kunde med ordrenummer" + orderId + ".");
                 ctx.render("salesperson_page.html");
 
             } catch (NumberFormatException | DatabaseException e) {
@@ -180,7 +181,7 @@ public class OrderController {
         private static void setStatusAccepted (Context ctx, ConnectionPool connectionPool){
 
             Order orderUser = ctx.sessionAttribute("orderUser");
-            int newStatusId = 3;
+            int newStatusId = 2;
 
             try {
                 int orderId = orderUser.getOrderId();
@@ -208,7 +209,7 @@ public class OrderController {
                 orderUser.setStatus("Tilbud afslået");
 
                 ctx.sessionAttribute("orderUser", orderUser);
-                ctx.attribute("message", "Du har nu valgt at afslå tilbuddet på denne ordre.");
+                ctx.attribute("message", "Du har nu valgt at afslå tilbuddet på denne ordre. Du er altid velkommen til at kontakte os igen");
                 ctx.render("customer_page.html");
             } catch (DatabaseException e) {
 
@@ -220,12 +221,12 @@ public class OrderController {
         private static void setStatusPaid (Context ctx, ConnectionPool connectionPool){
             try {
                 int orderId = Integer.parseInt(ctx.formParam("orderId"));
-                int newStatusId = 5;
+                int newStatusId = 3;
 
                 OrderMapper.updateStatus(orderId, newStatusId, connectionPool);
                 List<Order> allOrdersList = OrderMapper.getAllOrders(connectionPool);
                 ctx.attribute("allOrdersList", allOrdersList);
-                ctx.attribute("messageorder", "Kunden med" + orderId + "har nu betalt.");
+                ctx.attribute("messageorder", "Kunde med ordrenummer " + orderId + " har nu betalt.");
                 ctx.render("salesperson_page.html");
 
             } catch (NumberFormatException | DatabaseException e) {
