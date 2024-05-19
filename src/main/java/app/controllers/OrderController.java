@@ -168,6 +168,7 @@ public class OrderController {
                 OrderMapper.updateStatus(orderId, newStatusId, connectionPool);
                 List<Order> allOrdersList = OrderMapper.getAllOrders(connectionPool);
                 ctx.attribute("allOrdersList", allOrdersList);
+                ctx.attribute("messageorder", "Der er nu afsedt tilbud til kunde med ordrenummer" + orderId + ".");
                 ctx.render("salesperson_page.html");
 
             } catch (NumberFormatException | DatabaseException e) {
@@ -208,7 +209,7 @@ public class OrderController {
                 orderUser.setStatus("Tilbud afslået");
 
                 ctx.sessionAttribute("orderUser", orderUser);
-                ctx.attribute("message", "Du har nu valgt at afslå tilbuddet på denne ordre.");
+                ctx.attribute("message", "Du har nu valgt at afslå tilbuddet på denne ordre. Du er altid velkommen til at kontakte os igen");
                 ctx.render("customer_page.html");
             } catch (DatabaseException e) {
 
@@ -225,7 +226,7 @@ public class OrderController {
                 OrderMapper.updateStatus(orderId, newStatusId, connectionPool);
                 List<Order> allOrdersList = OrderMapper.getAllOrders(connectionPool);
                 ctx.attribute("allOrdersList", allOrdersList);
-                ctx.attribute("messageorder", "Kunden med" + orderId + "har nu betalt.");
+                ctx.attribute("messageorder", "Kunde med ordrenummer " + orderId + " har nu betalt.");
                 ctx.render("salesperson_page.html");
 
             } catch (NumberFormatException | DatabaseException e) {
