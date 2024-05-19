@@ -81,6 +81,7 @@
 
             </div>
 
+            <div>
 
             <div th:if="${session.orderUser == null}">
                 <a href="customize_page.html" th:href="@{/customize}">
@@ -91,8 +92,9 @@
                     </div>
                 </a>
             </div>
-            <div >
-                <div class="orderUser-start" th:if="${session.orderUser != 0}">
+            <div th:if="${session.orderUser != null}">
+                <div class="orderUser-start" th:if="${session.orderUser != null}">
+
                     <h3 class="orderUser-text" th:if="${session.orderUser.status == 'Afventer'}">
                         Tak for din forespørgsel på bestilling af carport. <br>
                         En medarbejder vil gennemgå dine mål. <br>
@@ -105,15 +107,18 @@
                     <h3 class="orderUser-text" th:if="${session.orderUser.status == 'Betaling gennemført'}">
                         Vi har nu modtaget din betaling. <br>
                         Vi vender snarest muligt tilbage med leveringsdato </h3>
+
                 </div>
+
                 <br>
                 <br>
                 <br>
                 <br>
-                <div th:if="${session.orderUser != null}">
+
                     <h4>Har du brug for flere carporte?</h4>
                     <h4> Giv os et kald.</h4>
-                </div>
+
+            </div>
             </div>
 
             <div>
