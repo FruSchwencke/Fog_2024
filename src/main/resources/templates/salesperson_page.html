@@ -44,24 +44,35 @@
                     <p th:if="${messageorder != null}" th:text="${messageorder}"></p>
                 </div>
                 <h3>ORDRELISTE</h3>
-                <table>
-                    <thead>
-                    <tr>
-                        <th>Order ID</th>
-                        <th>Status</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="order : ${allOrdersList}">
-                        <td>
-                            <a class="btn-gen" th:href="@{'/order_details/' + ${order.orderId}}">
-                                <span th:text="${order.orderId}"></span>
-                            </a>
-                        </td>
-                        <td th:text="${order.status}"></td>
-                    </tr>
-                    </tbody>
-                </table>
+                <form method="post" th:action="@{/setStatusDone}">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Status</th>
+                            <th>Fjern</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="order : ${allOrdersList}">
+
+                            <td>
+                                <a class="btn-gen" th:href="@{'/order_details/' + ${order.orderId}}">
+                                    <span th:text="${order.orderId}"></span>
+                                </a>
+                            </td>
+                            <td th:text="${order.status}"></td>
+                            <td>
+                                <input type="checkbox" name="orderIds" th:value="${order.orderId}"/>
+                            </td>
+
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <button type="submit" class="btn-create">Fjern ordrer fra liste</button>
+
+                </form>
             </div>
 
 

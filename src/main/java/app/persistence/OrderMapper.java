@@ -16,6 +16,7 @@ public class OrderMapper {
         String sql = "SELECT o.order_id, s.status_name " +
                 "FROM orders o " +
                 "JOIN status s ON o.status_id = s.status_id " +
+                "WHERE o.status_id != 6 " +
                 "ORDER BY s.status_id";
 
         try (

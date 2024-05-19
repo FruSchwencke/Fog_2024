@@ -31,6 +31,7 @@ public class OrderController {
         app.post("/setStatusAccepted", ctx -> setStatusAccepted(ctx, connectionPool));
         app.post("/setStatusDeclined", ctx -> setStatusDeclined(ctx, connectionPool));
         app.post("/setStatusPaid", ctx -> setStatusPaid(ctx, connectionPool));
+        app.post("/setStatusDone", ctx -> setStatusDone(ctx, connectionPool));
 
 
     }
@@ -235,6 +236,28 @@ public class OrderController {
 
             }
         }
+
+    public static void setStatusDone(Context ctx, ConnectionPool connectionPool) {
+        try {
+            List<String> orderIds = ctx.formParams("orderIds");
+            if (orderIds != null) {
+                for (String orderIdStr : orderIds) {
+                    int orderId = Integer.parseInt(orderIdStr);
+                    OrderMapper.updateStatus(orderId, 6, connectionPool);
+                }
+                ctx.attribute("messageorder", "Valgte ordrer er nu flytte til listen for færdigbehandlede ordrer.");
+            } else {
+                ctx.attribute("messageorder", "Ingen ordrer valgt til opdatering.");
+            }
+            List<Order> allOrdersList = OrderMapper.getAllOrders(connectionPool);
+            ctx.attribute("allOrdersList", allOrdersList);
+            ctx.render("salesperson_page.html");
+        } catch (DatabaseException | NumberFormatException e) {
+            ctx.attribute("message", "Der var problemer med at flytte valgte ordrer" + e.getMessage());
+            ctx.render("salesperson_page.html");
+        }
+    }
+
     private static double calculateSuggestedPrice(double costPrice) {
         double suggestedPrice = costPrice * 1.30;
         return Math.ceil(suggestedPrice);
