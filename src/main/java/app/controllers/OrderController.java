@@ -145,7 +145,7 @@ public class OrderController {
 
                 if (newTotalPrice >= costPrice) {
                     OrderMapper.updateTotalPrice(orderId, newTotalPrice, connectionPool);
-                    ctx.attribute("messageUpdatePrice", newTotalPrice + " er nu prisen for ordre nr " + orderId + ".");
+                    ctx.attribute("messageUpdatePrice", "Salgsprisen for ordrenummer " + orderId + " er nu " + newTotalPrice + " kr.");
                 } else {
                     ctx.attribute("messageUpdatePrice", "Du kan ikke afgive tilbud, som er mindre end indkøbsprisen");
                 }
