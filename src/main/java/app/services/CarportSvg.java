@@ -15,13 +15,13 @@ public class CarportSvg {
 
     public static void main(String[] args) {
         List<Material> postList = new ArrayList<>();
-        postList.add(new Material(1,"post","lala",1,1,1,1,1,4));
+        postList.add(new Material(1,"post","lala",1,1,97,1,97,4));
 
         List<Material> beamList = new ArrayList<>();
-        beamList.add(new Material(1,"beam","lala",1,1,1,1,1,2));
+        beamList.add(new Material(1,"beam","lala",1,1,195,4500,45,2));
 
         List<Material> rafterList = new ArrayList<>();
-        rafterList.add(new Material(1,"rafter","lala",1,1,1,1,1,5));
+        rafterList.add(new Material(1,"rafter","lala",1,1,195,1,45,5));
 
         List<Material> sternList = new ArrayList<>();
         sternList.add(new Material(1,"rafter","lala",1,1,1,1,1,2));
@@ -61,10 +61,12 @@ public class CarportSvg {
         int y = 60;
         double offsetW1 = 35;
         double offsetL1 = 110;
+        double postWidth = (double) posts.get(0).getWidth()/10;
+        double postHeight = (double) posts.get(0).getHeight()/10;
 
         for (int i = 0; i < (posts.get(0).getQuantity() / 2); i++) {
             for (int j = 0; j < 2; j++) {
-                svg.addRectangle((x + ((length-offsetL1) * i) + offsetL1) - (15 * 0.5),y + (width * j) + offsetW1 - (15 * 0.5),15,15,"stroke-width:1px; stroke:#000000; fill:grey");
+                svg.addRectangle((x + ((length-offsetL1) * i) + offsetL1) - postHeight,y + ((width - postWidth) * j) + offsetW1 ,postHeight,postWidth,"stroke-width:1px; stroke:#000000; fill:grey");
                 svg.addN();
             }
         }
@@ -75,12 +77,13 @@ public class CarportSvg {
     public static void drawBeams(double length, double width, List<Material> beams){
 
         int x = 120;
-        int y = 60;
+        double y = 60;
         double offsetW1 = 35;
         double offsetL1 = 110;
+        double beamHeigth = (double) beams.get(0).getHeight()/10;
 
         for (int i = 0; i < beams.get(0).getQuantity(); i++) {
-            svg.addRectangle(x + offsetL1 - (15 * 0.5), y + (width * i) + offsetW1, 1.95 , 450, "stroke-width:1px; stroke:#000000; fill:lightgray:");
+            svg.addRectangle(x + offsetL1 -9.7, y + (((width - 9.7)* i))  + (offsetW1 + (9.7 * 0.25)), beamHeigth , length, "stroke-width:1px; stroke:#000000; fill:lightgray:");
             svg.addN();
         }
     }
@@ -90,17 +93,18 @@ public class CarportSvg {
 
         double x = 120;
         double y = 60;
-        double rafterHeight = rafters.get(0).getHeight();
-        double offsetL1 = 120;
+        double rafterHeight = (double) rafters.get(0).getHeight()/10;
+        double offsetL1 = 110;
+        double offsetW1 = 35;
         int quantity = rafters.get(0).getQuantity();
-        double lengthBetween = (length  / (quantity-1))-rafterHeight;
+        double lengthBetween = length / (quantity-1);
 
         for (int i = 0; i < quantity; i++) {
             if (i == quantity - 1) {
-                svg.addRectangle(((x + (lengthBetween * i)) + offsetL1) -rafterHeight, y + 9, 250, rafterHeight, "stroke-width:1px; stroke:#000000; fill:purple;");
+                svg.addRectangle(((x + (lengthBetween * i)) + offsetL1) -(rafterHeight*2), y + offsetW1 , width, rafterHeight, "stroke-width:1px; stroke:#000000; fill:purple;");
                 svg.addN();
             }else{
-                svg.addRectangle((x + (lengthBetween * i)) + offsetL1, y + 9, 250, rafterHeight, "stroke-width:1px; stroke:#000000; fill:purple;");
+                svg.addRectangle((x + (lengthBetween * i)) + offsetL1  - (9.7 * 0.5), y + offsetW1 , width, rafterHeight, "stroke-width:1px; stroke:#000000; fill:purple;");
                 svg.addN();
             }
         }
