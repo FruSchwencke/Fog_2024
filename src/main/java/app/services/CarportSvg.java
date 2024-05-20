@@ -26,12 +26,14 @@ public class CarportSvg {
         List<Material> sternList = new ArrayList<>();
         sternList.add(new Material(1,"rafter","lala",1,1,200,1,25,2));
 
-        drawPosts(450,250, postList);
-        drawBeams(450,250,beamList);
-        drawRafters(450,250,rafterList);
-        drawSterns(450,250,sternList);
-        drawArrows(450,250);
-
+        drawPosts(330,570, postList);
+        drawBeams(330,570,beamList);
+        drawRafters(330,570,rafterList);
+        drawSterns(330,570,sternList);
+        drawVerticalArrow(570);
+        drawHorizontalArrow(330);
+        drawVerticalText(570);
+        drawHorizontalText(330);
 
         String finalSvg = svg.toString();
         try {
@@ -68,7 +70,7 @@ public class CarportSvg {
 
         for (int i = 0; i < (posts.get(0).getQuantity() / 2); i++) {
             for (int j = 0; j < 2; j++) {
-                svg.addRectangle((x + ((carportLength-offsetL1) * i) + offsetL1) - postHeight,y + ((carportWidth - postWidth) * j) + offsetW1 ,postHeight,postWidth,"stroke-width:0.05px; stroke:#000000; fill:grey");
+                svg.addRectangle((x + ((carportLength-offsetL1) * i) + offsetL1) - postHeight,y + ((carportWidth - postWidth) * j) + offsetW1 ,postHeight,postWidth,"stroke-width:0.05px; stroke:#000000; fill:black");
                 svg.addN();
             }
         }
@@ -85,7 +87,7 @@ public class CarportSvg {
         double beamHeigth = (double) beams.get(0).getHeight()/10;
 
         for (int i = 0; i < beams.get(0).getQuantity(); i++) {
-            svg.addRectangle(x + offsetL1 -9.7, y + (((carportWidth - 9.7)* i))  + (offsetW1 + (9.7 * 0.25)), beamHeigth , carportLength, "stroke-width:0.05px; stroke:#000000; fill:blue;");
+            svg.addRectangle(x + offsetL1 -9.7, y + (((carportWidth - 9.7)* i))  + (offsetW1 + (9.7 * 0.25)), beamHeigth , carportLength, "stroke-width:0.05px; stroke:#000000; fill:darkgrey;");
             svg.addN();
         }
     }
@@ -103,10 +105,10 @@ public class CarportSvg {
 
         for (int i = 0; i < quantity; i++) {
             if (i == quantity - 1) {
-                svg.addRectangle(((x + (lengthBetween * i)) + offsetL1) -(rafterHeight*3), y + offsetW1 , carportWidth, rafterHeight, "stroke-width:0.05px; stroke:#000000; fill:purple;");
+                svg.addRectangle(((x + (lengthBetween * i)) + offsetL1) -(rafterHeight*3), y + offsetW1 , carportWidth, rafterHeight, "stroke-width:0.05px; stroke:#000000; fill:gainsboro;");
                 svg.addN();
             }else{
-                svg.addRectangle((x + (lengthBetween * i)) + offsetL1  - (9.7 * 0.50), y + offsetW1 , carportWidth, rafterHeight, "stroke-width:0.05px; stroke:#000000; fill:purple;");
+                svg.addRectangle((x + (lengthBetween * i)) + offsetL1  - (9.7 * 0.50), y + offsetW1 , carportWidth, rafterHeight, "stroke-width:0.05px; stroke:#000000; fill:gainsboro;");
                 svg.addN();
             }
         }
@@ -123,25 +125,38 @@ public class CarportSvg {
 
         for (int i = 0; i < (sterns.get(0).getQuantity() / 2); i++) {
             for (int j = 0; j < 2; j++) {
-                svg.addRectangle(x + offsetL1 , y + offsetW1 +((carportWidth -(9.7*0.25)) * j), sternHeight, carportLength, "stroke-width:0.05px; stroke:#000000; fill:green");
+                svg.addRectangle(x + offsetL1 , y + offsetW1 +((carportWidth -(9.7*0.25)) * j), sternHeight, carportLength, "stroke-width:0.05px; stroke:#000000; fill:dimgrey");
                 svg.addN();
             }
         }
 
         for (int i = 0; i < (sterns.get(0).getQuantity() / 2); i++) {
             for (int j = 0; j < 2; j++) {
-                svg.addRectangle(x + offsetL1 + (carportLength*j), y + offsetW1, carportWidth, sternHeight, "stroke-width:0.05px; stroke:#000000; fill:red");
+                svg.addRectangle(x + offsetL1 + (carportLength*j), y + offsetW1, carportWidth, sternHeight, "stroke-width:0.05px; stroke:#000000; fill:dimgrey");
                 svg.addN();
             }
         }
 
     }
 
-    public static void drawArrows (double carportLength, double carportWidth){
-        svg.addArrow();
-        svg.addHorizontalText(carportLength);
-        svg.addVerticalText(carportWidth);
+    public static void drawHorizontalArrow (double carportLength){
+        svg.addHorizontalArrow((carportLength+220));
     }
+
+
+    public static void drawVerticalArrow (double carportWidth){
+        svg.addVerticalArrow(carportWidth+95);
+    }
+
+    public static void drawVerticalText (double carportWidth){
+        svg.addVerticalText((carportWidth/2)+95,carportWidth);
+    }
+
+    public static void drawHorizontalText (double carportLength){
+        svg.addHorizontalText((carportLength/2)+220, carportLength);
+    }
+
+
 
 
     public static void drawCarport(double carportLength, double carportWidth, List<Material> postList, List<Material> rafterList, List <Material> sternList, List <Material> beamList){
@@ -150,7 +165,10 @@ public class CarportSvg {
             drawBeams(carportLength,carportWidth,beamList);
             drawRafters(carportLength,carportWidth,rafterList);
             drawSterns(carportLength,carportWidth,sternList);
-            drawArrows(carportLength,carportWidth);
+            drawHorizontalArrow(carportLength);
+            drawVerticalArrow(carportWidth);
+            drawHorizontalText(carportLength);
+            drawVerticalText(carportWidth);
     }
 
 
