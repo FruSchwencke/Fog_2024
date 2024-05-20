@@ -12,6 +12,7 @@ import app.services.CarportSvg;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 
+import java.io.FileWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -58,6 +59,17 @@ public class OrderController {
             double costPrice = OrderMapper.getCostPrice(orderId, connectionPool);
             double suggestedPrice = calculateSuggestedPrice(costPrice);
             List<Material> orderMaterialList = MaterialMapper.getOrderMaterialList(orderId, connectionPool);
+            int carportWidth = orderDetails.getWidth();
+            int carportLength = orderDetails.getLength();
+
+            // each method for calculation is called and assigned a list
+            List<Material> postList = Calculate.calculatePosts(carportLength, carportWidth, connectionPool);
+            List<Material> rafterList = Calculate.calculateRafter(carportLength, carportWidth, connectionPool);
+            List<Material> roofList = Calculate.calculateRoof(carportLength, carportWidth, connectionPool);
+            List<Material> sternList = Calculate.calculateStern(carportLength, carportWidth, connectionPool);
+            List<Material> beamList = Calculate.calculateBeam(carportLength, carportWidth, connectionPool);
+
+            String svg = CarportSvg.drawCarport((double) carportLength/10, (double) carportWidth/10,postList,rafterList,sternList,beamList);
 
             if (orderDetails != null) {
                 ctx.sessionAttribute("orderDetails", orderDetails);
@@ -65,6 +77,7 @@ public class OrderController {
                 ctx.sessionAttribute("costPrice", costPrice);
                 ctx.sessionAttribute("suggestedPrice", suggestedPrice);
                 ctx.sessionAttribute("orderMaterialList", orderMaterialList);
+                ctx.sessionAttribute("svgDrawing",svg);
             }
 
             ctx.render("order_details.html");
@@ -73,6 +86,7 @@ public class OrderController {
             ctx.render("salesperson_page.html");
         }
     }
+
 
         public static void customizeCarportRoute (Context ctx, ConnectionPool connectionPool){
             //These parameters represent the choices that the user has to make and the ability to send forward a text with remark or wishes, when customizing a carport

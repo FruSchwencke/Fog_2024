@@ -63,10 +63,10 @@ package app.services;
 
 
     // text, horizontal
-    private static final String SVG_HORIZONTAL_TEXT = "<text style=\"text-anchor: middle\" transform=\"translate(%f,40)\">%.2f</text>";
+    private static final String SVG_HORIZONTAL_TEXT = "<text style=\"text-anchor: middle\" transform=\"translate(%f,40)\">%.2f cm</text>";
 
     // text, vertical
-    private static final String SVG_VERTICAL_TEXT = "<text style=\"text-anchor: middle\" transform=\"translate(170,%f) rotate(-90)\">%.2f</text>";
+    private static final String SVG_VERTICAL_TEXT = "<text style=\"text-anchor: middle\" transform=\"translate(170,%f) rotate(-90)\">%.2f cm</text>";
 
 
 
@@ -101,7 +101,8 @@ package app.services;
 
     @Override
     public String toString() {
-        return svg.append("</svg>").toString();
+       return svg.append("</svg>").toString();
+        //return svg.toString();
     }
 
 
