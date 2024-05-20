@@ -6,7 +6,7 @@ package app.services;
      public SvgTemplates() {
          svg = new StringBuilder();
          svg.append(String.format(SVG_TEMPLATE, 1,80,"0 0 1000 880","100%"));
-         svg.append(SVG_BACKGROUND);
+
      }
 
      //canvas for the svg
@@ -18,7 +18,7 @@ package app.services;
 
 
      //white background rectangle
-     private static final String SVG_BACKGROUND = "<rect x=\"50\" y=\"0\" width=\"750\" height=\"750\"\n" +
+     private static final String SVG_BACKGROUND = "<rect x=\"50\" y=\"0\" width=\"%f\" height=\"%f\"\n" +
              "     stroke=\"gray\" fill=\"white\" stroke-width=\"0.6\"/>";
 
 
@@ -72,10 +72,8 @@ package app.services;
 
 
 
-    public void Svg(int x, int y, String viewBox, String width) {
-
-        svg.append(String.format(SVG_TEMPLATE, x, y, viewBox, width));
-
+    public void addBackground(double carportWidth, double carportLength) {
+        svg.append(String.format(SVG_BACKGROUND, carportWidth, carportLength));
     }
 
     public void addRectangle(double x, double y, double length, double width, String style) {

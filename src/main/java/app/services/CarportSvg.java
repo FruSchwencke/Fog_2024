@@ -26,14 +26,16 @@ public class CarportSvg {
         List<Material> sternList = new ArrayList<>();
         sternList.add(new Material(1,"rafter","lala",1,1,200,1,25,2));
 
-        drawPosts(330,570, postList);
-        drawBeams(330,570,beamList);
-        drawRafters(330,570,rafterList);
-        drawSterns(330,570,sternList);
+        drawBackground(570,450);
+        drawPosts(450,570, postList);
+        drawBeams(450,570,beamList);
+        drawRafters(450,570,rafterList);
+        drawSterns(450,570,sternList);
         drawVerticalArrow(570);
-        drawHorizontalArrow(330);
+        drawHorizontalArrow(450);
         drawVerticalText(570);
-        drawHorizontalText(330);
+        drawHorizontalText(450);
+
 
         String finalSvg = svg.toString();
         try {
@@ -154,6 +156,10 @@ public class CarportSvg {
 
     public static void drawHorizontalText (double carportLength){
         svg.addHorizontalText((carportLength/2)+220, carportLength);
+    }
+
+    public static void drawBackground(double carportWidth, double carportLength){
+        svg.addBackground(((carportWidth* 1.2) +95 ), ((carportLength * 1.2)+220));
     }
 
 
