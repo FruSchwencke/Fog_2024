@@ -1,30 +1,27 @@
 package app.services;
 
 import app.entities.Material;
-import app.persistence.ConnectionPool;
-
 import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CarportSvg {
 
-
     private static final SvgTemplates svg = new SvgTemplates();
 
+    // only call this to demonstrate the svg drawing with hardcoding
     public static void main(String[] args) {
         List<Material> postList = new ArrayList<>();
-        postList.add(new Material(1,"post","lala",1,1,97,1,97,4));
+        postList.add(new Material(1,"post","text",1,1,97,1,97,4));
 
         List<Material> beamList = new ArrayList<>();
-        beamList.add(new Material(1,"beam","lala",1,1,195,4500,45,2));
+        beamList.add(new Material(1,"beam","text",1,1,195,4500,45,2));
 
         List<Material> rafterList = new ArrayList<>();
-        rafterList.add(new Material(1,"rafter","lala",1,1,195,1,45,5));
+        rafterList.add(new Material(1,"rafter","text",1,1,195,1,45,5));
 
         List<Material> sternList = new ArrayList<>();
-        sternList.add(new Material(1,"rafter","lala",1,1,200,1,25,2));
+        sternList.add(new Material(1,"stern","text",1,1,200,1,25,2));
 
         drawBackground(570,450);
         drawPosts(450,570, postList);
@@ -57,7 +54,6 @@ public class CarportSvg {
         catch (Exception e) {
             e.getStackTrace();
         }
-
     }
 
 
@@ -79,7 +75,7 @@ public class CarportSvg {
     }
 
 
-    //REMMER
+    //REMME
     public static void drawBeams(double carportLength, double carportWidth, List<Material> beams){
 
         int x = 120;
@@ -145,15 +141,14 @@ public class CarportSvg {
         svg.addHorizontalArrow((carportLength+220));
     }
 
-
     public static void drawVerticalArrow (double carportWidth){
         svg.addVerticalArrow(carportWidth+95);
     }
 
+
     public static void drawVerticalText (double carportWidth){
         svg.addVerticalText((carportWidth/2)+95,carportWidth);
     }
-
     public static void drawHorizontalText (double carportLength){
         svg.addHorizontalText((carportLength/2)+220, carportLength);
     }
@@ -167,6 +162,7 @@ public class CarportSvg {
 
     public static void drawCarport(double carportLength, double carportWidth, List<Material> postList, List<Material> rafterList, List <Material> sternList, List <Material> beamList){
 
+            drawBackground(carportWidth,carportLength);
             drawPosts(carportLength,carportWidth,postList);
             drawBeams(carportLength,carportWidth,beamList);
             drawRafters(carportLength,carportWidth,rafterList);
