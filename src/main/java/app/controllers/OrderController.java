@@ -18,6 +18,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -53,6 +54,7 @@ public class OrderController {
 
     private static void getOrderDetails(Context ctx, ConnectionPool connectionPool) {
         try {
+            Locale.setDefault(new Locale("US"));
             int orderId = Integer.parseInt(ctx.pathParam("orderId"));
             Order orderDetails = OrderMapper.getOrderDetails(orderId, connectionPool);
             User userInformation = OrderMapper.getUserInformation(orderId, connectionPool);
