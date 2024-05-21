@@ -48,8 +48,6 @@ public class Calculate {
         //adding 1 post at the end, because there are two ends of the width supporting the roof.
         int quantityByWidth = (int) ceil( (double)(width - (offsetW1 +offsetW2)) / (double) maxWidth +1);
 
-
-
         // Calculate posts based on length
         // offset is the space in the front and back of the carport
         int offsetL1 = 1000;
@@ -89,7 +87,7 @@ public class Calculate {
 
             //add the correct lengths
             List<Material> result = new ArrayList<>();
-            //iterating over the list of various lengths in reverse order to determine if i is greater the 0, if so, it continues to iterate over the availableLengths
+            //iterating over the list of various lengths in reverse order to determine if it is greater than 0, if so, it continues to iterate over the availableLengths
             for (int i = materialList.size() - 1; i > 0; i--) {
 
                 // condition - comparing the length with the value of index i in the availableLengths list
@@ -118,7 +116,6 @@ public class Calculate {
 
     //SPÆR
     public static List<Material> calculateRafter(int length, int width, ConnectionPool connectionPool) throws DatabaseException {
-
         // Get materials from database
         String description = "Spær, monteres på rem";
         List<Material> materialList = MaterialMapper.getMaterialByDescription(description, connectionPool);
@@ -128,19 +125,16 @@ public class Calculate {
         int maxWidth = 550;
         // then the length of the carport is divided by maxWidth, to find the quantity needed for at specific length
         int quantity = (int) ceil((double) length / (double) maxWidth);
-
         // Add the correct lengths for the rafters
         List<Material> result = new ArrayList<>();
         // the length of the rafter has to be set as equal to the width of the carport.
         length = width;
 
-        //
+        //iterating over the list of various lengths in reverse order to determine if it is greater than 0, if so, it continues to iterate over the availableLengths
         for (int i = materialList.size() - 1; i > 0; i--) {
             if ((length) >= materialList.get(i).getLength()) {
                 //if index i is greater or equal to the length, then it's added to the new item list
                 result.add(materialList.get(i));
-
-
                 // this ensures that the lengths are ready to be iterated over again, with no changes.
                 length -= materialList.get(i).getLength();
             }
@@ -149,11 +143,9 @@ public class Calculate {
         // this ensures if there's any leftover length of material that wasn't accounted for in the loop processing the various lengths, it adds an item to the result list.
         if (length > 0) {
             result.add(materialList.get(0));
-
         }
 
         result.get(0).setQuantity(quantity);
-
         return result;
     }
 
@@ -229,15 +221,10 @@ public class Calculate {
 
                 result.add(newItem(quantity, materialList.get(i).getMaterialId(), materialList.get(i)));
 
-
                 done = true;
 
             }
         }
-
         return result;
-
     }
-
-
 }
