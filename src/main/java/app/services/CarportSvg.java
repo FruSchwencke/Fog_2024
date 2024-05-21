@@ -7,7 +7,7 @@ import java.util.List;
 
 public class CarportSvg {
 
-    private static final SvgTemplates svg = new SvgTemplates();
+    private static SvgTemplates svg = new SvgTemplates();
 
     // only call this to demonstrate the svg drawing with hardcoding
     public static void main(String[] args) {
@@ -162,6 +162,7 @@ public class CarportSvg {
 
     public static String drawCarport(double carportLength, double carportWidth, List<Material> postList, List<Material> rafterList, List <Material> sternList, List <Material> beamList){
 
+            svg = new SvgTemplates();
             //drawBackground(carportWidth,carportLength);
             drawPosts(carportLength,carportWidth,postList);
             drawBeams(carportLength,carportWidth,beamList);
