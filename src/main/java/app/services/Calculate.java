@@ -121,7 +121,7 @@ public class Calculate {
         List<Material> materialList = MaterialMapper.getMaterialByDescription(description, connectionPool);
 
         // Calculate
-        // maxWidth is the largest space allowed between rafters (60 cm) subtracted with a rafters own width (50)
+        // maxWidth is the largest space allowed between rafters (60 cm/600 mm) subtracted with a rafters own width (5 cm/ 50mm)
         int maxWidth = 550;
         // then the length of the carport is divided by maxWidth, to find the quantity needed for at specific length
         int quantity = (int) ceil((double) length / (double) maxWidth);
