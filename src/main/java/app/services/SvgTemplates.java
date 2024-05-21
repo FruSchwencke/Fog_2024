@@ -5,14 +5,14 @@ package app.services;
      private StringBuilder svg;
      public SvgTemplates() {
          svg = new StringBuilder();
-         svg.append(String.format(SVG_TEMPLATE, 1,80,"0 0 1000 880","100%"));
+         svg.append(String.format(SVG_TEMPLATE, 1,1,"0 0 600 600"));
 
      }
 
      //canvas for the svg
     private static final String SVG_TEMPLATE = "<svg version=\"1.1\"\n" +
             "     x=\"%d\" y=\"%d\"\n" +
-            "     viewBox=\"%s\"  width=\"%s\" \n" +
+            "     viewBox=\"%s\" \n" +
              "xmlns=\"http://www.w3.org/2000/svg\" \n"+
             "     preserveAspectRatio=\"xMinYMin\"\n>";
 

@@ -128,7 +128,10 @@
                     </tr>
                     </tbody>
                 </table>
-                <div th:utext="${session.svgDrawing}"></div>
+
+                    <div
+                            style="height: 500px; width: 500px" th:utext="${session.svgDrawing}">
+                    </div>
             </div>
         </div>
     </div>
