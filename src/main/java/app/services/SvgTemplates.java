@@ -5,14 +5,14 @@ package app.services;
      private StringBuilder svg;
      public SvgTemplates() {
          svg = new StringBuilder();
-         svg.append(String.format(SVG_TEMPLATE, 1,80,"0 0 1000 880","100%"));
+         svg.append(String.format(SVG_TEMPLATE, 1,1,"0 0 1000 800"));
 
      }
 
      //canvas for the svg
     private static final String SVG_TEMPLATE = "<svg version=\"1.1\"\n" +
             "     x=\"%d\" y=\"%d\"\n" +
-            "     viewBox=\"%s\"  width=\"%s\" \n" +
+            "     viewBox=\"%s\" \n" +
              "xmlns=\"http://www.w3.org/2000/svg\" \n"+
             "     preserveAspectRatio=\"xMinYMin\"\n>";
 
@@ -63,10 +63,10 @@ package app.services;
 
 
     // text, horizontal
-    private static final String SVG_HORIZONTAL_TEXT = "<text style=\"text-anchor: middle\" transform=\"translate(%f,40)\">%.2f</text>";
+    private static final String SVG_HORIZONTAL_TEXT = "<text style=\"text-anchor: middle\" transform=\"translate(%f,40)\">%.2f cm</text>";
 
     // text, vertical
-    private static final String SVG_VERTICAL_TEXT = "<text style=\"text-anchor: middle\" transform=\"translate(170,%f) rotate(-90)\">%.2f</text>";
+    private static final String SVG_VERTICAL_TEXT = "<text style=\"text-anchor: middle\" transform=\"translate(170,%f) rotate(-90)\">%.2f cm</text>";
 
 
 
@@ -101,7 +101,8 @@ package app.services;
 
     @Override
     public String toString() {
-        return svg.append("</svg>").toString();
+       return svg.append("</svg>").toString();
+        //return svg.toString();
     }
 
 
