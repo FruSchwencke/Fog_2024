@@ -5,7 +5,7 @@ package app.services;
      private StringBuilder svg;
      public SvgTemplates() {
          svg = new StringBuilder();
-         svg.append(String.format(SVG_TEMPLATE, 1,1,"0 0 600 600"));
+         svg.append(String.format(SVG_TEMPLATE, 1,1,"0 0 1000 800"));
 
      }
 
