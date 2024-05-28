@@ -70,16 +70,22 @@ public class CalculateTest {
 
     @Test
     void calculateRafter() throws DatabaseException {
-        Material material = new Material(1534,"45x195 mm. spærtræ ubh.","Spær, monteres på rem",315.0,1,195,6000,45,15);
+        Material material = new Material(1534,
+                "45x195 mm. spærtræ ubh.",
+                "Spær, monteres på rem",
+                315.0,
+                1,
+                195,
+                6000,
+                45,
+                15);
         List<Material> expected = new ArrayList<>();
         expected.add(material);
         List<Material> result = new ArrayList<>();
         result = Calculate.calculateRafter(7800,6000, connectionPool);
 
-        //assertEquals only works here, because of the equals-override in Material Class. Where it is defined what equals is.
+        //assertEquals only works here, because of the equals-override in Material Class.Where it is defined what equals is.
         assertEquals(expected, result);
-
-
     }
 
 

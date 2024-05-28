@@ -3,9 +3,11 @@ import app.entities.Material;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
 import app.persistence.MaterialMapper;
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.*;
+
 import static java.lang.Math.ceil;
+import static java.lang.Math.max;
 
 
 public class Calculate {
@@ -227,4 +229,29 @@ public class Calculate {
         }
         return result;
     }
+
+
+    //TAGPLADER UDVIDET VERSION
+
+    public static List<Material> calculateAnyRoof (int carportLength, int carportWidth, ConnectionPool connectionPool) throws DatabaseException {
+
+        int overlapWidth = 70;
+        int overlapLength = 500;
+        int quantity;
+
+        // retrieving the roof options
+        String description = "Tagplader monteres på spær";
+        List<Material> materialList = MaterialMapper.getMaterialByDescription(description, connectionPool);
+
+        //iteration over the list of materials, and finding the longest material
+        Optional <Material> longestOption = materialList.stream().max(Comparator.comparingInt(Material::getLength));
+
+
+        if (carportWidth < )
+
+
+
+        return null;
+    }
+
 }
