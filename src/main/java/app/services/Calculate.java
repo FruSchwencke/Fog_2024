@@ -319,17 +319,35 @@ public class Calculate {
                     HashMap<Double,Double> remainders = new HashMap<Double,Double>();
 
                     for (int j = 0; j <= materialList.size() -1; j++) {
+
                         //find the remainder, when the length of the material is divided by the piecelength
                         double remainder= materialList.get(i).getLength() % pieceLength;
-                       // set the remainder and the length of the material as key/value pairs on a HashMap
-                        remainders.Set(i, remainder);
 
+                       // set the remainder and the length of the material as key/value pairs on a HashMap
+                        remainders.put((double) j,remainder);
                     }
 
+
+
+                    //find the smallest remainder
                     Map.Entry<Double,Double> minEntry = Collections.min(remainders.entrySet(), Comparator.comparing(Map.Entry::getValue));
-                    Optional<Material> bestMaterial = materialList.stream().filter(m-> m.getLength() == minEntry.getKey()).findFirst();
-                    double quantityOfBestMaterial = ceil (quantity/quotient);
-                    result.add(newItem(quantityOfBestMaterial, materialList.get(i).getMaterialId(), bestMaterial));
+
+
+                    //find the material with the smallest remainder
+                    Optional<Material> materialWithSmallestRemainder = materialList.stream().filter(m-> m.getLength() == minEntry.getKey()).findFirst();
+
+                    int bestMaterial = 0;
+                    //
+                    if (materialWithSmallestRemainder.isPresent()){
+                        bestMaterial = materialWithSmallestRemainder.get().getMaterialId();
+                    }
+
+
+                    //find the quantity needed of bestMaterial
+                    int quantityOfBestMaterial = (int) ceil (quantity/quotient);
+
+                    //add the quantity and the bestMaterial to the result
+                    result.add(newItem(quantityOfBestMaterial, materialList.get(i).getMaterialId(), materialList.get(bestMaterial)));
 
 
                     done = true;
@@ -339,8 +357,6 @@ public class Calculate {
             return result;
 
         }
-
-
 
         return null;
     }
