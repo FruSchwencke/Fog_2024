@@ -233,21 +233,56 @@ public class Calculate {
 
     //TAGPLADER UDVIDET VERSION
 
+
     public static List<Material> calculateAnyRoof (int carportLength, int carportWidth, ConnectionPool connectionPool) throws DatabaseException {
 
         int overlapWidth = 70;
         int overlapLength = 500;
         int quantity;
+        boolean done = false;
 
         // retrieving the roof options
         String description = "Tagplader monteres på spær";
         List<Material> materialList = MaterialMapper.getMaterialByDescription(description, connectionPool);
 
         //iteration over the list of materials, and finding the longest material
-        Optional <Material> longestOption = materialList.stream().max(Comparator.comparingInt(Material::getLength));
+        Optional<Material> findLongestOption = materialList.stream().max(Comparator.comparingInt(Material::getLength));
+
+        int longestOption = 0;
+        //Collection does not work with operators and has a null check that ensures that
+       if (findLongestOption.isPresent()){
+           longestOption = findLongestOption.get().getLength();
+       }
+
+       //if the carportWidth is the same length or shorter than the longest roof material, then do this
+        if (carportWidth <= longestOption){
+
+            List<Material> result = new ArrayList<>();
+
+            for (int i = 0 ; i <= materialList.size() -1; i++) {
+                //if the length of the material is greater or equal to carportWidth, then find the quantity needed.
+                if (materialList.get(i).getLength() >= carportWidth && !done) {
+
+                    // how many items is needed to cover the length of the carport.
+                    int itemWidth = materialList.get(i).getWidth() - overlapWidth;
+                    quantity = (int) ceil((double) carportLength / (double) itemWidth);
+
+                    result.add(newItem(quantity, materialList.get(i).getMaterialId(), materialList.get(i)));
+
+                    done = true;
+
+                }
+            }
+            return result;
+
+        }
 
 
-        if (carportWidth < )
+        //if the carportWidth is longer than the longest roof material, then do this
+
+        if (carportWidth > longestOption){
+
+        }
 
 
 
