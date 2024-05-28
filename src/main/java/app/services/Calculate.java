@@ -234,9 +234,8 @@ public class Calculate {
 
 
 
-    //TAGPLADER UDVIDET VERSION
+    //TAGPLADER UDVIDDET VERSION
     public static List<Material> calculateAnyRoof (int carportLength, int carportWidth, ConnectionPool connectionPool) throws DatabaseException {
-
         int overlapWidth = 70;
         int overlapLength = 500;
         int quantity;
@@ -246,16 +245,16 @@ public class Calculate {
         String description = "Tagplader monteres på spær";
         List<Material> materialList = MaterialMapper.getMaterialByDescription(description, connectionPool);
 
-        //iteration over the list of materials, and finding the longest material
+        //iterating over the list of materials, and finding the longest material
         Optional<Material> findLongestOption = materialList.stream().max(Comparator.comparingInt(Material::getLength));
 
         int longestOption = 0;
-        //Collection does not work with operators and has a null check that ensures that
+        //Collection does not work with operators, and has to have a null check to prevent null pointer exceptions, which can cause programs to crash or yield unexpected results
        if (findLongestOption.isPresent()){
            longestOption = findLongestOption.get().getLength();
        }
 
-       //if the carportWidth is the same length or shorter than the longest roof material, then do this
+       //if the carportWidth is the same length or shorter than the longest roof material, then...
         if (carportWidth <= longestOption){
 
             List<Material> result = new ArrayList<>();
@@ -275,31 +274,19 @@ public class Calculate {
                 }
             }
             return result;
-
         }
 
 
         //if the carportWidth is longer than the longest roof material, then do this
+
+        List<Material> result = new ArrayList<>();
+
         if (carportWidth > longestOption) {
 
-
             //calculating the big area
-            List<Material> result = new ArrayList<>();
-
-            for (int i = 0; i <= materialList.size() - 1; i++) {
-                //if the length of the material is greater or equal to carportWidth, then find the quantity needed.
-                if (materialList.get(i).getLength() >= carportWidth && !done) {
-
-                    // how many items is needed to cover the length of the carport.
-                    int itemWidth = materialList.get(i).getWidth() - overlapWidth;
-                    quantity = (int) ceil((double) carportLength / (double) itemWidth);
-
-                    result.add(newItem(quantity, materialList.get(i).getMaterialId(), materialList.get(i)));
-
-                    done = true;
-                }
-            }
-
+            int itemWidth = materialList.get(longestOption).getWidth() - overlapWidth;
+            quantity = (int) ceil((double) carportLength / (double) itemWidth);
+            result.add(newItem(quantity, materialList.get(longestOption).getMaterialId(), materialList.get(longestOption)));
 
             //calculating the small area
             for (int i = 0 ; i <= materialList.size() -1; i++) {
@@ -311,7 +298,7 @@ public class Calculate {
 
                     for (int j = 0; j <= materialList.size() -1; j++) {
 
-                        //find the remainder, when the length of the material is divided by the piecelength
+                        //find the remainder, when the length of the material is divided by the pieceLength
                         double remainder= materialList.get(i).getLength() % pieceLength;
 
                        // set the remainder and the length of the material as key/value pairs on a HashMap
@@ -330,19 +317,14 @@ public class Calculate {
                         bestMaterial = materialWithSmallestRemainder.get().getMaterialId();
                     }
 
-                    //establish quantity
-                    int itemWidth = materialList.get(i).getWidth() - overlapWidth;
-                    quantity = (int) ceil((double) carportLength / (double) itemWidth);
-                    //find the quantity needed of bestMaterial
+                    //find the quantity needed of bestMaterial, using ceil to get the next greater number
                     int quantityOfBestMaterial = (int) ceil (quantity/quotient);
-                    //add the quantity and the bestMaterial to the result
+                    //add the quantity, materialId and bestMaterial to the result
                     result.add(newItem(quantityOfBestMaterial, materialList.get(i).getMaterialId(), materialList.get(bestMaterial)));
-
                     done = true;
             }
-            return result;
         }
-        return null;
+        return result;
     }
 
 }
