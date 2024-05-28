@@ -246,16 +246,18 @@ public class Calculate {
         List<Material> materialList = MaterialMapper.getMaterialByDescription(description, connectionPool);
 
         //iterating over the list of materials, and finding the longest material
-        Optional<Material> findLongestOption = materialList.stream().max(Comparator.comparingInt(Material::getLength));
+        Optional<Material> longestMaterialOptional = materialList.stream().max(Comparator.comparingInt(Material::getLength));
+        Material longestMaterial = null;
 
-        int longestOption = 0;
+        int longestMaterialLength = 0;
         //Collection does not work with operators, and has to have a null check to prevent null pointer exceptions, which can cause programs to crash or yield unexpected results
-       if (findLongestOption.isPresent()){
-           longestOption = findLongestOption.get().getLength();
+       if (longestMaterialOptional.isPresent()){
+           longestMaterialLength = longestMaterialOptional.get().getLength();
+            longestMaterial = longestMaterialOptional.get();
        }
 
-       //if the carportWidth is the same length or shorter than the longest roof material, then...
-        if (carportWidth <= longestOption){
+       //if the carportWidth is shorter than the longest roof material, then...
+        if (carportWidth < longestMaterialLength){
 
             List<Material> result = new ArrayList<>();
 
@@ -281,50 +283,46 @@ public class Calculate {
 
         List<Material> result = new ArrayList<>();
 
-        if (carportWidth > longestOption) {
+        if (carportWidth >= longestMaterialLength) {
 
             //calculating the big area
-            int itemWidth = materialList.get(longestOption).getWidth() - overlapWidth;
+            int itemWidth = longestMaterial.getWidth() - overlapWidth;
             quantity = (int) ceil((double) carportLength / (double) itemWidth);
-            result.add(newItem(quantity, materialList.get(longestOption).getMaterialId(), materialList.get(longestOption)));
+            result.add(newItem(quantity, longestMaterial.getMaterialId(), longestMaterial));
+
+
+            double pieceLength = (carportWidth-longestMaterialLength) + overlapLength;
+            Map<Double,Double> remainders = new HashMap<>();
 
             //calculating the small area
             for (int i = 0 ; i <= materialList.size() -1; i++) {
 
-                    double pieceLength = (carportWidth-longestOption) +overlapLength;
-                    double quotient = materialList.get(i).getLength() / pieceLength;
+                    //find the remainder, when the length of the material is divided by the pieceLength
+                    double remainder = materialList.get(i).getLength() % pieceLength;
 
-                    HashMap<Double,Double> remainders = new HashMap<Double,Double>();
-
-                    for (int j = 0; j <= materialList.size() -1; j++) {
-
-                        //find the remainder, when the length of the material is divided by the pieceLength
-                        double remainder= materialList.get(i).getLength() % pieceLength;
-
-                       // set the remainder and the length of the material as key/value pairs on a HashMap
-                        remainders.put((double) j,remainder);
-                    }
+                    // set the remainder and the length of the material as key/value pairs on a HashMap
+                    remainders.put((double) i, remainder);
+            }
 
                     //find the smallest remainder
                     Map.Entry<Double,Double> minEntry = Collections.min(remainders.entrySet(), Comparator.comparing(Map.Entry::getValue));
 
-                    //find the material with the smallest remainder
-                    Optional<Material> materialWithSmallestRemainder = materialList.stream().filter(m-> m.getLength() == minEntry.getKey()).findFirst();
+                    //get the material with the smallest remainder
+                    Optional<Material> materialWithSmallestRemainderOptional = materialList.stream().filter(m-> m.getLength() == minEntry.getKey()).findFirst();
+                    Material materialWithSmallestRemainder = null;
 
-                    int bestMaterial = 0;
                     //
-                    if (materialWithSmallestRemainder.isPresent()){
-                        bestMaterial = materialWithSmallestRemainder.get().getMaterialId();
+                    if (materialWithSmallestRemainderOptional.isPresent()){
+                        materialWithSmallestRemainder = materialWithSmallestRemainderOptional.get();
                     }
 
+                    double quotient = materialWithSmallestRemainder.getLength() / pieceLength;
                     //find the quantity needed of bestMaterial, using ceil to get the next greater number
                     int quantityOfBestMaterial = (int) ceil (quantity/quotient);
                     //add the quantity, materialId and bestMaterial to the result
-                    result.add(newItem(quantityOfBestMaterial, materialList.get(i).getMaterialId(), materialList.get(bestMaterial)));
+                    result.add(newItem(quantityOfBestMaterial, materialWithSmallestRemainder.getMaterialId(), materialWithSmallestRemainder));
                     done = true;
-            }
         }
         return result;
     }
-
 }
