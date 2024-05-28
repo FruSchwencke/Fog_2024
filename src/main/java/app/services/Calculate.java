@@ -326,13 +326,11 @@ public class Calculate {
 
                     }
 
+                    Map.Entry<Double,Double> minEntry = Collections.min(remainders.entrySet(), Comparator.comparing(Map.Entry::getValue));
+                    Optional<Material> bestMaterial = materialList.stream().filter(m-> m.getLength() == minEntry.getKey()).findFirst();
+                    double quantityOfBestMaterial = ceil (quantity/quotient);
+                    result.add(newItem(quantityOfBestMaterial, materialList.get(i).getMaterialId(), bestMaterial));
 
-
-
-
-
-
-                    result.add(newItem(quantity, materialList.get(i).getMaterialId(), materialList.get(i)));
 
                     done = true;
 
