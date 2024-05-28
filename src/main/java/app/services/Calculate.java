@@ -231,9 +231,10 @@ public class Calculate {
     }
 
 
+
+
+
     //TAGPLADER UDVIDET VERSION
-
-
     public static List<Material> calculateAnyRoof (int carportLength, int carportWidth, ConnectionPool connectionPool) throws DatabaseException {
 
         int overlapWidth = 70;
@@ -279,8 +280,65 @@ public class Calculate {
 
 
         //if the carportWidth is longer than the longest roof material, then do this
-
         if (carportWidth > longestOption){
+
+
+
+
+            //calculating the big area
+            List<Material> result = new ArrayList<>();
+
+            for (int i = 0 ; i <= materialList.size() -1; i++) {
+                //if the length of the material is greater or equal to carportWidth, then find the quantity needed.
+                if (materialList.get(i).getLength() >= carportWidth && !done) {
+
+                    // how many items is needed to cover the length of the carport.
+                    int itemWidth = materialList.get(i).getWidth() - overlapWidth;
+                    quantity = (int) ceil((double) carportLength / (double) itemWidth);
+
+                    result.add(newItem(quantity, materialList.get(i).getMaterialId(), materialList.get(i)));
+
+                    done = true;
+
+                }
+            }
+            return result;
+
+
+            //calculating the small area
+
+            for (int i = 0 ; i <= materialList.size() -1; i++) {
+
+                //if the length of the material is greater or equal to carportWidth, then find the quantity needed.
+                if (materialList.get(i).getLength() >= carportWidth && !done) {
+
+                    double pieceLength = (carportWidth-longestOption) +overlapLength;
+
+                    double quotient = materialList.get(i).getLength() / pieceLength;
+
+                    HashMap<Double,Double> remainders = new HashMap<Double,Double>();
+
+                    for (int j = 0; j <= materialList.size() -1; j++) {
+                        //find the remainder, when the length of the material is divided by the piecelength
+                        double remainder= materialList.get(i).getLength() % pieceLength;
+                       // set the remainder and the length of the material as key/value pairs on a HashMap
+                        remainders.Set(i, remainder);
+
+                    }
+
+
+
+
+
+
+
+                    result.add(newItem(quantity, materialList.get(i).getMaterialId(), materialList.get(i)));
+
+                    done = true;
+
+                }
+            }
+            return result;
 
         }
 
