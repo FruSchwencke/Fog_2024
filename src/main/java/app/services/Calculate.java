@@ -280,15 +280,13 @@ public class Calculate {
 
 
         //if the carportWidth is longer than the longest roof material, then do this
-        if (carportWidth > longestOption){
-
-
+        if (carportWidth > longestOption) {
 
 
             //calculating the big area
             List<Material> result = new ArrayList<>();
 
-            for (int i = 0 ; i <= materialList.size() -1; i++) {
+            for (int i = 0; i <= materialList.size() - 1; i++) {
                 //if the length of the material is greater or equal to carportWidth, then find the quantity needed.
                 if (materialList.get(i).getLength() >= carportWidth && !done) {
 
@@ -299,21 +297,14 @@ public class Calculate {
                     result.add(newItem(quantity, materialList.get(i).getMaterialId(), materialList.get(i)));
 
                     done = true;
-
                 }
             }
-            return result;
 
 
             //calculating the small area
-
             for (int i = 0 ; i <= materialList.size() -1; i++) {
 
-                //if the length of the material is greater or equal to carportWidth, then find the quantity needed.
-                if (materialList.get(i).getLength() >= carportWidth && !done) {
-
                     double pieceLength = (carportWidth-longestOption) +overlapLength;
-
                     double quotient = materialList.get(i).getLength() / pieceLength;
 
                     HashMap<Double,Double> remainders = new HashMap<Double,Double>();
@@ -327,11 +318,8 @@ public class Calculate {
                         remainders.put((double) j,remainder);
                     }
 
-
-
                     //find the smallest remainder
                     Map.Entry<Double,Double> minEntry = Collections.min(remainders.entrySet(), Comparator.comparing(Map.Entry::getValue));
-
 
                     //find the material with the smallest remainder
                     Optional<Material> materialWithSmallestRemainder = materialList.stream().filter(m-> m.getLength() == minEntry.getKey()).findFirst();
@@ -342,22 +330,18 @@ public class Calculate {
                         bestMaterial = materialWithSmallestRemainder.get().getMaterialId();
                     }
 
-
+                    //establish quantity
+                    int itemWidth = materialList.get(i).getWidth() - overlapWidth;
+                    quantity = (int) ceil((double) carportLength / (double) itemWidth);
                     //find the quantity needed of bestMaterial
                     int quantityOfBestMaterial = (int) ceil (quantity/quotient);
-
                     //add the quantity and the bestMaterial to the result
                     result.add(newItem(quantityOfBestMaterial, materialList.get(i).getMaterialId(), materialList.get(bestMaterial)));
 
-
                     done = true;
-
-                }
             }
             return result;
-
         }
-
         return null;
     }
 
