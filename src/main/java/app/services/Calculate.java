@@ -234,7 +234,7 @@ public class Calculate {
 
 
 
-    //TAGPLADER UDVIDDET VERSION OP TIL 11,5 meter
+    //TAGPLADER UDVIDDET VERSION, CARPORT BREDDE OP TIL 11,5 meter
     public static List<Material> calculateAnyRoof (int carportLength, int carportWidth, ConnectionPool connectionPool) throws DatabaseException {
         int overlapWidth = 70;
         int overlapLength = 500;
@@ -272,24 +272,20 @@ public class Calculate {
                     result.add(newItem(quantity, materialList.get(i).getMaterialId(), materialList.get(i)));
 
                     done = true;
-
                 }
             }
             return result;
         }
 
 
-        //if the carportWidth is longer than the longest roof material, then do this
-
+        //if the carportWidth is longer than the longest roof material, then...
         List<Material> result = new ArrayList<>();
 
         if (carportWidth >= longestMaterialLength) {
-
             //calculating the big area
             int itemWidth = longestMaterial.getWidth() - overlapWidth;
             quantity = (int) ceil((double) carportLength / (double) itemWidth);
             result.add(newItem(quantity, longestMaterial.getMaterialId(), longestMaterial));
-
 
             double pieceLength = (carportWidth-longestMaterialLength) + overlapLength;
             Map<Integer,Double> remainders = new HashMap<>();
@@ -316,7 +312,6 @@ public class Calculate {
                     int quantityOfBestMaterial = (int) ceil (quantity/quotient);
                     //add the quantity, materialId and bestMaterial to the result
                     result.add(newItem(quantityOfBestMaterial, materialWithSmallestRemainder.getMaterialId(), materialWithSmallestRemainder));
-                    done = true;
         }
         return result;
     }
