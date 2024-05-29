@@ -305,7 +305,7 @@ public class Calculate {
                     //find the smallest remainder
                     Map.Entry<Integer,Double> minEntry = Collections.min(remainders.entrySet(), Comparator.comparing(Map.Entry::getValue));
 
-                    //get the material with the smallest remainder
+                    //identify the material with the smallest remainder
                     Material materialWithSmallestRemainder = materialList.get(minEntry.getKey());
 
 
