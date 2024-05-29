@@ -292,7 +292,7 @@ public class Calculate {
 
 
             double pieceLength = (carportWidth-longestMaterialLength) + overlapLength;
-            Map<Double,Double> remainders = new HashMap<>();
+            Map<Integer,Double> remainders = new HashMap<>();
 
             //calculating the small area
             for (int i = 0 ; i <= materialList.size() -1; i++) {
@@ -301,20 +301,15 @@ public class Calculate {
                     double remainder = materialList.get(i).getLength() % pieceLength;
 
                     // set the remainder and the length of the material as key/value pairs on a HashMap
-                    remainders.put((double) i, remainder);
+                    remainders.put( i, remainder);
             }
 
                     //find the smallest remainder
-                    Map.Entry<Double,Double> minEntry = Collections.min(remainders.entrySet(), Comparator.comparing(Map.Entry::getValue));
+                    Map.Entry<Integer,Double> minEntry = Collections.min(remainders.entrySet(), Comparator.comparing(Map.Entry::getValue));
 
                     //get the material with the smallest remainder
-                    Optional<Material> materialWithSmallestRemainderOptional = materialList.stream().filter(m-> m.getLength() == minEntry.getKey()).findFirst();
-                    Material materialWithSmallestRemainder = null;
+                    Material materialWithSmallestRemainder = materialList.get(minEntry.getKey());
 
-                    //
-                    if (materialWithSmallestRemainderOptional.isPresent()){
-                        materialWithSmallestRemainder = materialWithSmallestRemainderOptional.get();
-                    }
 
                     double quotient = materialWithSmallestRemainder.getLength() / pieceLength;
                     //find the quantity needed of bestMaterial, using ceil to get the next greater number
