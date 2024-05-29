@@ -252,7 +252,9 @@ public class Calculate {
         int longestMaterialLength = 0;
         //Collection does not work with operators, and has to have a null check to prevent null pointer exceptions, which can cause programs to crash or yield unexpected results
        if (longestMaterialOptional.isPresent()){
+           //the length of the longest material
            longestMaterialLength = longestMaterialOptional.get().getLength();
+           //the material with the longest length
             longestMaterial = longestMaterialOptional.get();
        }
 
