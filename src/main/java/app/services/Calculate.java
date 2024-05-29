@@ -234,7 +234,7 @@ public class Calculate {
 
 
 
-    //TAGPLADER UDVIDDET VERSION
+    //TAGPLADER UDVIDDET VERSION OP TIL 11,5 meter
     public static List<Material> calculateAnyRoof (int carportLength, int carportWidth, ConnectionPool connectionPool) throws DatabaseException {
         int overlapWidth = 70;
         int overlapLength = 500;

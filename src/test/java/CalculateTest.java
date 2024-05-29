@@ -135,7 +135,20 @@ public class CalculateTest {
 
         //assertEquals only works here, because of the equals-override in Material Class. Where it is defined what equals is.
         assertEquals(expected, result);
-
     }
 
+    @Test
+    void calculateAnyRoof2() throws DatabaseException {
+        Material material = new Material(2006, "Plastmo Ecolite blåtonet", "Tagplader monteres på spær", 187.5,1,1090,6000,0,7);
+        Material material2 = new Material(2005, "Plastmo Ecolite blåtonet", "Tagplader monteres på spær", 127.5,1,1090,4800,0,7);
+
+        List<Material> expected = new ArrayList<>();
+        expected.add(material);
+        expected.add(material2);
+        List<Material> result = new ArrayList<>();
+        result = Calculate.calculateAnyRoof(7000,10000, connectionPool);
+
+        //assertEquals only works here, because of the equals-override in Material Class. Where it is defined what equals is.
+        assertEquals(expected, result);
+    }
 }
