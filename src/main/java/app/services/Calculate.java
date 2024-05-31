@@ -259,7 +259,7 @@ public class Calculate {
        }
 
        //if the carportWidth is shorter than the longest roof material, then...
-        if (carportWidth < longestMaterialLength){
+        if (carportWidth <= longestMaterialLength){
 
             List<Material> result = new ArrayList<>();
 
@@ -283,7 +283,7 @@ public class Calculate {
         //if the carportWidth is longer than the longest roof material, then...
         List<Material> result = new ArrayList<>();
 
-        if (carportWidth >= longestMaterialLength) {
+        if (carportWidth > longestMaterialLength) {
             //calculating the big area
             int itemWidth = longestMaterial.getWidth() - overlapWidth;
             quantity = (int) ceil((double) carportLength / (double) itemWidth);
